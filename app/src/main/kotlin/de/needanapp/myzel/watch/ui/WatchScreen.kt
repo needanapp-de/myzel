@@ -35,7 +35,6 @@ import androidx.compose.material.icons.outlined.Watch
 import androidx.compose.material.icons.rounded.CheckCircle
 import androidx.compose.material.icons.rounded.ErrorOutline
 import androidx.compose.material.icons.rounded.RadioButtonUnchecked
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -70,6 +69,7 @@ import de.needanapp.design.components.ListRow
 import de.needanapp.design.components.PillButton
 import de.needanapp.design.components.RowPosition
 import de.needanapp.design.components.SettingsGroup
+import de.needanapp.design.components.SignalCircularProgressIndicator
 import de.needanapp.design.components.SwitchRow
 import de.needanapp.design.components.TextFieldRow
 import de.needanapp.myzel.ui.compat.BackButton
@@ -371,7 +371,7 @@ private fun Devices(state: SetupState, onSelect: (String) -> Unit) {
         ListRow(
           it,
           stringResource(R.string.myzel_watch_searching),
-          trailing = { CircularProgressIndicator(Modifier.size(24.dp), strokeWidth = 2.dp) },
+          trailing = { SignalCircularProgressIndicator(Modifier.size(24.dp), strokeWidth = 2.dp) },
         )
       }
     }
@@ -450,7 +450,8 @@ private fun StepRow(position: RowPosition, step: SetupStep, state: SetupState, f
     stringResource(step.text()),
     trailing = {
       when {
-        step == state.current -> CircularProgressIndicator(Modifier.size(24.dp), strokeWidth = 2.dp)
+        step == state.current ->
+          SignalCircularProgressIndicator(Modifier.size(24.dp), strokeWidth = 2.dp)
         step in state.done ->
           Icon(
             Icons.Rounded.CheckCircle,

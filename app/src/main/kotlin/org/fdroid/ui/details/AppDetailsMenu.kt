@@ -11,7 +11,6 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Preview
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.UpdateDisabled
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,6 +18,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import de.needanapp.myzel.ui.compat.Checkbox
 import de.needanapp.myzel.ui.compat.DropdownMenuItem
 import org.fdroid.R
 import org.fdroid.ui.FDroidContent

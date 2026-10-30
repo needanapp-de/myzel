@@ -34,6 +34,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import de.needanapp.design.theme.LocalDesignColors
 import de.needanapp.myzel.ui.compat.ExpandableSection
 import de.needanapp.myzel.ui.compat.MeteredConnectionDialog
 import kotlinx.coroutines.launch
@@ -103,7 +104,8 @@ fun Version(
         }
         if (item.isInstalled)
           Badge(
-            containerColor = MaterialTheme.colorScheme.primary,
+            containerColor = LocalDesignColors.current.signal,
+            contentColor = LocalDesignColors.current.onSignal,
             modifier = Modifier.padding(start = 8.dp),
           ) {
             Text(text = stringResource(R.string.app_installed), modifier = Modifier.padding(4.dp))

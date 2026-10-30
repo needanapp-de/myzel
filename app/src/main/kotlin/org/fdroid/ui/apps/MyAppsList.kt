@@ -14,7 +14,6 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -32,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import de.needanapp.design.components.SignalButton
 import de.needanapp.myzel.ui.compat.MeteredConnectionDialog
 import de.needanapp.myzel.ui.compat.OnboardingCard
 import org.fdroid.R
@@ -103,7 +103,7 @@ fun MyAppsList(
             modifier = Modifier.padding(16.dp).weight(1f),
           )
           if (showUpdateAllButton)
-            Button(
+            SignalButton(
               onClick = {
                 val installLambda = {
                   myAppsInfo.actions.updateAll()

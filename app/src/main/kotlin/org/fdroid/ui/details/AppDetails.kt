@@ -25,7 +25,6 @@ import androidx.compose.material.icons.filled.OndemandVideo
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Translate
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -73,6 +72,7 @@ import com.viktormykhailiv.compose.hints.HintProperties
 import com.viktormykhailiv.compose.hints.rememberHint
 import com.viktormykhailiv.compose.hints.rememberHintAnchorState
 import com.viktormykhailiv.compose.hints.rememberHintController
+import de.needanapp.design.components.SignalButton
 import de.needanapp.myzel.ui.compat.ExpandableSection
 import de.needanapp.myzel.ui.compat.HintOverlayContainer
 import de.needanapp.myzel.ui.compat.OnboardingPopupCard
@@ -377,7 +377,7 @@ fun AppDetails(
         if (item.authorHasMoreThanOneApp) {
           val authorName = item.app.authorName!!
           val title = stringResource(R.string.app_list_author, authorName)
-          Button(
+          SignalButton(
             onClick = { onNav(NavigationKey.AppList(AppListType.Author(title, authorName))) },
             modifier = Modifier.align(CenterHorizontally).padding(bottom = 16.dp),
           ) {

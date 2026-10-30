@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -15,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import de.needanapp.design.components.SignalButton
 
 @Composable
 fun FDroidButton(
@@ -23,7 +23,7 @@ fun FDroidButton(
   modifier: Modifier = Modifier,
   imageVector: ImageVector? = null,
 ) {
-  Button(
+  SignalButton(
     onClick = onClick,
     shape = RoundedCornerShape(32.dp),
     modifier = modifier.heightIn(min = ButtonDefaults.MinHeight),

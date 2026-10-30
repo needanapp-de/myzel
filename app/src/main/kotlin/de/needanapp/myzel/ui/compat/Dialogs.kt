@@ -30,7 +30,6 @@ import androidx.compose.material.icons.outlined.QrCode
 import androidx.compose.material.icons.outlined.VisibilityOff
 import androidx.compose.material.icons.outlined.WarningAmber
 import androidx.compose.material.icons.outlined.Widgets
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -50,6 +49,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import de.needanapp.design.components.ContentDialog
+import de.needanapp.design.components.SignalCircularProgressIndicator
 import de.needanapp.design.theme.LocalDesignShapes
 import de.needanapp.myzel.ui.toIconBitmap
 import org.fdroid.R
@@ -122,7 +122,7 @@ fun QrCodeDialog(onDismissDialog: () -> Unit, generateQrCode: suspend () -> Bitm
     ) {
       val bitmap = qrCode
       if (bitmap == null) {
-        CircularProgressIndicator()
+        SignalCircularProgressIndicator()
       } else {
         Image(bitmap = bitmap, contentDescription = stringResource(R.string.swap_scan_qr))
       }

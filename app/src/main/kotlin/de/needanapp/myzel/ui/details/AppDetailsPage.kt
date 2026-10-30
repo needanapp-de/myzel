@@ -76,9 +76,7 @@ import androidx.compose.material.icons.rounded.Update
 import androidx.compose.material.icons.rounded.Verified
 import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.material.icons.rounded.Watch
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -156,6 +154,8 @@ import de.needanapp.design.components.PillAction
 import de.needanapp.design.components.PillButton
 import de.needanapp.design.components.RoundKey
 import de.needanapp.design.components.SectionCard
+import de.needanapp.design.components.SignalCircularProgressIndicator
+import de.needanapp.design.components.SignalLinearProgressIndicator
 import de.needanapp.design.components.StatusTone
 import de.needanapp.design.components.TagPill
 import de.needanapp.design.components.designCard
@@ -1249,7 +1249,7 @@ private fun WatchReachNote(reach: WatchReach) {
         horizontalArrangement = spacedBy(8.dp),
         modifier = Modifier.padding(top = 6.dp),
       ) {
-        CircularProgressIndicator(Modifier.size(14.dp), strokeWidth = 2.dp)
+        SignalCircularProgressIndicator(Modifier.size(14.dp), strokeWidth = 2.dp)
         Text(
           stringResource(R.string.myzel_details_watch_checking),
           style = MaterialTheme.typography.small(13.sp),
@@ -1279,13 +1279,13 @@ private fun WatchProgress(text: String, fraction: Float?) {
   Column(verticalArrangement = spacedBy(6.dp)) {
     Text(text, style = MaterialTheme.typography.small(13.sp, FontWeight.Medium))
     if (fraction != null) {
-      LinearProgressIndicator(
+      SignalLinearProgressIndicator(
         progress = { fraction },
         trackColor = scheme.outlineVariant,
         modifier = Modifier.fillMaxWidth(),
       )
     } else {
-      LinearProgressIndicator(
+      SignalLinearProgressIndicator(
         trackColor = scheme.outlineVariant,
         modifier = Modifier.fillMaxWidth(),
       )

@@ -37,7 +37,6 @@ import androidx.compose.material.icons.rounded.AddCircle
 import androidx.compose.material.icons.rounded.CheckCircle
 import androidx.compose.material.icons.rounded.ContentPaste
 import androidx.compose.material.icons.rounded.WarningAmber
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -78,6 +77,7 @@ import com.journeyapps.barcodescanner.ScanOptions.QR_CODE
 import de.needanapp.design.components.CardStatus
 import de.needanapp.design.components.PillButton
 import de.needanapp.design.components.SectionCard
+import de.needanapp.design.components.SignalCircularProgressIndicator
 import de.needanapp.design.components.StatusTone
 import de.needanapp.myzel.ui.apps.SectionTitle
 import de.needanapp.myzel.ui.compat.MeteredConnectionDialog
@@ -443,7 +443,7 @@ private fun PreviewStateCard(
         ValueText(pluralStringResource(R.plurals.repo_num_apps_text, count, count))
         if (!state.done) {
           Spacer(Modifier.width(10.dp))
-          CircularProgressIndicator(Modifier.size(14.dp), strokeWidth = 2.dp)
+          SignalCircularProgressIndicator(Modifier.size(14.dp), strokeWidth = 2.dp)
         }
       }
     }
@@ -483,7 +483,7 @@ fun AddRepoProgressScreen(
     horizontalAlignment = CenterHorizontally,
     modifier = modifier.padding(16.dp).fillMaxSize(),
   ) {
-    CircularProgressIndicator(Modifier.size(48.dp))
+    SignalCircularProgressIndicator(Modifier.size(48.dp))
     Text(
       text = text,
       style = MaterialTheme.typography.titleMedium,

@@ -22,9 +22,7 @@ import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Cancel
 import androidx.compose.material3.AssistChip
-import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -70,6 +68,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import coil3.compose.AsyncImage
+import de.needanapp.design.components.SignalButton
+import de.needanapp.design.components.SignalCircularProgressIndicator
+import de.needanapp.design.theme.LocalDesignColors
 import de.needanapp.myzel.ui.compat.BadgedBox
 import de.needanapp.myzel.ui.compat.InstalledBadge
 import de.needanapp.myzel.ui.compat.MeteredConnectionDialog
@@ -325,12 +326,16 @@ fun AppDetailsHeader(
               animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec,
             )
           LinearWavyProgressIndicator(
+            color = LocalDesignColors.current.signal,
             stopSize = 0.dp,
             progress = { animatedProgress },
             modifier = Modifier.weight(1f),
           )
         } else {
-          LinearWavyProgressIndicator(modifier = Modifier.weight(1f))
+          LinearWavyProgressIndicator(
+            modifier = Modifier.weight(1f),
+            color = LocalDesignColors.current.signal,
+          )
         }
         var cancelled by remember { mutableStateOf(false) }
         IconButton(
@@ -340,7 +345,7 @@ fun AppDetailsHeader(
           }
         ) {
           AnimatedVisibility(cancelled) {
-            CircularProgressIndicator(modifier = Modifier.size(24.dp))
+            SignalCircularProgressIndicator(modifier = Modifier.size(24.dp))
           }
           AnimatedVisibility(!cancelled) {
             Icon(
@@ -371,7 +376,7 @@ fun AppDetailsHeader(
       }
       if (item.mainButtonState != MainButtonState.NONE) {
         // button is for either installing or updating
-        Button(
+        SignalButton(
           onClick = {
             if (item.networkState.showWarningDialog) {
               showMeteredDialog = true

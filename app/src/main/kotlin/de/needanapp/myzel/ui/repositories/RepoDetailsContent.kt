@@ -25,7 +25,6 @@ import androidx.compose.material.icons.rounded.WarningAmber
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -52,6 +51,7 @@ import androidx.core.os.LocaleListCompat
 import de.needanapp.design.components.CardStatus
 import de.needanapp.design.components.PillButton
 import de.needanapp.design.components.SectionCard
+import de.needanapp.design.components.SignalLinearProgressIndicator
 import de.needanapp.design.components.StatusTone
 import de.needanapp.myzel.ui.apps.IconCircle
 import de.needanapp.myzel.ui.compat.DeleteMirrorDialog
@@ -102,7 +102,7 @@ fun RepoDetailsContent(
     val updateState = info.model.updateState
     if (updateState is RepoUpdateProgress) {
       val progress by animateFloatAsState(targetValue = updateState.progress)
-      LinearProgressIndicator(progress = { progress }, modifier = Modifier.fillMaxWidth())
+      SignalLinearProgressIndicator(progress = { progress }, modifier = Modifier.fillMaxWidth())
     }
     RepoHeader(
       iconModel =
@@ -316,7 +316,7 @@ private fun SettingsCard(repo: Repository, info: RepoDetailsInfo) {
         }
       }
       ArchiveState.LOADING ->
-        LinearProgressIndicator(Modifier.fillMaxWidth().padding(vertical = 16.dp))
+        SignalLinearProgressIndicator(Modifier.fillMaxWidth().padding(vertical = 16.dp))
       else ->
         SwitchLine(
           text = stringResource(R.string.repo_archive_toggle_description),

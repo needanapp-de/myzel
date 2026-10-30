@@ -1,0 +1,2 @@
+• Tasten, Schalter, Regler, Kästchen und Fortschrittsanzeigen leuchten in der Signalfarbe
+• „Über“: Der Link zum Quellcode führt jetzt zu GitHub

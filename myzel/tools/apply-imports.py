@@ -117,6 +117,8 @@ SWAPS = [
 ] + [
     # Design „Gerät“: Schalter in der Signalfarbe mit hellem Daumen
     (None, "androidx.compose.material3.Switch", "de.needanapp.myzel.ui.compat.Switch"),
+    # Häkchen-Kästchen in der Signalfarbe wie die Schalter
+    (None, "androidx.compose.material3.Checkbox", "de.needanapp.myzel.ui.compat.Checkbox"),
 ] + [
     (f, "androidx.compose.material3.ListItem", "de.needanapp.myzel.ui.compat.ListItem")
     for f in [

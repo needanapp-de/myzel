@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.ErrorOutline
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
@@ -18,6 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import de.needanapp.design.components.SignalCircularProgressIndicator
 import de.needanapp.myzel.ui.compat.ListItem
 import org.fdroid.R
 import org.fdroid.install.InstallState
@@ -58,9 +58,9 @@ fun InstallingAppRow(app: InstallingAppItem, isSelected: Boolean, modifier: Modi
         )
       } else {
         if (app.installState is InstallState.Downloading) {
-          CircularProgressIndicator(progress = { app.installState.progress })
+          SignalCircularProgressIndicator(progress = { app.installState.progress })
         } else {
-          CircularProgressIndicator()
+          SignalCircularProgressIndicator()
         }
       }
     },

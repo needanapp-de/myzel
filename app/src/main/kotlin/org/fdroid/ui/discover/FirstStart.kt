@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Button
 import androidx.compose.material3.CircularWavyProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Text
@@ -27,6 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import de.needanapp.design.components.SignalButton
 import org.fdroid.R
 import org.fdroid.download.NetworkState
 import org.fdroid.index.IndexUpdateResult
@@ -70,7 +70,7 @@ fun FirstStart(
         textAlign = TextAlign.Center,
         modifier = Modifier.padding(16.dp).fillMaxWidth(),
       )
-      Button(onClick = { override = true }, modifier = Modifier.align(CenterHorizontally)) {
+      SignalButton(onClick = { override = true }, modifier = Modifier.align(CenterHorizontally)) {
         Text(stringResource(R.string.first_start_button))
       }
     } else {

@@ -10,9 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -22,6 +19,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import de.needanapp.design.components.SignalButton
+import de.needanapp.design.components.SignalCircularProgressIndicator
+import de.needanapp.design.components.SignalLinearProgressIndicator
 import de.needanapp.myzel.ui.apps.NameWithPills
 import de.needanapp.myzel.ui.apps.RowIcon
 import de.needanapp.myzel.ui.apps.SectionTitle
@@ -74,7 +74,7 @@ private fun WatchAppsHeader(handle: WatchAppsHandle) {
     noteIsError = false,
   ) {
     if (busy) {
-      CircularProgressIndicator(Modifier.padding(end = 12.dp).size(20.dp), strokeWidth = 2.dp)
+      SignalCircularProgressIndicator(Modifier.padding(end = 12.dp).size(20.dp), strokeWidth = 2.dp)
     } else {
       TextButton(onClick = handle.check) {
         Text(stringResource(R.string.myzel_my_apps_watch_check))
@@ -125,7 +125,7 @@ private fun WatchAppsNote(handle: WatchAppsHandle) {
       )
     }
     if (updates > 0 && !busy) {
-      Button(onClick = handle.updateAll, modifier = Modifier.padding(bottom = 8.dp)) {
+      SignalButton(onClick = handle.updateAll, modifier = Modifier.padding(bottom = 8.dp)) {
         Text(stringResource(R.string.myzel_my_apps_watch_update_all))
       }
     }
@@ -178,20 +178,20 @@ internal fun WearUpdateNote(update: WearUpdateState, modifier: Modifier = Modifi
     )
     when (update) {
       is WearUpdateState.Downloading ->
-        LinearProgressIndicator(
+        SignalLinearProgressIndicator(
           progress = { update.fraction },
           trackColor = scheme.outlineVariant,
           modifier = Modifier.fillMaxWidth(),
         )
       is WearUpdateState.Sending ->
-        LinearProgressIndicator(
+        SignalLinearProgressIndicator(
           progress = { update.fraction },
           trackColor = scheme.outlineVariant,
           modifier = Modifier.fillMaxWidth(),
         )
       WearUpdateState.Confirm,
       WearUpdateState.Restarting ->
-        LinearProgressIndicator(
+        SignalLinearProgressIndicator(
           trackColor = scheme.outlineVariant,
           modifier = Modifier.fillMaxWidth(),
         )

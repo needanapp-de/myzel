@@ -1,0 +1,2 @@
+• Buttons, switches, sliders, checkboxes and progress indicators glow in the signal color
+• About: the source code link now opens GitHub

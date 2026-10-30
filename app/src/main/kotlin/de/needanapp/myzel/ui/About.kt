@@ -48,7 +48,7 @@ import org.fdroid.ui.FDroidContent
 import org.fdroid.ui.utils.openUriSafe
 
 private const val WEBSITE_URL = "https://needanapp.de"
-private const val SOURCE_URL = "https://git.needanapp.de/needanapp.de/myzel"
+private const val SOURCE_URL = "https://github.com/needanapp-de/myzel"
 private const val FDROID_URL = "https://f-droid.org"
 private const val FDROID_FORUM_URL = "https://forum.f-droid.org"
 private const val FDROID_DONATE_URL = "https://f-droid.org/donate/"

@@ -41,7 +41,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Download
 import androidx.compose.material.icons.rounded.Update
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItemDefaults
@@ -86,6 +85,7 @@ import androidx.compose.ui.unit.dp
 import de.needanapp.design.components.DeviceDisplay
 import de.needanapp.design.components.DeviceKey
 import de.needanapp.design.components.MonoLabel
+import de.needanapp.design.components.SignalCircularProgressIndicator
 import de.needanapp.design.components.StatusTone
 import de.needanapp.design.components.TagPill
 import de.needanapp.design.components.designCard
@@ -883,8 +883,8 @@ private fun InstallingRow(
         is InstallState.Installed,
         is InstallState.Error -> {}
         is InstallState.Downloading ->
-          CircularProgressIndicator(progress = { state.progress }, Modifier.size(28.dp))
-        else -> CircularProgressIndicator(Modifier.size(28.dp))
+          SignalCircularProgressIndicator(Modifier.size(28.dp), progress = { state.progress })
+        else -> SignalCircularProgressIndicator(Modifier.size(28.dp))
       }
     }
   if (isNeedanappDesign) {
