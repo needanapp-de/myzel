@@ -45,7 +45,7 @@ COMMON_YML = """Categories:
 License: GPL-3.0-or-later
 AuthorName: needanapp.de
 AuthorWebSite: https://needanapp.de
-SourceCode: https://git.needanapp.de/needanapp.de/myzel
+SourceCode: https://github.com/needanapp-de/myzel
 """
 
 DEBUG_NOTE = {

@@ -9,13 +9,13 @@ Categories:
 License: GPL-3.0-or-later
 AuthorName: needanapp.de
 WebSite: https://needanapp.de
-SourceCode: https://git.needanapp.de/needanapp.de/myzel
-IssueTracker: https://git.needanapp.de/needanapp.de/myzel/issues
+SourceCode: https://github.com/needanapp-de/myzel
+IssueTracker: https://github.com/needanapp-de/myzel/issues
 
 AutoName: Myzel
 
 RepoType: git
-Repo: https://git.needanapp.de/needanapp.de/myzel.git
+Repo: https://github.com/needanapp-de/myzel.git
 
 Builds:
   - versionName: 0.11.0

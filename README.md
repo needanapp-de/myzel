@@ -102,67 +102,31 @@ Paketquelle und hält sie danach aktuell.
 
 ### Darstellung
 
-- Aussehen wie ein Gerät: Alu im hellen, Graphit im dunklen Modus, Orange als Signalfarbe, schwarze Anzeigen
-  in Punktmatrix-Schrift
+- Zwei Stile: „Myzel“ sieht aus wie ein Gerät, mit Alu im hellen und Graphit im dunklen Modus, Orange als
+  Signalfarbe und schwarzen Anzeigen in Punktmatrix-Schrift; „NeedAnApp“ ist der ruhige Kartenlook von needanapp.de
+- Eigene Farbwelten für hell und dunkel (u. a. Papier, Latte, Nordnacht, Mitternacht, Warnweste, Kupfer) und eine
+  frei wählbare Signalfarbe; alle Schriften bleiben in jeder Kombination gut lesbar
 - Navigation in einer schwebenden Pille unten, zwischen Entdecken, Suche und Meine Apps auch per Wischen; das
   Myzel ist der Menüknopf
 - Kategorien in Entdecken als Bedienfeld mit allen Gruppen auf einen Blick
-- Hell, dunkel oder wie das System, reines Schwarz, Signalfarbe, Bewegung und UI-Skalierung
+- Hell, dunkel oder wie das System, reines Schwarz, Bewegung und UI-Skalierung
 - Deutsch und Englisch
 
 Keine Werbung, kein Tracking, keine Absturzberichte.
 
-## Für Entwickler
-
-### Aufbau
-
-Myzel ist ein Fork des [F-Droid-Clients](https://gitlab.com/fdroid/fdroidclient) 2.0.1 (Variante *basic*). Der
-Branch `myzel` ist der Stand von Myzel, `master` folgt F-Droid. Damit Updates von F-Droid leicht übernommen
-werden können, ändert Myzel möglichst wenig an Dateien von F-Droid:
-
-- Eigener Code liegt unter `app/src/main/kotlin/de/needanapp/myzel/`. Bildschirme und Bausteine von F-Droid
-  werden über ihre Import-Zeilen gegen die von Myzel getauscht (`myzel/tools/apply-imports.py`, prüfen mit
-  `--check`).
-- Eigene Texte stehen in `app/src/main/res/values*/myzel_strings.xml`; Name, Symbol und angepasste Texte von
-  F-Droid überschreibt `app/src/myzel/res/`. Build-Abweichungen sammelt `app/myzel.gradle`.
-- `myzel/wear/` ist Myzel Wear, die App für die Uhr; `myzel/link/` die Verbindung zwischen Handy und Uhr über
-  Bluetooth.
-- Das Design kommt aus dem Paket [needanapp-design](https://git.needanapp.de/needanapp.de/needanapp-design)
-  (Git-Submodul `myzel/needanapp-design`, Zweig `geraet`).
-
-Die ausführliche Beschreibung (Bildschirme, Uhr-Protokoll, Messen, Veröffentlichen, Updates von F-Droid
-übernehmen) steht in [myzel/README.md](myzel/README.md).
-
-### Bauen
-
-```bash
-git clone --recurse-submodules https://git.needanapp.de/needanapp.de/myzel.git
-cd myzel
-./gradlew :app:assembleBasicDefaultDebug :myzel-wear:assembleDebug
-```
-
-Gebaut wird mit JDK 21 und dem Android SDK (compileSdk 37). Die Debug-Variante heißt `de.needanapp.myzel.debug`
-und lässt sich neben Myzel installieren. Release-Builds (`:app:assembleBasicDefaultRelease`) signiert
-needanapp.de; ohne den Schlüssel bleiben sie unsigniert.
-
-```bash
-./gradlew :app:testBasicDefaultDebugUnitTest :myzel-link:testDebugUnitTest
-./gradlew :app:ktfmtFormatMain :app:ktfmtFormatTest
-```
-
 ## Grundlage und Dank
 
-- [F-Droid-Client](https://gitlab.com/fdroid/fdroidclient) (GPL-3.0-or-later) – Grundlage von Myzel, samt der
-  Bibliotheken unter `libs/`
+- [F-Droid-Client](https://gitlab.com/fdroid/fdroidclient) – Grundlage von Myzel
 - Die Betreiber von F-Droid, IzzyOnDroid und allen weiteren Paketquellen
 - [libadb-android](https://github.com/MuntashirAkon/libadb-android) – ADB-Verbindung zur Uhr bei der Einrichtung
 - [Shizuku](https://github.com/RikkaApps/Shizuku-API) – Installation ohne Nachfrage
-- [needanapp-design](https://git.needanapp.de/needanapp.de/needanapp-design) (Apache-2.0) – Oberfläche
+- needanapp-design – die Oberfläche, das Design-Paket von needanapp.de
 
 ## Lizenz
 
 Myzel ist freie Software unter der GNU General Public License, Version 3 oder neuer, siehe [LICENSE](LICENSE).
-Das Design-Paket needanapp-design steht unter Apache 2.0.
+Das Design-Paket needanapp-design steht unter der GNU General Public License, Version 3. Die Bibliotheken von
+F-Droid unter `libs/` stehen unter der [Apache License 2.0](libs/LICENSE).
 
 Einige Symbole von F-Droid stammen von [Picol](http://www.flaticon.com/authors/picol),
 [Icomoon](http://www.flaticon.com/authors/icomoon) und [Dave Gandy](http://www.flaticon.com/authors/dave-gandy)
