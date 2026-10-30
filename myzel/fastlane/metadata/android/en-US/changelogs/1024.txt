@@ -1,0 +1,5 @@
+• My apps and history as cards with pills such as "Update", "Error" or "Removed"
+• Repository details laid out like the app page: state band, apps, times, fingerprint and mirrors
+• Add repository: QR code and address as cards, preview shows "New" or "Already added"
+• Search with a pill-shaped field, history and number of results
+• App options as a sheet with switches, full-screen screenshots, new dialogs

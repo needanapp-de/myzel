@@ -1,0 +1,1 @@
+• Crash reporting from F-Droid (ACRA) removed completely: no report dialog, no e-mail, no extra process

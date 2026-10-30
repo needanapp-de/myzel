@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- die App-Seite wird über einen Link geöffnet (market://details) -->
+    <queries>
+        <package android:name="de.needanapp.myzel.profiling" />
+    </queries>
+</manifest>

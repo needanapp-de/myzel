@@ -1,0 +1,3 @@
+• Entdecken: Neue und kürzlich aktualisierte Apps stehen in zwei Reihen, zur Seite scrollen wie bisher
+• Entdecken: Nach unten ziehen aktualisiert die Paketquellen
+• Die Benachrichtigung beim Aktualisieren der Paketquellen zeigt das Myzel-Logo

@@ -1,0 +1,3 @@
+• Update diagnosis: if an app can't be updated, a card on the app page explains why (different signature, update only from another repository, doesn't fit the device, beta only, last error) and what helps, with details on the install source, signatures per repository and the device; "Copy report" puts it all on the clipboard
+• The band on the app page then says "Update not possible" instead of "Up to date"
+• My apps: apps with a problem show the reason below the version

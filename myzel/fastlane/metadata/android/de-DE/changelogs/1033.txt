@@ -1,0 +1,5 @@
+• Neues Aussehen „Gerät“: Alu und Graphit, Orange als Signalfarbe, schwarze Anzeigen in Punktmatrix-Schrift, Tasten wie an einem Gerät
+• Das Myzel ist Menüknopf und auf der App-Seite Knopf für die Optionen; beim Antippen läuft ein Signal hindurch
+• App-Seite: Favorit als Myzel neben dem Namen, Versionen als Anzeige mit Raster
+• Anzeigen auf Entdecken, in der Suche, in Meine Apps und bei den Paketquellen
+• Darstellung: Hell/Dunkel, reines Schwarz, Signalfarbe, Bewegung

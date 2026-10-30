@@ -1,0 +1,2 @@
+• App-Seite: Bei installierten Apps steht „Deinstallieren“ jetzt rot neben „Öffnen“
+• Unten schwebt wie auf den Hauptseiten eine Pille mit App-Info, Favorit und Teilen, rechts der Knopf Optionen; beim Scrollen verschwindet sie

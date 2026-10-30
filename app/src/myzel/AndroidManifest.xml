@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Myzel: Ergänzungen zum Manifest von F-Droid, eingebunden über app/myzel.gradle -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Uhr (de.needanapp.myzel.watch): Myzel Link über die bestehende Bluetooth-Kopplung -->
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <!-- Einrichtung der Uhr per ADB über WLAN: Uhr per mDNS finden, mit ihrem adbd verbinden;
+         ab Android 17 braucht das Recht für Geräte im lokalen Netz -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_LOCAL_NETWORK" />
+
+    <application>
+        <!-- Die Sprachwahl der Darstellung (Design-Paket) setzt die Sprache über AppCompat;
+             unter Android 12 merkt sich AppCompat sie nur mit diesem Dienst. -->
+        <service
+            android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
+            android:enabled="false"
+            android:exported="false">
+            <meta-data
+                android:name="autoStoreLocales"
+                android:value="true" />
+        </service>
+        <!-- Shizuku übergibt Myzel über diesen Provider seinen Binder (Installation über Shizuku,
+             de.needanapp.myzel.install) -->
+        <provider
+            android:name="rikka.shizuku.ShizukuProvider"
+            android:authorities="${applicationId}.shizuku"
+            android:enabled="true"
+            android:exported="true"
+            android:multiprocess="false"
+            android:permission="android.permission.INTERACT_ACROSS_USERS_FULL" />
+    </application>
+</manifest>

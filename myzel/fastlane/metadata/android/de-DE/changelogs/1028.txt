@@ -1,0 +1,2 @@
+• Myzel steht jetzt auch in der Rubrik „Uhr“ und trägt die Pille „Uhr“
+• Auf der Seite von Myzel zeigt die Karte „Uhr“, welche Myzel Wear auf der Uhr ist und ob ein Update ansteht; ohne eingerichtete Uhr führt „Uhr einrichten“ direkt zur Einrichtung

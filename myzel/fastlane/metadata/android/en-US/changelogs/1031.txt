@@ -1,0 +1,1 @@
+• Discover: after refreshing the repositories by pulling down, the list of new and updated apps jumps back to the start, so new apps show up right away

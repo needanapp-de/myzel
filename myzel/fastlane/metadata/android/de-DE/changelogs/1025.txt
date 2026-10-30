@@ -1,0 +1,5 @@
+• Kopfleisten, Menüs, Filter und Dialoge im Stil von Myzel
+• Klarere Texte in vielen Hinweisen und Meldungen
+• App-Symbol wieder durchsichtig
+• Lange Paketnamen auf der App-Seite brechen an den Punkten um und lassen sich kopieren
+• Behoben: Nach einer Änderung in den Einstellungen stand „Zuletzt nach Updates gesucht: nie“

@@ -1,0 +1,1 @@
+• App-Seite: Neben „Deinstallieren“ steht „Aktualisieren“ jetzt zweizeilig mit der Größe darunter, statt abgeschnitten zu werden

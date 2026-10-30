@@ -1,0 +1,176 @@
+// Myzel von needanapp.de: alle Abweichungen vom Build von F-Droid an einer Stelle.
+// app/build.gradle.kts bindet diese Datei mit einer einzigen Zeile ein, damit Updates von F-Droid
+// ohne Konflikte übernommen werden können.
+
+// Version von Myzel und Myzel Wear: myzel/version.properties
+def myzelVersion = new Properties()
+rootProject.file("myzel/version.properties").withInputStream { myzelVersion.load(it) }
+def myzelVersionName = myzelVersion.getProperty("versionName")
+def myzelVersionCode = myzelVersion.getProperty("versionCode").toInteger()
+
+// F-Droid-Version, auf der Myzel aufbaut (wird vor dem Überschreiben gelesen)
+def fdroidVersionName = android.defaultConfig.versionName
+
+// Release-Builds signiert der Release-Schlüssel von needanapp.de, derselbe wie bei needafile. Er
+// liegt außerhalb des Repos in ~/needanapp-signing (oder dem Ordner aus needanapp.signingDir in
+// ~/.gradle/gradle.properties); keystore.properties nennt storeFile (relativ zum Ordner), keyAlias
+// und die Passwörter. Fehlt die Datei, bleibt der Release-Build unsigniert wie bei F-Droid.
+def signingDir = new File(findProperty("needanapp.signingDir") ?: "${System.getProperty("user.home")}/needanapp-signing")
+def keystoreProperties = new File(signingDir, "keystore.properties")
+
+android {
+    defaultConfig {
+        applicationId "de.needanapp.myzel"
+        minSdk 31
+        versionCode myzelVersionCode
+        versionName myzelVersionName
+        buildConfigField "String", "FDROID_VERSION_NAME", "\"${fdroidVersionName}\""
+    }
+
+    // F-Droid hängt für die Variante basic ".basic" an die App-ID an
+    productFlavors.basic.applicationIdSuffix = ""
+
+    // nur Deutsch und Englisch: nur dort heißt die App überall Myzel
+    androidResources {
+        localeFilters.clear()
+        localeFilters.addAll(["en", "de"])
+    }
+
+    if (keystoreProperties.exists()) {
+        signingConfigs {
+            needanapp {
+                def properties = new Properties()
+                keystoreProperties.withInputStream { properties.load(it) }
+                storeFile signingDir.toPath().resolve(properties.getProperty("storeFile")).toFile()
+                storePassword properties.getProperty("storePassword")
+                keyAlias properties.getProperty("keyAlias")
+                keyPassword properties.getProperty("keyPassword")
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            // eigene Keep-Regeln für Release-Builds (verkleinert mit R8)
+            proguardFile "src/myzel/proguard-myzel.pro"
+            if (keystoreProperties.exists()) {
+                signingConfig signingConfigs.needanapp
+            }
+        }
+        // zum Erzeugen des Baseline Profiles (myzel/baselineprofile): wie Release, aber nicht
+        // verkleinert, damit das Profil die echten Klassennamen enthält (R8 schreibt es beim
+        // Release-Build um), mit dem Debug-Schlüssel signiert und unter eigener App-ID, damit es
+        // neben einer installierten Myzel laufen kann
+        profiling {
+            initWith release
+            minifyEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.debug
+            applicationIdSuffix ".profiling"
+            matchingFallbacks = ["release"]
+        }
+    }
+
+    packaging {
+        // bcprov und bcpkix (Einrichtung der Uhr) bringen dieselbe Datei mit
+        resources.excludes += "META-INF/versions/9/OSGI-INF/MANIFEST.MF"
+        // Datendateien von BouncyCastle (Post-Quanten-Verfahren, Texte der Zertifikatsprüfung),
+        // gut 1,4 MB; die Einrichtung braucht nur AES-GCM, HKDF und das eigene Zertifikat
+        resources.excludes += "org/bouncycastle/**"
+    }
+
+    // eigene Ressourcen überschreiben die von F-Droid (Name, Symbol, Texte), ohne dass Dateien von
+    // F-Droid geändert werden müssen. Die Varianten-Quellsätze haben Vorrang vor allen anderen, auch
+    // vor src/debug (dort setzt F-Droid einen roten Symbol-Hintergrund). Das Manifest dort ergänzt
+    // das von F-Droid.
+    sourceSets {
+        basicDefaultDebug {
+            res.srcDirs += "src/myzel/res"
+            manifest.srcFile "src/myzel/AndroidManifest.xml"
+        }
+        basicDefaultRelease {
+            res.srcDirs += "src/myzel/res"
+            manifest.srcFile "src/myzel/AndroidManifest.xml"
+        }
+        basicDefaultProfiling {
+            res.srcDirs += "src/myzel/res"
+            manifest.srcFile "src/myzel/AndroidManifest.xml"
+        }
+        // Baseline Profile: welche Teile von Myzel ART schon bei der Installation vorab übersetzt
+        // (erzeugt mit myzel/baselineprofile, siehe myzel/README.md)
+        main {
+            baselineProfiles.srcDirs += "src/myzel/baselineProfiles"
+        }
+    }
+}
+
+/** Legt die gebaute APK von Myzel Wear als myzel-wear.apk in [outputDir]. */
+abstract class CopyMyzelWear extends DefaultTask {
+    @InputDirectory
+    abstract DirectoryProperty getApkDir()
+
+    @OutputDirectory
+    abstract DirectoryProperty getOutputDir()
+
+    @TaskAction
+    void copy() {
+        def out = outputDir.get().asFile
+        out.deleteDir()
+        out.mkdirs()
+        def apks = apkDir.get().asFile.listFiles().findAll { it.name.endsWith(".apk") }
+        if (apks.size() != 1) throw new GradleException("Erwartet genau eine APK in ${apkDir.get().asFile}: $apks")
+        java.nio.file.Files.copy(apks[0].toPath(), new File(out, "myzel-wear.apk").toPath())
+    }
+}
+
+// Myzel Wear (myzel/wear) ist eine eigene APK: die Uhr-Version von Myzel in der Paketquelle, die
+// die Einrichtung der Uhr (de.needanapp.myzel.watch.setup) von dort lädt. Nur Debug-Builds legen
+// ihre eigene als Asset myzel-wear.apk bei, damit sich Handy und Uhr ohne Paketquelle zusammen
+// testen lassen; mit -Pmyzel.bundleWear=false auch sie nicht (Weg über die Paketquelle testen).
+def bundleWear = (findProperty("myzel.bundleWear") ?: "true").toString().toBoolean()
+def copyMyzelWearDebug = tasks.register("copyMyzelWearDebug", CopyMyzelWear) {
+    dependsOn ":myzel-wear:assembleDebug"
+    apkDir.set(project(":myzel-wear").layout.buildDirectory.dir("outputs/apk/debug"))
+    outputDir.set(layout.buildDirectory.dir("generated/myzel-wear/debug"))
+}
+
+androidComponents {
+    // das Profil wird nur für Myzel selbst erzeugt
+    beforeVariants(selector().withBuildType("profiling")) { variant ->
+        variant.enable = variant.flavorName == "basicDefault"
+    }
+    onVariants(selector().withBuildType("debug")) { variant ->
+        if (bundleWear && variant.flavorName.startsWith("basic")) {
+            variant.sources.assets?.addGeneratedSourceDirectory(copyMyzelWearDebug) { it.outputDir }
+        }
+    }
+}
+
+// Robolectric lädt sonst in den Unit-Tests die Android-Fassung von Conscrypt (Einrichtung der Uhr),
+// deren JNI-Bibliothek es auf dem PC nicht gibt
+configurations.configureEach {
+    if (name.endsWith("UnitTestRuntimeClasspath")) {
+        exclude group: "org.conscrypt", module: "conscrypt-android"
+    }
+}
+
+repositories {
+    // libadb-android und spake2-android (Einrichtung der Uhr) gibt es nur dort
+    maven {
+        url "https://jitpack.io"
+        content { includeGroupByRegex "com\\.github\\.MuntashirAkon.*" }
+    }
+}
+
+dependencies {
+    implementation project(":myzel-design")
+    // Installation ohne Nachfrage über Shizuku (de.needanapp.myzel.install)
+    implementation "dev.rikka.shizuku:api:13.1.5"
+    implementation "dev.rikka.shizuku:provider:13.1.5"
+    // Uhr (de.needanapp.myzel.watch): Myzel Link zu Myzel Wear und die Einrichtung per ADB über
+    // WLAN: ADB-Protokoll und Kopplung, TLS 1.3 zu einem fremden adbd, Zertifikat des Handys
+    implementation project(":myzel-link")
+    implementation "com.github.MuntashirAkon:libadb-android:3.1.1"
+    implementation "org.conscrypt:conscrypt-android:2.7.0"
+    implementation libs.bcpkix.jdk15to18
+}

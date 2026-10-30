@@ -1,0 +1,4 @@
+• New logo (mycelium), also in the header next to the “myzel” wordmark
+• Discover: one of New, Recently updated and Most downloaded is always open, its apps float over the background and fade out at the edges; “Show all” at the end
+• Categories: only one group open at a time
+• Faster first start: the small repositories load before f-droid.org, apps show up after a few seconds

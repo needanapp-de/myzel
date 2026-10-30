@@ -1,0 +1,2 @@
+• Installed apps carry an “Installed” sash across the icon instead of the check mark
+• New apps (up to 14 days in a repository) carry a “New” tag, on Discover, in lists, in search and on their page

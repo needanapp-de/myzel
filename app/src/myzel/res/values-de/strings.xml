@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="about_title_full">Über Myzel</string>
+    <string name="about_title_basic">Über Myzel</string>
+    <string name="about_text">Myzel ist ein App-Store für freie und quelloffene Software aus F-Droid-Paketquellen. Er stammt von needanapp.de und basiert auf dem F-Droid-Client.\n\nWie F-Droid selbst ist Myzel freie Software unter der GNU General Public License, Version 3 oder neuer.</string>
+    <string name="app_details_anti_features_text">Manche Apps weisen Funktionen auf, um die du nicht gebeten hast – und die du vielleicht gar nicht willst. Dazu gehören beispielsweise Werbung, Tracking oder die Abhängigkeit von proprietären Diensten. Diese werden als „unerwünschte Merkmale“ bezeichnet.\n\nApps in Myzel sind deutlich gekennzeichnet, wenn sie unerwünschte Merkmale enthalten, damit du eine fundierte Entscheidung treffen kannst.</string>
+    <!-- Texte von F-Droid in der Wortwahl von Myzel: „Paketquelle“ statt „Repository“ -->
+    <string name="app_issue_not_available_text">Die App wurde vielleicht entfernt oder stammte aus einer Paketquelle, die du entfernt oder ausgeschaltet hast.</string>
+    <string name="app_issue_update_other_repo">In einer anderen Paketquelle gibt es ein Update. Mach sie zur bevorzugten Paketquelle, um zu aktualisieren.</string>
+    <string name="app_no_compatible_signer_in_this_repo">Diese App kann nicht aktualisiert werden, weil die bevorzugte Paketquelle keine passende Version hat.\n\nWähle eine andere bevorzugte Paketquelle.</string>
+    <string name="banner_updating_repositories">Paketquellen werden aktualisiert</string>
+    <string name="first_start_button">Paketquellen abrufen</string>
+    <string name="first_start_intro">Rufe zuerst die Paketquellen ab, um loszulegen</string>
+    <string name="first_start_loading">Paketquellen werden abgerufen …</string>
+    <string name="first_start_metered">Du nutzt mobile Daten und es werden mehr als 10 MB heruntergeladen. Tippe auf „Paketquellen abrufen“, um trotzdem loszulegen.</string>
+    <string name="has_disallow_install_unknown_sources">Dieser Nutzer darf keine unbekannten Quellen hinzufügen, auch keine neuen Paketquellen</string>
+    <string name="has_disallow_install_unknown_sources_globally">Die Geräteverwaltung erlaubt keine Apps aus unbekannten Quellen, auch keine neuen Paketquellen</string>
+    <string name="my_apps_empty">%1$s zeigt hier nur Apps, die es in deinen Paketquellen gibt</string>
+    <string name="no_repos_enabled">Keine Paketquellen verfügbar. Schalte eine ein oder füge eine Paketquelle hinzu, um loszulegen.</string>
+    <string name="notification_channel_updates_available_description">Benachrichtigt, wenn beim Aktualisieren der Paketquellen App-Updates gefunden wurden</string>
+    <string name="onboarding_app_list_filter_message">Mit Filtern zeigst du nur Apps aus bestimmten Kategorien oder Paketquellen. Auch die Sortierung lässt sich hier ändern.</string>
+    <string name="pref_repo_updates_summary_always">Regelmäßig in den Paketquellen nach App-Updates suchen, auch über mobile Daten</string>
+    <string name="pref_repo_updates_summary_only_wifi">Regelmäßig in den Paketquellen nach App-Updates suchen, nur über WLAN</string>
+    <string name="repo_and_mirror_add_both_info">Die Adresse (%s) ist ein Spiegelserver einer neuen Paketquelle. Die Paketquelle und der Spiegelserver werden beide hinzugefügt.</string>
+    <string name="repo_basic_auth_title">Anmeldung</string>
+    <string name="repo_basicauth_edit">Zugangsdaten speichern</string>
+    <string name="repo_details_info_text">Eine Paketquelle ist eine Quelle für Apps.\n\nSpiegelserver verteilen die Downloads auf mehrere Server. Spiegelserver in deiner Nähe können schneller sein.\n\nDie offiziellen Spiegelserver legt der Betreiber der Paketquelle fest. Sie lassen sich nicht löschen, nur ausschalten. Eigene Spiegelserver fügst du wie eine normale Paketquelle hinzu.</string>
+    <string name="repo_disable_dialog_text">Die Apps dieser Paketquelle verschwinden aus Myzel. Installierte Apps bleiben, wie sie sind.</string>
+    <string name="repo_disable_dialog_title">Paketquelle ausschalten?</string>
+    <string name="repo_disable_dialog_warning">Wenn du diese Paketquelle für Apps bevorzugt hast, geht diese Wahl verloren.</string>
+    <string name="repo_disable_warning_button">Ausschalten</string>
+    <string name="repo_enter_url">Adresse der Paketquelle eingeben</string>
+    <string name="repo_error_adding_archive">Archiv-Paketquellen lassen sich nicht direkt hinzufügen. Tippe in der Liste auf die Paketquelle und schalte dort das Archiv ein.</string>
+    <string name="repo_has_update_error_intro">Beim Aktualisieren dieser Paketquelle ist ein Fehler aufgetreten:</string>
+    <string name="repo_intro">Eine Paketquelle ist eine weitere Quelle für Apps. Jede Paketquelle hat eigene Regeln dafür, welche Apps sie anbietet und wie sie gebaut werden.\n\nFüge nur Paketquellen hinzu, denen du vertraust.</string>
+    <string name="repo_invalid">Ungültige Paketquelle.\n\nGib den Betreibern Bescheid, damit sie das Problem beheben können.</string>
+    <string name="repo_last_update_check">Zuletzt nach Updates gesucht: %s</string>
+    <string name="repo_list_info_text">Eine Paketquelle ist eine Quelle für Apps. Ausgeschaltete Paketquellen stehen unter „Weitere Paketquellen“ und werden nicht genutzt.\n\nGibt es eine App in mehreren Paketquellen, wird die weiter oben stehende bevorzugt. Die Reihenfolge änderst du durch langes Drücken und Ziehen.</string>
+    <string name="repo_mirror_add_info">Die Adresse (%s) ist ein Spiegelserver einer vorhandenen Paketquelle.</string>
+    <string name="search_no_results">Keine Apps gefunden\n\nVersuche es mit weniger Suchbegriffen oder schalte weitere Paketquellen ein</string>
+</resources>

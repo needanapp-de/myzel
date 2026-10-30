@@ -1,0 +1,4 @@
+• Settings as grouped cards, appearance from the needanapp.de design
+• New About Myzel page, crediting F-Droid
+• Lists, app details and categories in the needanapp design
+• Pills reliably come back after sub pages

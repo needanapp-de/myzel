@@ -1,0 +1,1 @@
+• Discover no longer shows “Most downloaded”: the F-Droid list is built in and only counts downloads from f-droid.org

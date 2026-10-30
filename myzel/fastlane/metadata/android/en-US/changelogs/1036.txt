@@ -1,0 +1,3 @@
+• A second look, "needanapp", to choose under Settings → Appearance → Style: light in cool grey, dark in night blue, cards with soft shadows; the displays, panel and menu from "Device" are there too
+• "Device" stays the default and looks as before
+• The repository fdroid.pan1k.de with test builds is no longer included

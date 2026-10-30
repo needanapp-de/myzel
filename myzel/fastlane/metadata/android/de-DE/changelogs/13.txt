@@ -1,0 +1,2 @@
+• Installierte Apps tragen ein Band „Installiert“ quer über dem Symbol statt des Häkchens
+• Neue Apps (bis 14 Tage in einer Paketquelle) tragen ein Schild „Neu“, auf Entdecken, in Listen, in der Suche und auf ihrer Seite

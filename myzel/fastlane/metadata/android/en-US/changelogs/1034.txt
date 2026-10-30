@@ -1,0 +1,6 @@
+• Swipe between Discover, Search and My apps: the pages follow your finger, the pill stays put
+• Faster switching, the three main pages stay loaded
+• Categories on Discover as a panel with all groups at a glance; a tap shows their categories and "All" for every app in the group
+• Much faster search, before typing only the history
+• While updating, the display shows which repository is loading, then cycles through what's new per repository
+• Compact pill and menus

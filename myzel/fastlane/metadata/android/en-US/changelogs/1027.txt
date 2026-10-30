@@ -1,0 +1,4 @@
+• Appearance → Surfaces: the background gradient can be turned off
+• New "Card brightness" slider: cards lighter or darker, the background stays as it is
+• Appearance as an accordion: only one section is open by default
+• Transparent app icons, including Myzel's, no longer sit in a black circle

@@ -1,0 +1,5 @@
+• New "device" look: aluminium and graphite, orange as signal color, black displays in a dot-matrix font, keys like on a device
+• The mycelium is the menu button and, on the app page, the options button; tapping sends a signal through it
+• App page: favorite as the mycelium next to the name, versions as a display with a grid
+• Displays on Discover, in search, in My apps and on the repositories
+• Appearance: light/dark, pure black, signal color, motion

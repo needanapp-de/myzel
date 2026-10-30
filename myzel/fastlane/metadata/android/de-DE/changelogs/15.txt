@@ -1,0 +1,5 @@
+• Neues Aussehen: Karten mit feinem Rand, Verlauf in der Akzentfarbe, Türkis als Standard
+• App-Seite neu: Versionen mit Zustand, Sicherheit, Details, großer Knopf, Aktionsleiste
+• Entdecken zeigt Apps als Karten mit Version und den Pillen „Installiert“ und „Neu“
+• Schneller: Paketquellen laden gleichzeitig, rascherer Start (Baseline Profile)
+• Behoben: Meldungen bei Installation über Root oder Shizuku konnten sich vermischen

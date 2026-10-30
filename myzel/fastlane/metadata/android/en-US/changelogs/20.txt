@@ -1,0 +1,3 @@
+• Faster switching: the sections of the pill change without a crossfade, new pages fade in briefly
+• Version numbers on the cards only scroll a few rounds, “Discover” no longer redraws constantly while idle
+• “My apps” no longer shows the hint “All your apps are up to date”, the pills show that

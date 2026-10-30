@@ -1,0 +1,3 @@
+• Discover: new and recently updated apps are shown in two rows, still scrolling sideways
+• Discover: pull down to update the repositories
+• The notification while updating repositories shows the Myzel logo

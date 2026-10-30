@@ -1,0 +1,3 @@
+• Die beiden Aussehen heißen jetzt „Myzel“ (bisher „Gerät“, weiter Standard) und „NeedAnApp“
+• Myzel: Neben Alu und Graphit lassen sich alle Farbwelten wählen, die Flächen nehmen ihre Farben an, Pille und Menüs bleiben dunkel; Tönung und Helligkeit wirken jetzt auch hier; Orange, Gelb und Grün als Signalfarben
+• NeedAnApp: Entdecken ohne Favoriten, Apps mit Uhr-Version tragen eine kleine Uhr; die App-Seite zeigt den Stand als Anzeige

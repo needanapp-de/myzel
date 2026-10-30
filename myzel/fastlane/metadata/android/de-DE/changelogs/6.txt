@@ -1,0 +1,1 @@
+• Absturzberichte von F-Droid (ACRA) vollständig entfernt: kein Berichtsdialog, keine E-Mail, kein eigener Prozess mehr

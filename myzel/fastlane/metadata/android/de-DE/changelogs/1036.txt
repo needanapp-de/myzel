@@ -1,0 +1,3 @@
+• Zweites Design „needanapp“ zur Wahl unter Einstellungen → Darstellung → Stil: hell in kühlem Grau, dunkel in Nachtblau, Karten mit weichem Schatten; Anzeigen, Bedienfeld und Menü aus „Gerät“ gibt es auch dort
+• „Gerät“ bleibt der Standard und sieht aus wie bisher
+• Die Paketquelle fdroid.pan1k.de mit Testversionen wird nicht mehr mitgeliefert

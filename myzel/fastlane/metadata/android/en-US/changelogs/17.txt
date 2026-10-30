@@ -1,0 +1,3 @@
+• Pills instead of stamps: “Installed”, “New” and the new “Update” now appear next to the name or version everywhere
+• Installed apps are greyed out in lists and on cards, so new apps stand out more
+• If there is an update, the app shows the pill “Update” and keeps its colors

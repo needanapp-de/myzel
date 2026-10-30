@@ -1,0 +1,4 @@
+• Myzel für die Uhr ist jetzt eine eigene App in der Paketquelle von needanapp.de; Einrichtung und Updates laden sie von dort, Myzel selbst ist dadurch kleiner
+• Uhr: Stand in Farbe (grün verbunden, rot nicht erreichbar), Fortschrittsring beim Empfangen und Installieren, zuletzt verbundenes Handy
+• Abzeichen in der Pille, wenn Paketquellen sich nicht laden lassen
+• Hinweiskarten im Kartenlook, App-Symbol auf weißem Grund

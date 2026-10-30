@@ -1,0 +1,2 @@
+• Myzel now also appears in the "Watch" category and carries the "Watch" pill
+• On Myzel's page, the "Watch" card shows which Myzel Wear is on the watch and whether an update is due; without a watch set up, "Set up watch" leads straight to the setup

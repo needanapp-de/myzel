@@ -1,0 +1,1 @@
+• Behoben: Der Modus „System“ der Darstellung folgt jetzt dem System, auch direkt nach dem Umstellen von Hell oder Dunkel und bei jedem späteren Wechsel

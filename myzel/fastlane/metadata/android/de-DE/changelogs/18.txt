@@ -1,0 +1,2 @@
+• Lange Versionsnummern auf den Karten laufen durch, die Pillen „Installiert“, „Neu“ und „Update“ haben immer Platz
+• Die Kopfzeile bleibt beim Scrollen Teil des Hintergrunds statt als dunkles Band zu erscheinen

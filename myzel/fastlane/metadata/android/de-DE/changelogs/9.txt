@@ -1,0 +1,2 @@
+• Sicherung: Paketquellen, Favoriten, Einstellungen und Darstellung einzeln in eine Datei sichern und wieder einspielen (Einstellungen → Sicherung)
+• Die Datei ist nicht verschlüsselt und enthält keine Zugangsdaten von Paketquellen

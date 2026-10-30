@@ -1,0 +1,3 @@
+• Neues Aussehen: Inhalte auf Karten mit feinem Rand, ein Verlauf in der Akzentfarbe dahinter, Türkis als Standardfarbe
+• App-Seite neu aufgebaut: Versionen mit Zustand (Aktuell, Update, nicht installiert), Sicherheit, Details, großer Knopf zum Installieren oder Öffnen, Aktionen in einer Leiste unten
+• Entdecken zeigt neue und aktualisierte Apps als Karten mit Name, Version und den Pillen „Installiert“ und „Neu“

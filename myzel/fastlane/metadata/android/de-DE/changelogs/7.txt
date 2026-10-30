@@ -1,0 +1,2 @@
+• Kleinere App-Symbole im Karussell auf Entdecken, Namen mittig
+• Das Häkchen installierter Apps wird nicht mehr abgeschnitten

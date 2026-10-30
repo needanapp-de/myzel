@@ -1,0 +1,5 @@
+• New stable repository apps.needanapp.de, added on first start; fdroid.needanapp.de is now "needanapp.de Testing" (pre-releases, login required)
+• New signing key: Myzel up to 0.21.1 can't update to it. Uninstall once and reinstall (back up first in Settings › Backup), Myzel Wear on the watch as well
+• Discover: "New and updated" of the last 14 days with filters
+• Repositories report "Login needed" and errors right away
+• All text readable in every color world

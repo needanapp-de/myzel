@@ -1,0 +1,4 @@
+• Navigation: eine Pille in der Mitte, Paketquellen, Einstellungen und mehr im Menüknopf rechts
+• Pillen etwas kleiner
+• Paketquellen: eingeschaltete oben, die übrigen unter „Weitere Paketquellen“ zum Aufklappen
+• Paketquelle von needanapp.de neu, mit IzzyOnDroid standardmäßig eingeschaltet (bei neuen Installationen)

@@ -1,0 +1,2 @@
+• Long version numbers on the cards scroll through, the pills “Installed”, “New” and “Update” always have room
+• The header stays part of the background while scrolling instead of showing as a dark band

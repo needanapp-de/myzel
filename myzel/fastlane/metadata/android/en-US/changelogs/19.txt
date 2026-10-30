@@ -1,0 +1,2 @@
+• App page: for installed apps, “Uninstall” now sits in red next to “Open”
+• At the bottom, like on the main screens, a floating pill with app info, favorite and share, the options button on the right; it hides while scrolling

@@ -1,0 +1,3 @@
+• New look: content on cards with a fine border, a gradient in the accent color behind it, teal as the default color
+• Rebuilt app page: versions with their state (up to date, update, not installed), security, details, a large button to install or open, actions in a bar at the bottom
+• Discover shows new and updated apps as cards with name, version and the pills “Installed” and “New”

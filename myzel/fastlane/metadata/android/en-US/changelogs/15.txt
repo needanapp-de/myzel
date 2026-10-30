@@ -1,0 +1,5 @@
+• New look: cards with a fine border, a gradient in the accent color, teal as the default
+• Rebuilt app page: versions with their state, security, details, a large button, an action bar
+• Discover shows apps as cards with version and the pills “Installed” and “New”
+• Faster: repositories load in parallel, quicker start (Baseline Profile)
+• Fixed: messages of installs via root or Shizuku could get mixed up

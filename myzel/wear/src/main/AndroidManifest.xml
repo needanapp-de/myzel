@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Nur für Uhren; im Index von F-Droid erkennt Myzel die Uhr-Version an diesem Merkmal -->
+    <uses-feature android:name="android.hardware.type.watch" />
+
+    <!-- Myzel Link: RFCOMM-Kanal über die bestehende Bluetooth-Kopplung -->
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <!-- APKs vom Handy installieren; die Einrichtung gibt das per ADB frei -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <!-- Apps auf Wunsch des Handys entfernen; Wear OS fragt dabei den Nutzer -->
+    <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />
+    <!-- Dem Handy melden, welche Version einer App installiert ist -->
+    <uses-permission
+        android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackagesPermission" />
+    <!-- Updates von Apps, die Myzel Wear selbst installiert hat, ohne Nachfrage -->
+    <uses-permission android:name="android.permission.UPDATE_PACKAGES_WITHOUT_USER_ACTION" />
+    <!-- Vordergrunddienst, solange Myzel Wear lauscht: Wear OS friert die App sonst ein, sobald
+         das Display ausgeht -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <application
+        android:name=".WearApp"
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@android:style/Theme.DeviceDefault">
+
+        <!-- Braucht keine Begleit-App aus dem Play Store -->
+        <meta-data
+            android:name="com.google.android.wearable.standalone"
+            android:value="true" />
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:taskAffinity="">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name=".LinkService"
+            android:exported="false"
+            android:foregroundServiceType="connectedDevice" />
+
+        <!-- Schlüssel aus der Einrichtung; nimmt nur Aufrufe aus der ADB-Shell an (KeyProvider) -->
+        <provider
+            android:name=".KeyProvider"
+            android:authorities="${applicationId}.key"
+            android:exported="true"
+            tools:ignore="ExportedContentProvider" />
+
+        <!-- Nach einem Update über Bluetooth wieder lauschen -->
+        <receiver
+            android:name=".UpdateReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Stand der Installationen vom PackageInstaller -->
+        <receiver
+            android:name=".InstallReceiver"
+            android:exported="false" />
+    </application>
+
+</manifest>

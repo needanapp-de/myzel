@@ -1,0 +1,1 @@
+• Entdecken zeigt „Am häufigsten heruntergeladen“ nicht mehr: Die Liste von F-Droid ist fest eingebaut und zählt nur Downloads von f-droid.org

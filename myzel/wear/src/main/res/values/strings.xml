@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">Myzel</string>
+
+    <string name="status_connected">Connected to %1$s</string>
+    <string name="status_listening">Reachable for your phone</string>
+    <string name="status_last_phone">Last connected: %1$s, %2$s</string>
+    <string name="status_starting">Starting …</string>
+    <string name="status_paused">Paused</string>
+    <string name="status_no_key">Not set up yet. Set up the watch in Myzel on your phone.</string>
+    <string name="status_bluetooth_off">Bluetooth is off</string>
+    <string name="status_no_permission">The permission “Nearby devices” is missing</string>
+    <string name="status_cannot_install">Installing apps is not allowed. Set up the watch again in Myzel.</string>
+    <string name="task_test">Connection test</string>
+    <string name="task_receiving">Receiving %1$s</string>
+    <string name="task_installing">Installing %1$s …</string>
+    <string name="task_removing">Removing %1$s …</string>
+    <string name="task_percent">%1$d %%</string>
+    <string name="confirm_install">Install %1$s</string>
+    <string name="confirm_uninstall">Remove %1$s</string>
+    <string name="button_pause">Pause</string>
+    <string name="button_start">Start</string>
+    <string name="history">History</string>
+    <string name="about_version">Version %1$s</string>
+    <string name="about_key">Key %1$s</string>
+
+    <string name="event_listening">Waiting for the phone</string>
+    <string name="event_connected">Connected to %1$s</string>
+    <string name="event_disconnected">Disconnected</string>
+    <string name="event_auth_ok">Phone signed in</string>
+    <string name="event_auth_refused">Phone refused: wrong key</string>
+    <string name="event_received">Received %1$s (%2$d KiB)</string>
+    <string name="event_damaged">%1$s arrived damaged</string>
+    <string name="event_confirm">%1$s: please confirm</string>
+    <string name="event_installed">%1$s installed</string>
+    <string name="event_install_failed">%1$s: installation failed</string>
+    <string name="event_uninstalled">%1$s removed</string>
+    <string name="event_uninstall_failed">%1$s: removal failed</string>
+    <string name="event_key">Key from the phone received</string>
+    <string name="event_updated">Myzel Wear updated</string>
+    <string name="event_error">Error: %1$s</string>
+    <string name="event_bluetooth_off">Bluetooth is off</string>
+    <string name="event_idle">Paused after %1$d minutes without phone</string>
+
+    <string name="channel_link">Connection to the phone</string>
+    <string name="notification_link">Waiting for the phone</string>
+    <string name="channel_install">Installations</string>
+    <string name="notification_install_title">Install?</string>
+    <string name="notification_install_text">%1$s from the phone</string>
+    <string name="notification_uninstall_title">Remove?</string>
+    <string name="notification_uninstall_text">%1$s, as asked by the phone</string>
+</resources>

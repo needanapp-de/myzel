@@ -1,0 +1,3 @@
+• Favoriten: Langes Drücken klappt unter einer App dasselbe Bedienfeld auf wie in Meine Apps; bei nicht installierten Apps steht vorn „Installieren“
+• Farbwelten wie Ultraviolett oder Kupfer bringen wieder ihre eigene Akzentfarbe mit: Wer in 0.20.0 Orange gewählt hatte, steht jetzt auf „Standard“, Gelb und Grün bleiben
+• Die Anzeige im Bedienfeld kürzt den Namen der Paketquelle

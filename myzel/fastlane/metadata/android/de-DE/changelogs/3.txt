@@ -1,0 +1,4 @@
+• Einstellungen als gruppierte Karten, Darstellung aus dem Design von needanapp.de
+• Über Myzel neu, mit Dank an F-Droid
+• Listen, App-Details und Kategorien im needanapp-Design
+• Pillen kommen nach Unterseiten zuverlässig zurück

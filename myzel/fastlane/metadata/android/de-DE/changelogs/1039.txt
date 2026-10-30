@@ -1,0 +1,5 @@
+• Neue stabile Paketquelle apps.needanapp.de, beim ersten Start ergänzt; fdroid.needanapp.de heißt jetzt „needanapp.de Testing“ (Vorabversionen, mit Anmeldung)
+• Neuer Signaturschlüssel: Myzel bis 0.21.1 lässt sich nicht aktualisieren. Einmal deinstallieren und neu installieren (vorher Einstellungen › Sicherung), Myzel Wear auf der Uhr ebenso
+• Entdecken: „Neu und aktualisiert“ (14 Tage) mit Filtern
+• Paketquellen melden Anmeldung und Fehler sofort
+• Alle Schrift lesbar in jeder Farbwelt

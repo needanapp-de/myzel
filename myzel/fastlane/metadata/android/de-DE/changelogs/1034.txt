@@ -1,0 +1,6 @@
+• Zwischen Entdecken, Suche und Meine Apps wischen: Die Seiten folgen dem Finger, die Pille steht still
+• Schnellerer Wechsel, die drei Hauptseiten bleiben aufgebaut
+• Kategorien in Entdecken als Bedienfeld mit allen Gruppen auf einen Blick; ein Tipp zeigt ihre Kategorien und „Alle“ für alle Apps der Gruppe
+• Suche deutlich schneller, vor der Eingabe nur der Verlauf
+• Die Anzeige zeigt beim Aktualisieren, welche Paketquelle lädt, danach im Wechsel das Neue je Quelle
+• Kompakte Pille und Menüs

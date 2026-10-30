@@ -1,0 +1,2 @@
+• Installation über Root oder Shizuku: Apps und Updates ohne Nachfrage (Einstellungen → Updates → Installation)
+• Ohne Zugriff installiert Myzel wie bisher mit dem Paketinstaller von Android

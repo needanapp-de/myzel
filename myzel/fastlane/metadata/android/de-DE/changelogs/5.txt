@@ -1,0 +1,4 @@
+• Neues Logo (Pilzgeflecht), auch in der Kopfzeile neben dem Schriftzug „myzel“
+• Entdecken: von Neu, Kürzlich aktualisiert und Meistgeladen ist immer einer offen, seine Apps schweben ohne Kasten über dem Hintergrund und blenden an den Rändern aus; am Ende „Alle anzeigen“
+• Kategorien: immer nur eine Gruppe offen
+• Erster Start schneller: die kleinen Paketquellen laden vor f-droid.org, Apps erscheinen nach wenigen Sekunden

@@ -1,0 +1,3 @@
+• Pillen statt Stempel: „Installiert“, „Neu“ und neu „Update“ stehen jetzt überall neben Name oder Version
+• Installierte Apps sind in Listen und auf Karten ausgegraut, so fallen neue Apps mehr auf
+• Gibt es ein Update, zeigt die App die Pille „Update“ und bleibt farbig

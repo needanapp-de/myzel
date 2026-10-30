@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="status_connected">Verbunden mit %1$s</string>
+    <string name="status_listening">Erreichbar für das Handy</string>
+    <string name="status_last_phone">Zuletzt verbunden: %1$s, %2$s</string>
+    <string name="status_starting">Startet …</string>
+    <string name="status_paused">Pausiert</string>
+    <string name="status_no_key">Noch nicht eingerichtet. Richte die Uhr in Myzel auf dem Handy ein.</string>
+    <string name="status_bluetooth_off">Bluetooth ist aus</string>
+    <string name="status_no_permission">Das Recht „Geräte in der Nähe“ fehlt</string>
+    <string name="status_cannot_install">Installieren ist nicht erlaubt. Richte die Uhr in Myzel neu ein.</string>
+    <string name="task_test">Verbindungstest</string>
+    <string name="task_receiving">Empfängt %1$s</string>
+    <string name="task_installing">Installiert %1$s …</string>
+    <string name="task_removing">Entfernt %1$s …</string>
+    <string name="task_percent">%1$d %%</string>
+    <string name="confirm_install">%1$s installieren</string>
+    <string name="confirm_uninstall">%1$s entfernen</string>
+    <string name="button_pause">Pausieren</string>
+    <string name="button_start">Starten</string>
+    <string name="history">Verlauf</string>
+    <string name="about_version">Version %1$s</string>
+    <string name="about_key">Schlüssel %1$s</string>
+
+    <string name="event_listening">Wartet auf das Handy</string>
+    <string name="event_connected">Verbunden mit %1$s</string>
+    <string name="event_disconnected">Getrennt</string>
+    <string name="event_auth_ok">Handy angemeldet</string>
+    <string name="event_auth_refused">Handy abgewiesen: falscher Schlüssel</string>
+    <string name="event_received">%1$s empfangen (%2$d KiB)</string>
+    <string name="event_damaged">%1$s kam beschädigt an</string>
+    <string name="event_confirm">%1$s: bitte bestätigen</string>
+    <string name="event_installed">%1$s installiert</string>
+    <string name="event_install_failed">%1$s: Installation fehlgeschlagen</string>
+    <string name="event_uninstalled">%1$s entfernt</string>
+    <string name="event_uninstall_failed">%1$s: Entfernen fehlgeschlagen</string>
+    <string name="event_key">Schlüssel vom Handy übernommen</string>
+    <string name="event_updated">Myzel Wear aktualisiert</string>
+    <string name="event_error">Fehler: %1$s</string>
+    <string name="event_bluetooth_off">Bluetooth ist aus</string>
+    <string name="event_idle">Pausiert nach %1$d Minuten ohne Handy</string>
+
+    <string name="channel_link">Verbindung zum Handy</string>
+    <string name="notification_link">Wartet auf das Handy</string>
+    <string name="channel_install">Installationen</string>
+    <string name="notification_install_title">Installieren?</string>
+    <string name="notification_install_text">%1$s vom Handy</string>
+    <string name="notification_uninstall_title">Entfernen?</string>
+    <string name="notification_uninstall_text">%1$s, auf Wunsch des Handys</string>
+</resources>

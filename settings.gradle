@@ -1,0 +1,23 @@
+pluginManagement {
+    repositories {
+        mavenCentral()
+        google()
+        gradlePluginPortal()
+    }
+}
+
+include ':app'
+include ':libs:core'
+include ':libs:sharedTest'
+include ':libs:download'
+include ':libs:index'
+include ':libs:database'
+
+include ':myzel-design' // Myzel: Design-Paket von needanapp.de (Quellen im Submodul myzel/needanapp-design)
+project(':myzel-design').projectDir = file('myzel/design')
+include ':myzel-baselineprofile' // Myzel: erzeugt das Baseline Profile (myzel/baselineprofile)
+project(':myzel-baselineprofile').projectDir = file('myzel/baselineprofile')
+include ':myzel-link' // Myzel: Verbindung zu Myzel Wear über Bluetooth (myzel/link)
+project(':myzel-link').projectDir = file('myzel/link')
+include ':myzel-wear' // Myzel: die App für Wear-OS-Uhren (myzel/wear)
+project(':myzel-wear').projectDir = file('myzel/wear')

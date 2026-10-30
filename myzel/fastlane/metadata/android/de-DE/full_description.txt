@@ -1,0 +1,28 @@
+Myzel ist ein App-Store für freie und quelloffene Software aus F-Droid-Paketquellen – im Design von needanapp.de, für Android 12 und neuer.
+
+<b>Grundlage</b>
+• Basiert auf dem F-Droid-Client 2.0.1 (Variante basic); Updates von F-Droid werden übernommen
+• Apps entdecken, suchen, installieren und aktualisieren, auch automatisch im Hintergrund
+• Installation wahlweise über Root oder Shizuku, dann ohne Nachfrage
+
+<b>Paketquellen</b>
+• F-Droid, IzzyOnDroid und die Paketquelle von needanapp.de sind eingeschaltet
+• Rund 40 weitere bekannte Paketquellen (u. a. Guardian Project, microG, NewPipe) stehen unter „Weitere Paketquellen“ bereit und lassen sich mit einem Schalter einschalten
+
+<b>Wear-OS-Uhr</b>
+• Die Uhr einmal über „Debugging über WLAN“ einrichten; danach installiert, aktualisiert und entfernt Myzel Apps auf der Uhr über Bluetooth
+• Rubrik „Uhr“ für Apps mit Uhr-Version, die Apps auf der Uhr samt Updates unter „Meine Apps“
+
+<b>Favoriten</b>
+• Apps mit dem Myzel-Logo auf ihrer Seite als Favoriten markieren
+• Die Liste der Favoriten öffnet sich über den Menüknopf
+
+<b>Sicherung</b>
+• Paketquellen, Favoriten, Einstellungen und Darstellung in eine Datei sichern und auf einem anderen Gerät einspielen
+
+<b>Design</b>
+• Aussehen wie ein Gerät: Alu im hellen, Graphit im dunklen Modus, Orange als Signalfarbe, schwarze Anzeigen in Punktmatrix-Schrift
+• Navigation in einer schwebenden Pille unten; zwischen Entdecken, Suche und Meine Apps lässt sich auch wischen
+• Das Myzel ist der Menüknopf und auf der App-Seite der Knopf für die Optionen
+• Kategorien in Entdecken als Bedienfeld mit allen Gruppen auf einen Blick
+• Darstellung: Hell, Dunkel oder wie das System, reines Schwarz, Signalfarbe, Bewegung, UI-Skalierung und Sprache

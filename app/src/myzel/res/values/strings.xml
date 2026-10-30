@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Myzel: Texte von F-Droid, in denen die App von sich selbst spricht. Überschreibt die gleichnamigen
+     Einträge aus src/main/res, ohne Dateien von F-Droid zu ändern. -->
+<resources>
+    <string name="app_name" translatable="false">Myzel</string>
+    <string name="about_title_full">About Myzel</string>
+    <string name="about_title_basic">About Myzel</string>
+    <string name="about_text">Myzel is an app store for free and open source software from F-Droid repositories. It is made by needanapp.de and based on the F-Droid client.\n\nLike F-Droid itself, Myzel is free software under the GNU General Public License, version 3 or later.</string>
+    <string name="app_details_anti_features_text">Some apps come with behaviors you didn’t ask for — and might not want. Things like ads, tracking, or dependence on proprietary services. These are called Anti-Features. \n\nApps in Myzel are clearly labeled when they contain Anti-Features, so you can make an informed choice.</string>
+    <!-- Texte von F-Droid in der Wortwahl von Myzel: „repository“ statt „repo“, Myzel statt F-Droid -->
+    <string name="app_issue_not_available_text">The app may have been removed or came from a repository you removed or turned off.</string>
+    <string name="app_issue_update_other_repo">An update is available in another repository. Make it the preferred repository to update.</string>
+    <string name="app_no_compatible_signer_in_this_repo">Can’t update this app, because the preferred repository has no compatible version.\n\nTry choosing another preferred repository.</string>
+    <string name="first_start_intro">To get started, fetch the repositories</string>
+    <string name="first_start_loading">Fetching repositories…</string>
+    <string name="has_disallow_install_unknown_sources">Unknown sources can’t be added by this user, that includes new repositories</string>
+    <string name="has_disallow_install_unknown_sources_globally">Your device admin doesn’t allow installing apps from unknown sources, that includes new repositories</string>
+    <string name="my_apps_empty">%1$s only shows apps here that are available in your repositories</string>
+    <string name="no_repos_enabled">No repositories available. Turn one on or add a repository to get started.</string>
+    <string name="repo_basic_auth_title">Login</string>
+    <string name="repo_basicauth_edit">Save login</string>
+    <string name="repo_details_info_text">A repository is a source of apps.\n\nMirrors spread the downloads across several servers. Mirrors closer to you may be faster.\n\nThe official mirrors are set by the owner of the repository. They can’t be deleted, only turned off. You can add your own mirrors just like a normal repository.</string>
+    <string name="repo_disable_dialog_text">Apps from this repository will disappear from Myzel. Installed apps stay as they are.</string>
+    <string name="repo_disable_dialog_title">Turn off repository?</string>
+    <string name="repo_disable_warning_button">Turn off</string>
+    <string name="repo_error_adding_archive">Archive repositories can’t be added directly. Tap the repository in the list and turn on the archive there.</string>
+    <string name="repo_intro">A repository is another source of apps. Each repository has its own rules for which apps it offers and how they are built.\n\nOnly add repositories you trust.</string>
+    <string name="repo_last_update_check">Last checked for updates: %s</string>
+    <string name="repo_list_info_text">A repository is a source of apps. Repositories that are turned off are listed under “More repositories” and are not used.\n\nIf an app is in more than one repository, the repository higher in the list is preferred. You can reorder repositories by long pressing and dragging them.</string>
+    <string name="search_no_results">No apps found\n\nTry fewer search terms or turn on more repositories</string>
+</resources>

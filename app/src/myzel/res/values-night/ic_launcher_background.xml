@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Myzel: Symbole bleiben transparent, ohne Hintergrundfläche (Wunsch des Nutzers, 2026-10-09).
+     Launcher, die einen Hintergrund einsetzen, dürfen das; Launcher mit Transparenz zeigen nur das
+     Geflecht. -->
+<resources>
+    <color name="ic_launcher_background">#00000000</color>
+</resources>

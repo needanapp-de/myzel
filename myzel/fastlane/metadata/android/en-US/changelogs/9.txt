@@ -1,0 +1,2 @@
+• Backup: save repositories, favorites, settings and appearance to a file one by one and restore them (Settings → Backup)
+• The file is not encrypted and contains no logins of repositories

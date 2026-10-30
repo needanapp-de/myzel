@@ -1,0 +1,3 @@
+• Langes Drücken auf eine App in Meine Apps klappt ein Bedienfeld auf: Anzeige mit Stand und Paketquelle, darunter Tasten für Aktualisieren, Öffnen, Favorit, Teilen, Update überspringen oder ignorieren, Auf der Uhr, App-Info und Entfernen
+• Was für eine App nicht geht, ist gedimmt; Zurück klappt das Feld wieder zu
+• Probleme ignorieren steht jetzt ebenfalls im Bedienfeld

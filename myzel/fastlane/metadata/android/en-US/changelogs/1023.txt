@@ -1,0 +1,4 @@
+• Myzel for the watch is now its own app in the needanapp.de repository; setup and updates download it from there, which makes Myzel itself smaller
+• Watch: status in colour (green connected, red unreachable), progress ring while receiving and installing, last connected phone
+• Badge on the pill when repositories fail to update
+• Hint cards in the card look, app icon on a white background

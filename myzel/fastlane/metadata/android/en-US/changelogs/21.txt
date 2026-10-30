@@ -1,0 +1,1 @@
+• App page: next to “Uninstall”, “Update” now shows the size on a second line instead of being cut off

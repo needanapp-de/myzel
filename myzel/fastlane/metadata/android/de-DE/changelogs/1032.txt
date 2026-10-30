@@ -1,0 +1,3 @@
+• Update-Diagnose: Lässt sich eine App nicht aktualisieren, erklärt eine Karte auf der App-Seite den Grund (andere Signatur, Update nur bei einer anderen Paketquelle, passt nicht aufs Gerät, nur Beta, letzter Fehler) und was hilft, dazu Details zu Installationsquelle, Signaturen und Gerät; „Bericht kopieren“ legt alles in die Zwischenablage
+• Das Band der App-Seite sagt dann „Update nicht möglich“ statt „Aktuell“
+• Meine Apps: Bei Apps mit Problem steht der Grund unter der Version

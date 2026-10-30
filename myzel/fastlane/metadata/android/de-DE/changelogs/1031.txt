@@ -1,0 +1,1 @@
+• Entdecken: Nach dem Aktualisieren der Paketquellen per Herunterziehen springt die Liste der neuen und aktualisierten Apps wieder an den Anfang, neue Apps sind gleich zu sehen

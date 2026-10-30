@@ -1,0 +1,5 @@
+• Top bars, menus, filters and dialogs in the Myzel style
+• Clearer wording in many hints and messages
+• App icon is transparent again
+• Long package names on the app page wrap at the dots and can be copied
+• Fixed: after changing a setting, "Last checked for updates" showed "never"

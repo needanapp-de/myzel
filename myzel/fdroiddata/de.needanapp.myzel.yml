@@ -1,0 +1,48 @@
+# Entwurf für fdroiddata (metadata/de.needanapp.myzel.yml), noch nicht eingereicht; was vorher
+# fehlt, steht in myzel/README.md unter „F-Droid (vorbereitet)“. Zwei Builds je Version: Myzel fürs
+# Handy (versionCode 1000 + n) und Myzel Wear als Uhr-Version desselben Pakets (versionCode n,
+# darunter wie bei Catima; Merkmal android.hardware.type.watch). F-Droid signiert beide mit
+# demselben Schlüssel, deshalb nimmt Myzel die Uhr-Version aus dieser Paketquelle
+# (de.needanapp.myzel.watch.MyzelWearSource).
+Categories:
+  - System
+License: GPL-3.0-or-later
+AuthorName: needanapp.de
+WebSite: https://needanapp.de
+SourceCode: https://git.needanapp.de/needanapp.de/myzel
+IssueTracker: https://git.needanapp.de/needanapp.de/myzel/issues
+
+AutoName: Myzel
+
+RepoType: git
+Repo: https://git.needanapp.de/needanapp.de/myzel.git
+
+Builds:
+  - versionName: 0.11.0
+    versionCode: 1023
+    commit: myzel-0.11.0
+    subdir: app
+    submodules: true
+    gradle:
+      - basicDefault
+    scanignore:
+      - libs/index/src/commonTest/resources
+
+  - versionName: 0.11.0
+    versionCode: 23
+    commit: myzel-0.11.0
+    subdir: myzel/wear
+    submodules: true
+    gradle:
+      - yes
+    scanignore:
+      - libs/index/src/commonTest/resources
+
+AutoUpdateMode: Version
+UpdateCheckMode: Tags ^myzel-
+VercodeOperation:
+  - '%c'
+  - '%c - 1000'
+UpdateCheckData: myzel/version.properties|versionCode=(\d+)|myzel/version.properties|versionName=(.+)
+CurrentVersion: 0.11.0
+CurrentVersionCode: 1023

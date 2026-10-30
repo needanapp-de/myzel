@@ -1,0 +1,4 @@
+• Darstellung → Flächen: Farbverlauf im Hintergrund abschaltbar
+• Neuer Regler „Kartenhelligkeit“: Karten heller oder dunkler, der Hintergrund bleibt, wie er ist
+• Darstellung als Akkordeon: Standardmäßig ist nur ein Abschnitt offen
+• Durchsichtige App-Symbole, auch das von Myzel, stehen nicht mehr in einem schwarzen Kreis

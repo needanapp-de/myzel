@@ -1,0 +1,3 @@
+• App-Seite: Beim Herunterladen füllt sich das Band oben in der Versionskarte als Fortschrittsbalken, Prozent in der Mitte; der Knopf darunter ist währenddessen ausgegraut und pulsiert
+• App-Seite neu sortiert: Unter den Versionen gleich Öffnen/Installieren, dann Screenshots, Beschreibung, Uhr, Links, Details und Sicherheit
+• Datumsangaben im deutschen Format TT.MM.JJJJ

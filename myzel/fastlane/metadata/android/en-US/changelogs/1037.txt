@@ -1,0 +1,3 @@
+• The two looks are now called "Myzel" (formerly "Device", still the default) and "NeedAnApp"
+• Myzel: besides aluminium and graphite, any color world can be chosen; surfaces take its colors, the pill and menus stay dark; tint and brightness now apply here too; orange, yellow and green as signal colors
+• NeedAnApp: Discover without favorites, apps with a watch version show a small watch; the app page shows the state as a display

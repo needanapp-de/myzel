@@ -1,0 +1,2 @@
+• Smaller app icons in the Discover carousel, names centered
+• The check mark of installed apps is no longer cut off

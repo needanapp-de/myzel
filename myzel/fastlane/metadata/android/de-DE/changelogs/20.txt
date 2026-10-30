@@ -1,0 +1,3 @@
+• Schnelleres Umschalten: Die Bereiche der Pille wechseln ohne Überblendung, neue Seiten blenden kurz ein
+• Versionsnummern auf den Karten laufen nur noch ein paar Runden, „Entdecken“ zeichnet danach im Leerlauf nicht mehr ständig neu
+• „Meine Apps“ zeigt den Hinweis „Alle deine Apps sind auf dem neuesten Stand“ nicht mehr, das zeigen die Pillen

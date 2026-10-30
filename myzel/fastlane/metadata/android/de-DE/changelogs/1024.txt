@@ -1,0 +1,5 @@
+• Meine Apps und Verlauf als Karten mit Pillen wie „Update“, „Fehler“ oder „Entfernt“
+• Paketquelle-Details aufgebaut wie die App-Seite: Stand mit Band, Apps, Zeiten, Fingerabdruck und Spiegelserver
+• Paketquelle hinzufügen: QR-Code und Adresse als Karten, Vorschau mit „Neu“ oder „Schon hinzugefügt“
+• Suche mit Suchfeld als Pille, Verlauf und Trefferzahl
+• Optionen einer App als Blatt mit Schaltern, Screenshots im Vollbild, neue Dialoge

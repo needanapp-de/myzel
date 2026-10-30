@@ -1,0 +1,3 @@
+• Long-press an app in My apps to open a panel: a display with its state and repository, below it keys for Update, Open, Favorite, Share, skip or ignore updates, On watch, App info and Uninstall
+• What doesn't apply to an app is dimmed; Back closes the panel again
+• Ignoring a problem is now in the panel as well

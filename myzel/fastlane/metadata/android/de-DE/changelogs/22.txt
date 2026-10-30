@@ -1,0 +1,5 @@
+• Wear-OS-Uhren: Uhr einmal über „Debugging über WLAN“ einrichten, danach installiert, aktualisiert und entfernt Myzel Apps auf der Uhr über Bluetooth
+• Rubrik „Uhr“ für Apps mit Uhr-Version, Abschnitt „Auf der Uhr“ in Meine Apps
+• Nach einer Installation auf dem Handy fragt Myzel, ob die App auch auf die Uhr soll
+• Entdecken zeigt beim Start die Apps vom letzten Mal
+• Die Pille verdeckt nach einem Seitenwechsel keine Listen mehr

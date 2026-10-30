@@ -1,0 +1,3 @@
+• Favorites: long-press an app to open the same panel as in My apps; apps that aren't installed show "Install" first
+• Color worlds such as Ultraviolet or Copper bring their own accent color again: if you picked orange in 0.20.0, it is now "Standard", yellow and green stay
+• The display in the panel shortens the repository name

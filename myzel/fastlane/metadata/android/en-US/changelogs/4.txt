@@ -1,0 +1,4 @@
+• Navigation: one pill in the middle, repositories, settings and more in the menu button on the right
+• Slightly smaller pills
+• Repositories: enabled ones on top, the others under “More repositories” to expand
+• New needanapp.de repository, enabled by default together with IzzyOnDroid (on new installs)

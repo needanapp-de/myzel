@@ -1,0 +1,3 @@
+• App page: while downloading, the band at the top of the versions card fills up as a progress bar with the percentage in the middle; the button below is greyed out and pulses meanwhile
+• App page reordered: open/install right below the versions, then screenshots, description, watch, links, details and security
+• Dates in German are shown as DD.MM.YYYY

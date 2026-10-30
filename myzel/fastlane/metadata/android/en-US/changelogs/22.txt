@@ -1,0 +1,5 @@
+• Wear OS watches: set up the watch once via “Wireless debugging”, then Myzel installs, updates and removes apps on the watch over Bluetooth
+• “Watch” category for apps with a watch version, “On the watch” section in My apps
+• After an install on the phone, Myzel asks whether the app should go to the watch too
+• Discover shows the apps from last time at start
+• The pill no longer covers lists after switching pages
