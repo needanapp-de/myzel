@@ -46,16 +46,22 @@ Paketquelle und hält sie danach aktuell.
 
 <table>
   <tr>
-    <td align="center" width="25%"><img src="myzel/fastlane/metadata/android/de-DE/images/phoneScreenshots/1-discover.png" alt="Entdecken: neue und aktualisierte Apps, Kategorien" width="200"><br><sub>Entdecken: neue und aktualisierte Apps, Kategorien</sub></td>
-    <td align="center" width="25%"><img src="myzel/fastlane/metadata/android/de-DE/images/phoneScreenshots/2-details.png" alt="App-Seite mit Versionen, Signatur und Details" width="200"><br><sub>App-Seite mit Versionen, Signatur und Details</sub></td>
-    <td align="center" width="25%"><img src="myzel/fastlane/metadata/android/de-DE/images/phoneScreenshots/3-search.png" alt="Suche über alle Paketquellen" width="200"><br><sub>Suche über alle Paketquellen</sub></td>
-    <td align="center" width="25%"><img src="myzel/fastlane/metadata/android/de-DE/images/phoneScreenshots/4-my-apps.png" alt="Meine Apps: Updates und installierte Apps" width="200"><br><sub>Meine Apps: Updates und installierte Apps</sub></td>
+    <td align="center" width="25%"><img src="myzel/fastlane/metadata/android/de-DE/images/phoneScreenshots/01-discover.png" alt="Entdecken: neue und aktualisierte Apps, Kategorien" width="200"><br><sub>Entdecken: neue und aktualisierte Apps, Kategorien</sub></td>
+    <td align="center" width="25%"><img src="myzel/fastlane/metadata/android/de-DE/images/phoneScreenshots/02-recent.png" alt="Neu und aktualisiert, über alle Paketquellen" width="200"><br><sub>Neu und aktualisiert, über alle Paketquellen</sub></td>
+    <td align="center" width="25%"><img src="myzel/fastlane/metadata/android/de-DE/images/phoneScreenshots/03-details.png" alt="App-Seite mit Optionen: Beta-Updates, Update ignorieren" width="200"><br><sub>App-Seite mit Optionen: Beta-Updates, Update ignorieren</sub></td>
+    <td align="center" width="25%"><img src="myzel/fastlane/metadata/android/de-DE/images/phoneScreenshots/04-my-apps.png" alt="Meine Apps: Menü beim langen Drücken auf eine App" width="200"><br><sub>Meine Apps: Menü beim langen Drücken auf eine App</sub></td>
   </tr>
   <tr>
-    <td align="center" width="25%"><img src="myzel/fastlane/metadata/android/de-DE/images/phoneScreenshots/5-repositories.png" alt="Paketquellen ein- und ausschalten oder hinzufügen" width="200"><br><sub>Paketquellen ein- und ausschalten oder hinzufügen</sub></td>
-    <td align="center" width="25%"><img src="myzel/fastlane/metadata/android/de-DE/images/phoneScreenshots/6-watch.png" alt="Wear-OS-Uhr einrichten und Verbindung testen" width="200"><br><sub>Wear-OS-Uhr einrichten und Verbindung testen</sub></td>
-    <td align="center" width="25%"><img src="myzel/fastlane/metadata/android/de-DE/images/phoneScreenshots/7-favorites.png" alt="Favoriten" width="200"><br><sub>Favoriten</sub></td>
-    <td align="center" width="25%"><img src="myzel/fastlane/metadata/android/de-DE/images/phoneScreenshots/8-appearance.png" alt="Darstellung: hell, dunkel, Signalfarbe und mehr" width="200"><br><sub>Darstellung: hell, dunkel, Signalfarbe und mehr</sub></td>
+    <td align="center" width="25%"><img src="myzel/fastlane/metadata/android/de-DE/images/phoneScreenshots/05-menu.png" alt="Das Myzel-Menü: Favoriten, Uhr, Paketquellen" width="200"><br><sub>Das Myzel-Menü: Favoriten, Uhr, Paketquellen</sub></td>
+    <td align="center" width="25%"><img src="myzel/fastlane/metadata/android/de-DE/images/phoneScreenshots/06-repositories.png" alt="Paketquellen ein- und ausschalten oder hinzufügen" width="200"><br><sub>Paketquellen ein- und ausschalten oder hinzufügen</sub></td>
+    <td align="center" width="25%"><img src="myzel/fastlane/metadata/android/de-DE/images/phoneScreenshots/07-favorites.png" alt="Favoriten mit dem Menü beim langen Drücken" width="200"><br><sub>Favoriten mit dem Menü beim langen Drücken</sub></td>
+    <td align="center" width="25%"><img src="myzel/fastlane/metadata/android/de-DE/images/phoneScreenshots/08-watch.png" alt="Wear-OS-Uhr einrichten und Verbindung testen" width="200"><br><sub>Wear-OS-Uhr einrichten und Verbindung testen</sub></td>
+  </tr>
+  <tr>
+    <td align="center" width="25%"><img src="myzel/fastlane/metadata/android/de-DE/images/phoneScreenshots/09-appearance.png" alt="Darstellung: Stil, hell, dunkel, Farbwelten" width="200"><br><sub>Darstellung: Stil, hell, dunkel, Farbwelten</sub></td>
+    <td align="center" width="25%"><img src="myzel/fastlane/metadata/android/de-DE/images/phoneScreenshots/10-install.png" alt="Installieren ohne Nachfrage über Root oder Shizuku" width="200"><br><sub>Installieren ohne Nachfrage über Root oder Shizuku</sub></td>
+    <td align="center" width="25%"><img src="myzel/fastlane/metadata/android/de-DE/images/phoneScreenshots/11-watch-category.png" alt="Rubrik „Uhr“: Apps mit Uhr-Version" width="200"><br><sub>Rubrik „Uhr“: Apps mit Uhr-Version</sub></td>
+    <td align="center" width="25%"><img src="myzel/fastlane/metadata/android/de-DE/images/phoneScreenshots/12-watch-apps.png" alt="Meine Apps: die Apps auf der Uhr" width="200"><br><sub>Meine Apps: die Apps auf der Uhr</sub></td>
   </tr>
 </table>
 

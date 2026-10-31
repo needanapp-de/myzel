@@ -5,6 +5,9 @@
     python3 myzel/tools/make-fdroid-upload.py release <ziel> --quelle stabil   Release für apps.needanapp.de
     python3 myzel/tools/make-fdroid-upload.py release <ziel> --quelle test     Release für fdroid.needanapp.de (Testing)
 
+Mit --nur-metadaten nur der Store-Eintrag ohne APK, etwa für neue Bilder. Version und Signatur kommen dann aus
+--apk <pfad>, wenn die Quelle eine andere Version führt als der letzte Build (Testing: die letzte APK von dort).
+
 <ziel> bekommt repo/<appid>_<code>.apk, metadata/<appid>.yml und metadata/<appid>/<sprache>/ mit name.txt,
 summary.txt, description.txt, changelogs/, featureGraphic.png, phoneScreenshots/, wearScreenshots/ und
 en-US/icon.png. Der Debug-Satz heißt „Myzel (Debug)“ und sagt das in der Beschreibung. Der Release muss mit dem Release-Schlüssel von needanapp.de
@@ -159,6 +162,11 @@ def main():
         sys.exit(__doc__)
     kind, target = args[0], os.path.abspath(args[1])
     with_apk = "--nur-metadaten" not in args[2:]
+    given_apk = None
+    if "--apk" in args[2:]:
+        if with_apk or args.index("--apk") + 1 >= len(args):
+            sys.exit("--apk <pfad> nur zusammen mit --nur-metadaten")
+        given_apk = os.path.abspath(os.path.expanduser(args[args.index("--apk") + 1]))
     source = None
     if kind == "release":
         # ohne Vorgabe: stabil oder Testing entscheidet sich bei jedem Release neu
@@ -167,7 +175,7 @@ def main():
         source = args[args.index("--quelle") + 1]
         if source not in INCOMING:
             sys.exit(f"Unbekannte Quelle {source}: stabil oder test")
-    apk = os.path.join(APK_DIR, kind, f"app-basic-default-{kind}.apk")
+    apk = given_apk or os.path.join(APK_DIR, kind, f"app-basic-default-{kind}.apk")
     if not os.path.exists(apk):
         sys.exit(f"Fehlt: {apk} – erst :app:assembleBasicDefault{kind.capitalize()} bauen")
     app_id, code, version = badging(apk)
