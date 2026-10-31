@@ -2,6 +2,8 @@
   <img src="myzel/fastlane/metadata/android/de-DE/images/featureGraphic.png" alt="Myzel – Freie Apps aus F-Droid und weiteren Paketquellen" width="100%">
 </p>
 
+<p align="center"><b>Deutsch</b> · <a href="README.en.md">English</a></p>
+
 # Myzel
 
 **App-Store für freie Software aus F-Droid-Paketquellen – auch für Wear-OS-Uhren**
