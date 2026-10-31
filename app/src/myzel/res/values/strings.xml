@@ -25,7 +25,7 @@
     <string name="repo_disable_warning_button">Turn off</string>
     <string name="repo_error_adding_archive">Archive repositories can’t be added directly. Tap the repository in the list and turn on the archive there.</string>
     <string name="repo_intro">A repository is another source of apps. Each repository has its own rules for which apps it offers and how they are built.\n\nOnly add repositories you trust.</string>
-    <string name="repo_last_update_check">Last checked for updates: %s</string>
+    <string name="repo_last_update_check">Last checked for updates %s</string>
     <string name="repo_list_info_text">A repository is a source of apps. Repositories that are turned off are listed under “More repositories” and are not used.\n\nIf an app is in more than one repository, the repository higher in the list is preferred. You can reorder repositories by long pressing and dragging them.</string>
     <string name="search_no_results">No apps found\n\nTry fewer search terms or turn on more repositories</string>
 </resources>

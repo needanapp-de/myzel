@@ -1229,6 +1229,7 @@ private fun WatchTaskNote(state: WatchInstallState?) {
     // den Grund nennt der Stand der Verbindung darunter
     is WatchInstallState.Unreachable -> {}
     is WatchInstallState.Failed -> WatchNote(watchStateText(state), MaterialTheme.colorScheme.error)
+    is WatchInstallState.Unconfirmed -> WatchNote(watchStateText(state))
     is WatchInstallState.Downloading -> WatchProgress(watchStateText(state), state.fraction)
     is WatchInstallState.Sending -> WatchProgress(watchStateText(state), state.fraction)
     else -> WatchProgress(watchStateText(state), null)

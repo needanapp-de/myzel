@@ -44,6 +44,7 @@ import de.needanapp.myzel.ui.compat.OnboardingPopupCard
 import de.needanapp.myzel.ui.compat.Scaffold
 import de.needanapp.myzel.ui.compat.TopAppBar
 import de.needanapp.myzel.ui.repositories.RepositoriesList
+import de.needanapp.myzel.ui.repositories.asPastTimeString
 import org.fdroid.R
 import org.fdroid.download.NetworkState
 import org.fdroid.ui.FDroidContent
@@ -103,8 +104,15 @@ fun Repositories(info: RepositoryInfo, isBigScreen: Boolean, onBackClicked: () -
         },
         title = { Text(stringResource(R.string.app_details_repositories)) },
         subtitle = {
+          // Myzel: „vor 17 Min.“ oder „am 29.10. um 07:09“
           val lastUpdated = info.model.lastCheckForUpdate
-          Text(stringResource(R.string.repo_last_update_check, lastUpdated))
+          Text(
+            if (lastUpdated > 0) {
+              stringResource(R.string.repo_last_update_check, lastUpdated.asPastTimeString())
+            } else {
+              stringResource(R.string.myzel_repo_never_checked)
+            }
+          )
         },
         scrollBehavior = scrollBehavior,
       )
@@ -149,7 +157,7 @@ private fun RepositoriesScaffoldLoadingPreview() {
         RepositoryModel(
           repositories = null,
           showOnboarding = false,
-          lastCheckForUpdate = "never",
+          lastCheckForUpdate = -1,
           networkState = NetworkState(isOnline = true, isMetered = false),
         )
       val info = getRepositoriesInfo(model)
@@ -167,7 +175,7 @@ private fun RepositoriesScaffoldPreview() {
         RepositoryModel(
           repositories = repoItems,
           showOnboarding = false,
-          lastCheckForUpdate = "42min. ago",
+          lastCheckForUpdate = System.currentTimeMillis() - 42 * 60_000,
           networkState = NetworkState(isOnline = true, isMetered = false),
         )
       val info = getRepositoriesInfo(model, repoItems[0].repoId)

@@ -1,0 +1,6 @@
+# Für die Tests von libs:database: Die index-v1.jar aus libs/sharedTest sind mit SHA-1 signiert (2018).
+# JDK 17 und 21 behandeln solche JAR-Signaturen als fehlend ("SHA1 denyAfter 2019-01-01"), Android
+# nicht. F-Droids CI ändert dafür java.security des JDK (.gitlab-ci.yml); hier nur für den Testlauf:
+#   JAVA_TOOL_OPTIONS="-Djava.security.properties=$PWD/myzel/tools/sha1-jar-tests.security" \
+#     ./gradlew :libs:database:testDebugUnitTest
+jdk.jar.disabledAlgorithms=MD2, MD5, RSA keySize < 1024, DSA keySize < 1024

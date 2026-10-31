@@ -98,6 +98,16 @@ constructor(
   suspend fun requestUserConfirmation(state: InstallConfirmationState): InstallState =
     session.requestUserConfirmation(state)
 
+  /** Ob der Paketinstaller von F-Droid installiert, nicht Root oder Shizuku. */
+  val usesPackageInstaller: Boolean
+    get() = method == InstallMethod.SESSION
+
+  /**
+   * Wie bei F-Droid über den alten Installationsdialog, für Xiaomi/Redmi-Geräte, auf denen die
+   * Paketinstaller-API nicht geht (AppInstallManager, nur mit [usesPackageInstaller]).
+   */
+  fun installLegacy(apkFile: File) = session.installLegacy(apkFile)
+
   companion object {
     /** Ob gerade Root oder Shizuku eingestellt ist. */
     @Volatile private var privilegedMethod = false

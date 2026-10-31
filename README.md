@@ -10,8 +10,8 @@
 
 Myzel ist ein App-Store für Android 12 und neuer. Du findest darin freie und quelloffene Apps aus F-Droid,
 IzzyOnDroid und weiteren Paketquellen, installierst sie und hältst sie aktuell – auf dem Handy und auf der Uhr.
-Myzel basiert auf dem offiziellen F-Droid-Client und übernimmt dessen Updates, trägt aber das Design von
-needanapp.de.
+Myzel basiert auf dem offiziellen F-Droid-Client (zurzeit Version 2.0.3) und übernimmt dessen Updates, trägt aber
+das Design von needanapp.de.
 
 [F-Droid-Repo](https://apps.needanapp.de) · [Myzel im Repo](https://apps.needanapp.de/de.needanapp.myzel/) ·
 Android 12 und neuer · Wear OS 3 und neuer · Lizenz [GPL-3.0](LICENSE) · Herausgeber needanapp.de
@@ -148,8 +148,9 @@ So installierst du Myzel trotzdem:
 
 ### Darstellung
 
-- Zwei Stile: „Myzel“ sieht aus wie ein Gerät, mit Alu im hellen und Graphit im dunklen Modus, Orange als
-  Signalfarbe und schwarzen Anzeigen in Punktmatrix-Schrift; „NeedAnApp“ ist der ruhige Kartenlook von needanapp.de
+- Zwei Stile: „NeedAnApp“ (Standard) ist der ruhige Kartenlook von needanapp.de; „Myzel“ sieht aus wie ein Gerät,
+  mit Alu im hellen und Graphit im dunklen Modus, Orange als Signalfarbe und schwarzen Anzeigen in
+  Punktmatrix-Schrift
 - Eigene Farbwelten für hell und dunkel (u. a. Papier, Latte, Nordnacht, Mitternacht, Warnweste, Kupfer) und eine
   frei wählbare Signalfarbe; alle Schriften bleiben in jeder Kombination gut lesbar
 - Navigation in einer schwebenden Pille unten, zwischen Entdecken, Suche und Meine Apps auch per Wischen; das

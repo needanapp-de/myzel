@@ -512,7 +512,7 @@ internal interface AppDaoInt : AppDao {
   @Transaction
   override suspend fun getNewApps(maxAgeInDays: Long): List<AppOverviewItem> {
     val query =
-      getAppsQuery("app.added >= ? ORDER BY app.lastUpdated DESC") { statement ->
+      getAppsQuery("app.added >= ? ORDER BY app.added DESC") { statement ->
         statement.bindLong(1, System.currentTimeMillis() - DAYS.toMillis(maxAgeInDays))
       }
     return getApps(query)
@@ -549,7 +549,7 @@ internal interface AppDaoInt : AppDao {
 
   override fun getNewAppsFlow(maxAgeInDays: Long): Flow<List<AppOverviewItem>> {
     val query =
-      getAppsQuery("app.added >= ? ORDER BY app.lastUpdated DESC") { statement ->
+      getAppsQuery("app.added >= ? ORDER BY app.added DESC") { statement ->
         statement.bindLong(1, System.currentTimeMillis() - DAYS.toMillis(maxAgeInDays))
       }
     return getAppsFlow(query)
@@ -948,14 +948,13 @@ internal interface AppDaoInt : AppDao {
   @Transaction
   @Query(
     """
-        SELECT repoId, packageName, app.lastUpdated, app.name, app.summary,
+        SELECT app.repoId, app.packageName, app.lastUpdated, app.name, app.summary,
             NULL AS description, app.authorName, app.categories,
             matchinfo(${AppMetadataFts.TABLE}, 'pcx')
-        FROM ${AppMetadata.TABLE} AS app
+        FROM ${AppMetadataFts.TABLE} AS fts
+        JOIN ${AppMetadata.TABLE} AS app ON app.rowid = fts.rowid
         JOIN PreferredRepo USING (packageName)
-        JOIN ${AppMetadataFts.TABLE} USING (repoId, packageName)
-        WHERE ${AppMetadataFts.TABLE} MATCH :searchQuery AND
-            repoId = preferredRepoId"""
+        WHERE ${AppMetadataFts.TABLE} MATCH :searchQuery AND app.repoId = preferredRepoId"""
   )
   override suspend fun getAppSearchItems(searchQuery: String): List<AppSearchItem>
 

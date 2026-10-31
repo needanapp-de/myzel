@@ -75,7 +75,6 @@ import org.fdroid.ui.repositories.details.OfficialMirrorItem
 import org.fdroid.ui.repositories.details.RepoDetailsInfo
 import org.fdroid.ui.repositories.details.UserMirrorItem
 import org.fdroid.ui.utils.addressForUi
-import org.fdroid.ui.utils.asRelativeTimeString
 
 /**
  * Ersatz für org.fdroid.ui.repositories.details.RepoDetailsContent mit derselben Signatur, über
@@ -220,10 +219,10 @@ private fun StateCard(repo: Repository, numberOfApps: Int?) {
       }
     }
     DetailRow(stringResource(R.string.myzel_repo_published)) {
-      ValueText(if (repo.timestamp < 0) never else repo.timestamp.asRelativeTimeString())
+      ValueText(if (repo.timestamp < 0) never else repo.timestamp.asPastTimeString())
     }
     DetailRow(stringResource(R.string.myzel_repo_downloaded)) {
-      ValueText(repo.lastUpdated?.asRelativeTimeString() ?: never)
+      ValueText(repo.lastUpdated?.asPastTimeString() ?: never)
     }
     if (needsLogin) {
       // der Server hat die Anmeldung verweigert (HTTP 401): sagen, wo sie hingehört; die

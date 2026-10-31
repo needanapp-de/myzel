@@ -1,7 +1,7 @@
 Myzel ist ein App-Store für freie und quelloffene Software aus F-Droid-Paketquellen – im Design von needanapp.de, für Android 12 und neuer.
 
 <b>Grundlage</b>
-• Basiert auf dem F-Droid-Client 2.0.1 (Variante basic); Updates von F-Droid werden übernommen
+• Basiert auf dem F-Droid-Client 2.0.3 (Variante basic); Updates von F-Droid werden übernommen
 • Apps entdecken, suchen, installieren und aktualisieren, auch automatisch im Hintergrund
 • Installation wahlweise über Root oder Shizuku, dann ohne Nachfrage
 
@@ -21,7 +21,7 @@ Myzel ist ein App-Store für freie und quelloffene Software aus F-Droid-Paketque
 • Paketquellen, Favoriten, Einstellungen und Darstellung in eine Datei sichern und auf einem anderen Gerät einspielen
 
 <b>Design</b>
-• Aussehen wie ein Gerät: Alu im hellen, Graphit im dunklen Modus, Orange als Signalfarbe, schwarze Anzeigen in Punktmatrix-Schrift
+• Zwei Stile: „NeedAnApp“ (Standard) ist der ruhige Kartenlook von needanapp.de mit Farbwelten für hell und dunkel; „Myzel“ sieht aus wie ein Gerät, mit Alu im hellen, Graphit im dunklen Modus, Orange als Signalfarbe und schwarzen Anzeigen in Punktmatrix-Schrift
 • Navigation in einer schwebenden Pille unten; zwischen Entdecken, Suche und Meine Apps lässt sich auch wischen
 • Das Myzel ist der Menüknopf und auf der App-Seite der Knopf für die Optionen
 • Kategorien in Entdecken als Bedienfeld mit allen Gruppen auf einen Blick

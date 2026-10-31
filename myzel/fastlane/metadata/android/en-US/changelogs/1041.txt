@@ -1,0 +1,5 @@
+• Now based on F-Droid 2.0.3: faster search on Android 14, installing on Xiaomi/Redmi fixed, "New apps" sorted by date added
+• Watch: Myzel waits for the confirmation on the watch, also via notification when the display is off
+• Repositories show the exact time, e.g. "on Oct 29 at 12:39"
+• NeedAnApp is the default style for new installs; its dialogs now have a colored header band
+• Source code on GitHub now builds including the design package

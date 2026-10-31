@@ -13,6 +13,7 @@ import android.content.pm.PackageInstaller.SessionParams
 import android.os.Build.VERSION.SDK_INT
 import android.util.Log
 import androidx.core.content.IntentCompat
+import de.needanapp.myzel.link.CONFIRM_BY_NOTIFICATION
 import de.needanapp.myzel.link.Install
 import de.needanapp.myzel.link.InstallStatus
 import de.needanapp.myzel.link.LinkConnection
@@ -109,7 +110,7 @@ object Installer {
             // Aus dem Hintergrund darf die App keine Activity starten
             WatchLink.setConfirm(PendingConfirm(id, name, removal, confirm))
             notifyConfirm(context, id, name, removal, confirm)
-            "notification"
+            CONFIRM_BY_NOTIFICATION
           }
         WatchLink.event(R.string.event_confirm, name)
         pending?.let { WatchLink.send(it.connection, Install(InstallStatus.CONFIRM, how)) }

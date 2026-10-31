@@ -12,6 +12,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import de.needanapp.myzel.link.AppState
+import de.needanapp.myzel.link.CONFIRM_BY_NOTIFICATION
 import de.needanapp.myzel.link.Hello
 import de.needanapp.myzel.link.InstallStatus
 import de.needanapp.myzel.link.LinkAuthException
@@ -84,8 +85,19 @@ sealed interface WatchInstallStep {
   /** Die APK geht über Bluetooth an die Uhr. */
   data class Sending(val fraction: Float) : WatchInstallStep
 
-  /** Die Uhr fragt den Nutzer, ob sie installieren oder entfernen soll. */
-  data object Confirm : WatchInstallStep
+  /**
+   * Die Uhr fragt den Nutzer, ob sie installieren oder entfernen soll.
+   *
+   * @param notification die Bitte steht in einer Benachrichtigung auf der Uhr
+   *   ([CONFIRM_BY_NOTIFICATION])
+   */
+  data class Confirm(val notification: Boolean) : WatchInstallStep
+
+  /**
+   * Der Nutzer hat auf der Uhr nicht rechtzeitig geantwortet. Die Bitte steht dort noch; bestätigt
+   * er später, zeigt das erst die nächste Abfrage.
+   */
+  data object Unconfirmed : WatchInstallStep
 
   /** @param app der Stand danach, null, wenn die Uhr ihn nicht nannte */
   data class Installed(val app: WatchPackage?) : WatchInstallStep
@@ -107,8 +119,12 @@ sealed interface WearUpdateState {
   /** Die neue Myzel Wear geht an die Uhr. */
   data class Sending(val fraction: Float) : WearUpdateState
 
-  /** Die Uhr fragt den Nutzer, ob sie das Update installieren soll. */
-  data object Confirm : WearUpdateState
+  /**
+   * Die Uhr fragt den Nutzer, ob sie das Update installieren soll.
+   *
+   * @param notification die Bitte steht in einer Benachrichtigung auf der Uhr
+   */
+  data class Confirm(val notification: Boolean) : WearUpdateState
 
   /** Myzel Wear startet nach dem Update neu; Myzel wartet, bis es wieder antwortet. */
   data object Restarting : WearUpdateState
@@ -180,10 +196,16 @@ interface WatchBridge {
 }
 
 /**
- * Wartet so lange auf das Ergebnis einer Installation oder Deinstallation (der Nutzer muss
- * vielleicht bestätigen).
+ * Wartet so lange auf das Ergebnis einer Installation oder Deinstallation, bis die Uhr den Nutzer
+ * fragt ([InstallStatus.CONFIRM]).
  */
 private const val INSTALL_TIMEOUT_MILLIS = 180_000L
+
+/**
+ * Hat die Uhr den Nutzer gefragt, wartet Myzel so lange auf seine Antwort. Ist das Display der Uhr
+ * aus, steht die Bitte in einer Benachrichtigung, und der Nutzer findet sie vielleicht erst später.
+ */
+private const val CONFIRM_TIMEOUT_MILLIS = 5 * 60_000L
 
 /** Nach einem gescheiterten Update von Myzel Wear versucht Myzel es so lange nicht von selbst. */
 private const val WEAR_UPDATE_BACKOFF_MILLIS = 15 * 60_000L
@@ -282,10 +304,23 @@ constructor(
     client: LinkClient,
     onStep: (WatchInstallStep) -> Unit,
   ): Boolean {
+    var asked = false
     while (true) {
-      val install = client.nextInstall(INSTALL_TIMEOUT_MILLIS)
+      val install =
+        try {
+          client.nextInstall(if (asked) CONFIRM_TIMEOUT_MILLIS else INSTALL_TIMEOUT_MILLIS)
+        } catch (e: IOException) {
+          // Die Bitte auf der Uhr bleibt; bestätigt der Nutzer später, gelingt es doch noch
+          if (!asked) throw e
+          log.info { "Keine Antwort des Nutzers auf der Uhr: ${e.message}" }
+          onStep(WatchInstallStep.Unconfirmed)
+          return false
+        }
       when (install.status) {
-        InstallStatus.CONFIRM -> onStep(WatchInstallStep.Confirm)
+        InstallStatus.CONFIRM -> {
+          asked = true
+          onStep(WatchInstallStep.Confirm(install.message == CONFIRM_BY_NOTIFICATION))
+        }
         InstallStatus.SUCCESS -> return true
         InstallStatus.FAILURE -> {
           onStep(WatchInstallStep.Failed(install.message))
@@ -432,15 +467,19 @@ constructor(
         }
       if (!result.ok) return failed(apk.sha256, result.message)
       // Myzel Wear installiert sich selbst; dabei endet sein Prozess und mit ihm die Verbindung
+      var asked = false
       while (true) {
         val install =
           try {
-            client.nextInstall(INSTALL_TIMEOUT_MILLIS)
+            client.nextInstall(if (asked) CONFIRM_TIMEOUT_MILLIS else INSTALL_TIMEOUT_MILLIS)
           } catch (_: IOException) {
             break
           }
         when (install.status) {
-          InstallStatus.CONFIRM -> _wearUpdate.value = WearUpdateState.Confirm
+          InstallStatus.CONFIRM -> {
+            asked = true
+            _wearUpdate.value = WearUpdateState.Confirm(install.message == CONFIRM_BY_NOTIFICATION)
+          }
           InstallStatus.SUCCESS -> break
           InstallStatus.FAILURE -> return failed(apk.sha256, install.message)
         }

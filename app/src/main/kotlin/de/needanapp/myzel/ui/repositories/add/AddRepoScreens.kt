@@ -90,6 +90,7 @@ import de.needanapp.myzel.ui.lists.AppListRow
 import de.needanapp.myzel.ui.nav.saysUnauthorized
 import de.needanapp.myzel.ui.repositories.LoginFields
 import de.needanapp.myzel.ui.repositories.RepoHeader
+import de.needanapp.myzel.ui.repositories.asPastTimeString
 import io.ktor.client.engine.ProxyConfig
 import io.ktor.client.plugins.ResponseException
 import io.ktor.http.HttpStatusCode
@@ -114,7 +115,6 @@ import org.fdroid.ui.lists.AppListItem
 import org.fdroid.ui.repositories.add.getDisallowInstallUnknownSourcesErrorMessage
 import org.fdroid.ui.utils.OfflineBar
 import org.fdroid.ui.utils.addressForUi
-import org.fdroid.ui.utils.asRelativeTimeString
 import org.fdroid.ui.utils.launchSafe
 import org.fdroid.ui.utils.startActivitySafe
 
@@ -448,7 +448,7 @@ private fun PreviewStateCard(
       }
     }
     DetailRow(stringResource(R.string.myzel_repo_published)) {
-      ValueText(timestamp.asRelativeTimeString())
+      ValueText(timestamp.asPastTimeString())
     }
     if (note != null) {
       Text(

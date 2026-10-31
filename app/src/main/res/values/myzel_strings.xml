@@ -155,10 +155,12 @@
     <string name="myzel_details_watch_connecting">Connecting to the watch …</string>
     <string name="myzel_details_watch_sending">Sending to the watch … %1$d %%</string>
     <string name="myzel_details_watch_confirm">Confirm the installation on the watch.</string>
+    <string name="myzel_details_watch_confirm_notification">Confirm the installation on the watch: tap Myzel’s notification there.</string>
     <string name="myzel_details_watch_installed">Version %1$s is installed on the watch.</string>
     <string name="myzel_details_watch_failed_download">Download failed.</string>
     <string name="myzel_details_watch_failed_check">The downloaded file doesn’t match the repository; Myzel didn’t send it to the watch.</string>
     <string name="myzel_details_watch_failed_install">The watch didn’t install the app.</string>
+    <string name="myzel_details_watch_unconfirmed">Not confirmed on the watch yet. If you confirm there later, Myzel shows the app at the next check.</string>
     <string name="myzel_details_watch_update_available">Version %1$s is installed on the watch; %2$s is newer.</string>
     <string name="myzel_details_watch_other_signer_installed">Version %1$s is installed on the watch, but signed differently. Myzel can\'t update it; remove it first.</string>
     <string name="myzel_details_watch_update">Update</string>
@@ -166,7 +168,9 @@
     <string name="myzel_details_watch_remove">Remove from the watch</string>
     <string name="myzel_details_watch_removing">Removing from the watch …</string>
     <string name="myzel_details_watch_confirm_removal">Confirm the removal on the watch.</string>
+    <string name="myzel_details_watch_confirm_removal_notification">Confirm the removal on the watch: tap Myzel’s notification there.</string>
     <string name="myzel_details_watch_failed_uninstall">The watch didn’t remove the app.</string>
+    <string name="myzel_details_watch_unconfirmed_removal">Removal not confirmed on the watch yet. If you confirm there later, Myzel sees it at the next check.</string>
     <string name="myzel_details_wear_on_watch">On the watch</string>
     <string name="myzel_details_wear_code">version code %1$d</string>
     <string name="myzel_details_wear_text">On the watch, Myzel runs as Myzel Wear. It gets there when you set up the watch and keeps itself up to date after that.</string>
@@ -192,6 +196,7 @@
     <string name="myzel_watch_wear_update_downloading">Downloading the new Myzel for the watch … %1$d %%</string>
     <string name="myzel_watch_wear_update_sending">Updating Myzel on the watch … %1$d %%</string>
     <string name="myzel_watch_wear_update_confirm">Confirm the update of Myzel on the watch.</string>
+    <string name="myzel_watch_wear_update_confirm_notification">Confirm the update of Myzel on the watch: tap Myzel’s notification there.</string>
     <string name="myzel_watch_wear_update_restarting">Myzel on the watch is restarting …</string>
     <string name="myzel_watch_wear_update_failed">Couldn’t update Myzel on the watch.</string>
     <string name="myzel_watch_wear_update_retry">Tap to try again.</string>
@@ -249,6 +254,14 @@
     <!-- Datumsformate (java.time), auf Deutsch TT.MM.JJJJ -->
     <string name="myzel_date_time_pattern" translatable="false">yyyy-MM-dd HH:mm</string>
     <string name="myzel_date_pattern" translatable="false">yyyy-MM-dd</string>
+    <string name="myzel_time_just_now">just now</string>
+    <string name="myzel_time_minutes_ago">%d min. ago</string>
+    <string name="myzel_time_hours_ago">%d hr. ago</string>
+    <string name="myzel_time_at">on %1$s at %2$s</string>
+    <string name="myzel_time_date_pattern" translatable="false">MMM d</string>
+    <string name="myzel_time_date_year_pattern" translatable="false">MMM d, yyyy</string>
+    <string name="myzel_repo_not_loaded">Not loaded yet</string>
+    <string name="myzel_repo_never_checked">Never checked for updates</string>
     <string name="myzel_details_install">Install · %s</string>
     <string name="myzel_details_update">Update · %s</string>
     <string name="myzel_details_update_title">Update</string>

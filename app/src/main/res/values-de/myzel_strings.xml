@@ -151,10 +151,12 @@
     <string name="myzel_details_watch_connecting">Verbinde mit der Uhr …</string>
     <string name="myzel_details_watch_sending">Wird an die Uhr gesendet … %1$d %%</string>
     <string name="myzel_details_watch_confirm">Bestätige die Installation auf der Uhr.</string>
+    <string name="myzel_details_watch_confirm_notification">Bestätige die Installation auf der Uhr: Tippe dort auf die Benachrichtigung von Myzel.</string>
     <string name="myzel_details_watch_installed">Version %1$s ist auf der Uhr installiert.</string>
     <string name="myzel_details_watch_failed_download">Herunterladen fehlgeschlagen.</string>
     <string name="myzel_details_watch_failed_check">Die heruntergeladene Datei passt nicht zur Paketquelle; Myzel hat sie nicht an die Uhr geschickt.</string>
     <string name="myzel_details_watch_failed_install">Die Uhr hat die App nicht installiert.</string>
+    <string name="myzel_details_watch_unconfirmed">Auf der Uhr noch nicht bestätigt. Bestätigst du dort später, zeigt Myzel die App bei der nächsten Abfrage.</string>
     <string name="myzel_details_watch_update_available">Auf der Uhr ist Version %1$s installiert, %2$s ist neuer.</string>
     <string name="myzel_details_watch_other_signer_installed">Auf der Uhr ist Version %1$s installiert, aber anders signiert. Myzel kann sie nicht aktualisieren; entferne sie zuerst.</string>
     <string name="myzel_details_watch_update">Aktualisieren</string>
@@ -162,7 +164,9 @@
     <string name="myzel_details_watch_remove">Von der Uhr entfernen</string>
     <string name="myzel_details_watch_removing">Wird von der Uhr entfernt …</string>
     <string name="myzel_details_watch_confirm_removal">Bestätige das Entfernen auf der Uhr.</string>
+    <string name="myzel_details_watch_confirm_removal_notification">Bestätige das Entfernen auf der Uhr: Tippe dort auf die Benachrichtigung von Myzel.</string>
     <string name="myzel_details_watch_failed_uninstall">Die Uhr hat die App nicht entfernt.</string>
+    <string name="myzel_details_watch_unconfirmed_removal">Entfernen auf der Uhr noch nicht bestätigt. Bestätigst du dort später, sieht Myzel das bei der nächsten Abfrage.</string>
     <string name="myzel_details_wear_on_watch">Auf der Uhr</string>
     <string name="myzel_details_wear_code">Versionscode %1$d</string>
     <string name="myzel_details_wear_text">Auf der Uhr läuft Myzel als Myzel Wear. Es kommt mit der Einrichtung der Uhr dorthin und hält sich danach selbst aktuell.</string>
@@ -188,6 +192,7 @@
     <string name="myzel_watch_wear_update_downloading">Neues Myzel für die Uhr wird geladen … %1$d %%</string>
     <string name="myzel_watch_wear_update_sending">Myzel auf der Uhr wird aktualisiert … %1$d %%</string>
     <string name="myzel_watch_wear_update_confirm">Bestätige das Update von Myzel auf der Uhr.</string>
+    <string name="myzel_watch_wear_update_confirm_notification">Bestätige das Update von Myzel auf der Uhr: Tippe dort auf die Benachrichtigung von Myzel.</string>
     <string name="myzel_watch_wear_update_restarting">Myzel auf der Uhr startet neu …</string>
     <string name="myzel_watch_wear_update_failed">Myzel auf der Uhr ließ sich nicht aktualisieren.</string>
     <string name="myzel_watch_wear_update_retry">Tippen, um es erneut zu versuchen.</string>
@@ -244,6 +249,14 @@
     <string name="myzel_details_downloading">Wird heruntergeladen …</string>
     <string name="myzel_date_time_pattern" translatable="false">dd.MM.yyyy HH:mm</string>
     <string name="myzel_date_pattern" translatable="false">dd.MM.yyyy</string>
+    <string name="myzel_time_just_now">gerade eben</string>
+    <string name="myzel_time_minutes_ago">vor %d Min.</string>
+    <string name="myzel_time_hours_ago">vor %d Std.</string>
+    <string name="myzel_time_at">am %1$s um %2$s</string>
+    <string name="myzel_time_date_pattern" translatable="false">dd.MM.</string>
+    <string name="myzel_time_date_year_pattern" translatable="false">dd.MM.yyyy</string>
+    <string name="myzel_repo_not_loaded">Noch nicht geladen</string>
+    <string name="myzel_repo_never_checked">Noch nie nach Updates gesucht</string>
     <string name="myzel_details_install">Installieren · %s</string>
     <string name="myzel_details_update">Aktualisieren · %s</string>
     <string name="myzel_details_update_title">Aktualisieren</string>

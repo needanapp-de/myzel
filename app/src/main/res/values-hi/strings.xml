@@ -2,7 +2,7 @@
 <resources>
     <string name="delete">डिलीट करें</string>
     <string name="version">संस्करण</string>
-    <string name="updates">अपडेट</string>
+    <string name="updates">अपडेट्स</string>
     <string name="no_such_app">ऐसा कोई एप्लिकेशन नहीं मिला |</string>
     <string name="about_title_full">एफ-ड्रॉइड के बारे में</string>
     <string name="about_version">संस्करण</string>
@@ -220,4 +220,5 @@
     <string name="repo_view_repo">रिपॉज़िटरी देखें</string>
     <string name="export_log_error">लॉगकैट सहेजने में त्रुटि</string>
     <string name="repo_scan_qr_code">QR कोड स्कैन करें</string>
+    <string name="my_apps_ignore_dialog_button">छिपाना</string>
 </resources>

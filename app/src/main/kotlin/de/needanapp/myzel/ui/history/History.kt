@@ -75,6 +75,7 @@ fun History(
       onDismiss = { deleteAllDialogShown = false },
       isDestructive = true,
       icon = Icons.Outlined.Delete,
+      confirmIcon = Icons.Outlined.Delete,
     ) {
       Text(stringResource(R.string.myzel_history_delete_text))
     }

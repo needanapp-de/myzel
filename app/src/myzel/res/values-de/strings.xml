@@ -34,7 +34,7 @@
     <string name="repo_has_update_error_intro">Beim Aktualisieren dieser Paketquelle ist ein Fehler aufgetreten:</string>
     <string name="repo_intro">Eine Paketquelle ist eine weitere Quelle für Apps. Jede Paketquelle hat eigene Regeln dafür, welche Apps sie anbietet und wie sie gebaut werden.\n\nFüge nur Paketquellen hinzu, denen du vertraust.</string>
     <string name="repo_invalid">Ungültige Paketquelle.\n\nGib den Betreibern Bescheid, damit sie das Problem beheben können.</string>
-    <string name="repo_last_update_check">Zuletzt nach Updates gesucht: %s</string>
+    <string name="repo_last_update_check">Zuletzt nach Updates gesucht %s</string>
     <string name="repo_list_info_text">Eine Paketquelle ist eine Quelle für Apps. Ausgeschaltete Paketquellen stehen unter „Weitere Paketquellen“ und werden nicht genutzt.\n\nGibt es eine App in mehreren Paketquellen, wird die weiter oben stehende bevorzugt. Die Reihenfolge änderst du durch langes Drücken und Ziehen.</string>
     <string name="repo_mirror_add_info">Die Adresse (%s) ist ein Spiegelserver einer vorhandenen Paketquelle.</string>
     <string name="search_no_results">Keine Apps gefunden\n\nVersuche es mit weniger Suchbegriffen oder schalte weitere Paketquellen ein</string>

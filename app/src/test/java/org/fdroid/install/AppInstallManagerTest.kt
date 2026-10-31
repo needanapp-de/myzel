@@ -46,6 +46,7 @@ import org.fdroid.fdroid.ProgressListener
 import org.fdroid.history.HistoryManager
 import org.fdroid.history.InstallEvent
 import org.fdroid.index.v2.FileV1
+import org.fdroid.utils.isOldXiaomi
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -116,6 +117,8 @@ internal class AppInstallManagerTest {
     mockkObject(AppInstallService.Companion)
     every { AppInstallService.isServiceRunning } returns true
     mockkStatic(::getUri)
+    mockkStatic(::isOldXiaomi)
+    every { isOldXiaomi(any()) } returns false
 
     val cacheDir = tmpFolder.newFolder()
     every { context.cacheDir } returns cacheDir
@@ -143,6 +146,7 @@ internal class AppInstallManagerTest {
   fun tearDown() {
     unmockkObject(AppInstallService.Companion)
     unmockkStatic(::getUri)
+    unmockkStatic(::isOldXiaomi)
   }
 
   @Test
@@ -726,5 +730,37 @@ internal class AppInstallManagerTest {
 
       // Clean up
       appInstallManager.cancel(otherPackageName)
+    }
+
+  @Test
+  fun `install uses legacy install on old Xiaomi devices`() = runBlocking {
+    every { isOldXiaomi(any()) } returns true
+    every { sessionInstallManager.usesPackageInstaller } returns true // Myzel
+    coEvery { sessionInstallManager.requestPreapproval(any(), any(), any(), any(), any()) } returns
+      PreApprovalResult.NotSupported
+    every { sessionInstallManager.installLegacy(any()) } just runs
+
+    val result = installApp()
+
+    assertIs<InstallState.UserAborted>(result)
+    verify(exactly = 1) { sessionInstallManager.installLegacy(any()) }
+    coVerify(exactly = 0) { sessionInstallManager.install(any(), any(), any(), any()) }
+  }
+
+  // Myzel
+  @Test
+  fun `install on old Xiaomi devices with root or Shizuku installs without the legacy dialog`() =
+    runBlocking {
+      every { isOldXiaomi(any()) } returns true
+      every { sessionInstallManager.usesPackageInstaller } returns false
+      coEvery {
+        sessionInstallManager.requestPreapproval(any(), any(), any(), any(), any())
+      } returns PreApprovalResult.NotSupported
+      coEvery { sessionInstallManager.install(any(), any(), any(), any()) } returns installedState
+
+      val result = installApp()
+
+      assertIs<InstallState.Installed>(result)
+      verify(exactly = 0) { sessionInstallManager.installLegacy(any()) }
     }
 }

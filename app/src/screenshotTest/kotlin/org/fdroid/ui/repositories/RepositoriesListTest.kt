@@ -18,7 +18,7 @@ fun RepositoriesListTest() =
       RepositoryModel(
         repositories = repoItems,
         showOnboarding = false,
-        lastCheckForUpdate = "42min. ago",
+        lastCheckForUpdate = System.currentTimeMillis() - 42 * 60_000,
         networkState = NetworkState(isOnline = false, isMetered = false),
       )
     val info = getRepositoriesInfo(model, repoItems[0].repoId)
@@ -38,7 +38,7 @@ fun RepositoriesListNightTest() =
       RepositoryModel(
         repositories = repoItems.map { if (it.name == "F-Droid") it else it.copy(enabled = false) },
         showOnboarding = false,
-        lastCheckForUpdate = "23hrs. ago",
+        lastCheckForUpdate = System.currentTimeMillis() - 23 * 3_600_000,
         networkState = NetworkState(isOnline = true, isMetered = false),
       )
     val info = getRepositoriesInfo(model, null)

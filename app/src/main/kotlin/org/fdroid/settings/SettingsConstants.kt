@@ -68,6 +68,10 @@ object SettingsConstants {
   const val PREF_KEY_APP_LIST_SORT_ORDER = "appListSortOrder"
   const val PREF_DEFAULT_APP_LIST_SORT_ORDER = "lastUpdated"
 
+  const val PREF_KEY_PRIVILEGED_EXTENSION_NEEDS_MIGRATION = "privilegedExtensionNeedsMigration"
+  // Myzel: war nie mit der Privileged Extension installiert (eigene App-ID), nichts umzustellen
+  const val PREF_DEFAULT_PRIVILEGED_EXTENSION_NEEDS_MIGRATION = false
+
   fun getAppListSortOrder(s: String?) =
     when (s) {
       "name" -> AppListSortOrder.NAME

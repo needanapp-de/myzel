@@ -39,12 +39,15 @@ import kotlinx.coroutines.launch
 val MyzelAccent = Color(0xFFFF5A1F)
 
 /**
- * Die Darstellung von Myzel, solange nichts gespeichert ist: der Stil Myzel in Alu und Graphit (die
- * Standard-Farbwelten des Stils) mit Orange, auch als Vorlage und als erste eigene Farbe.
+ * Die Darstellung von Myzel, solange nichts gespeichert ist: der Stil NeedAnApp in „Wolke“ und
+ * „Nordnacht“ (die Standard-Farbwelten des Stils) mit Myzels Orange, auch als Vorlage und als erste
+ * eigene Farbe. Bis 0.22.1 war es der Stil Myzel in Alu und Graphit; wer Myzel schon nutzt, behält
+ * seinen Stil, denn [prepareMyzelAppearance] hat beim ersten Start die ganze Darstellung
+ * gespeichert.
  */
 val MyzelThemeDefaults =
   ThemeSettings(
-    design = DesignStyle.MYZEL,
+    design = DesignStyle.NEEDANAPP,
     preset = AccentPreset.ORANGE,
     customAccent = MyzelAccent,
   )

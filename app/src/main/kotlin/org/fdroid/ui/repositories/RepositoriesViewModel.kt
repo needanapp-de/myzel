@@ -59,7 +59,6 @@ constructor(
     lazy(LazyThreadSafetyMode.NONE) {
       moleculeScope.launchMolecule(mode = ContextClock) {
         RepositoriesPresenter(
-          context = application,
           repositoriesFlow = repos,
           repoSortingMapFlow = repoSortingMap,
           showOnboardingFlow = showOnboarding,

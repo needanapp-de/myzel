@@ -14,6 +14,7 @@ import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import java.io.File
+import java.util.concurrent.ConcurrentHashMap
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.CancellationException
@@ -68,6 +69,9 @@ sealed interface WatchReach {
 /** So lange wartet eine Installation höchstens darauf, dass Myzel Wear antwortet. */
 private const val WAIT_FOR_WATCH_MILLIS = 5 * 60_000L
 
+/** Ziel eines Auftrags zum Entfernen, siehe [WatchInstaller.goals]. */
+private const val REMOVAL = -1L
+
 /** Gründe, aus denen ein erneuter Versuch nichts ändert: Die Uhr muss neu eingerichtet werden. */
 private val FINAL_REASONS =
   setOf(
@@ -93,14 +97,28 @@ sealed interface WatchInstallState {
   /** Die APK geht über Bluetooth an die Uhr. */
   data class Sending(val fraction: Float) : WatchInstallState
 
-  /** Die Uhr fragt den Nutzer, ob sie installieren soll. */
-  data object Confirm : WatchInstallState
+  /**
+   * Die Uhr fragt den Nutzer, ob sie installieren soll.
+   *
+   * @param notification die Bitte steht in einer Benachrichtigung auf der Uhr
+   */
+  data class Confirm(val notification: Boolean) : WatchInstallState
 
   /** Myzel bittet Myzel Wear, die App zu entfernen. */
   data object Removing : WatchInstallState
 
-  /** Die Uhr fragt den Nutzer, ob sie die App entfernen soll. */
-  data object ConfirmRemoval : WatchInstallState
+  /**
+   * Die Uhr fragt den Nutzer, ob sie die App entfernen soll.
+   *
+   * @param notification die Bitte steht in einer Benachrichtigung auf der Uhr
+   */
+  data class ConfirmRemoval(val notification: Boolean) : WatchInstallState
+
+  /**
+   * Der Nutzer hat auf der Uhr nicht rechtzeitig bestätigt; die Bitte steht dort noch. Bestätigt er
+   * später, räumt die nächste Abfrage den Stand ab ([WatchInstaller.probe]).
+   */
+  data class Unconfirmed(val removal: Boolean) : WatchInstallState
 
   /** Myzel kam nicht an die Uhr, siehe [WatchException.Reason]. */
   data class Unreachable(val reason: WatchException.Reason) : WatchInstallState
@@ -117,9 +135,9 @@ val WatchInstallState?.isRunning: Boolean
       this == WatchInstallState.WaitingForWatch ||
       this is WatchInstallState.Downloading ||
       this is WatchInstallState.Sending ||
-      this == WatchInstallState.Confirm ||
+      this is WatchInstallState.Confirm ||
       this == WatchInstallState.Removing ||
-      this == WatchInstallState.ConfirmRemoval
+      this is WatchInstallState.ConfirmRemoval
 
 /**
  * Bringt die Uhr-Version einer App auf die eingerichtete Uhr und entfernt sie wieder (Umbauplan
@@ -145,6 +163,12 @@ constructor(
 
   /** Der Stand je Paketname; ohne Eintrag lief für die App noch keine Installation. */
   val states: StateFlow<Map<String, WatchInstallState>> = _states.asStateFlow()
+
+  /**
+   * Wohin der letzte Auftrag je Paketname wollte: der versionCode einer Installation oder
+   * [REMOVAL]. Daran erkennt [settle], dass ein Fehler oder eine offene Bestätigung überholt ist.
+   */
+  private val goals = ConcurrentHashMap<String, Long>()
 
   /** Die eingerichtete Uhr, null ohne. */
   val watch: StateFlow<PairedWatch?> = bridge.watch
@@ -198,6 +222,7 @@ constructor(
       try {
         val info = bridge.check(packageNames)
         store.saveApps(info.apps, complete)
+        settle(info.apps)
         WatchReach.Ok(info)
       } catch (e: CancellationException) {
         throw e
@@ -228,6 +253,25 @@ constructor(
     }
   }
 
+  /**
+   * Räumt die Stände ab, die [apps] überholt: Die App ist auf der Uhr so, wie der letzte Auftrag
+   * wollte, etwa weil der Nutzer erst nach dem Warten bestätigt hat.
+   */
+  private fun settle(apps: List<WatchPackage>) {
+    val byName = apps.associateBy { it.packageName }
+    _states.update { states ->
+      states.filterNot { (name, state) ->
+        val app = byName[name]
+        val goal = goals[name]
+        when {
+          app == null || goal == null || state.isRunning -> false
+          goal == REMOVAL -> !app.installed
+          else -> app.installed && app.versionCode >= goal
+        }
+      }
+    }
+  }
+
   /** Fragt Myzel Wear nach allen Apps mit Uhr-Version aus den Paketquellen ([WatchCatalog]). */
   fun checkAll() {
     if (!_checkingAll.compareAndSet(expect = false, update = true)) return
@@ -245,17 +289,24 @@ constructor(
 
   /** Lädt [version] und installiert sie auf der Uhr; den Stand zeigen [states] und [apps]. */
   fun install(version: AppVersion) =
-    launchTask(version.packageName, WatchInstallState.Connecting, WatchInstallProblem.INSTALL) {
+    launchTask(
+      version.packageName,
+      version.versionCode,
+      WatchInstallState.Connecting,
+      WatchInstallProblem.INSTALL,
+    ) {
       run(version)
     }
 
   /** Lässt Myzel Wear [packageName] entfernen; den Stand zeigen [states] und [apps]. */
   fun uninstall(packageName: String) =
-    launchTask(packageName, WatchInstallState.Removing, WatchInstallProblem.UNINSTALL) {
+    launchTask(packageName, REMOVAL, WatchInstallState.Removing, WatchInstallProblem.UNINSTALL) {
       var result: WatchInstallState? = WatchInstallState.Failed(WatchInstallProblem.UNINSTALL)
       bridge.uninstall(packageName) { step ->
         when (step) {
-          WatchInstallStep.Confirm -> set(packageName, WatchInstallState.ConfirmRemoval)
+          is WatchInstallStep.Confirm ->
+            set(packageName, WatchInstallState.ConfirmRemoval(step.notification))
+          WatchInstallStep.Unconfirmed -> result = WatchInstallState.Unconfirmed(removal = true)
           WatchInstallStep.Removed -> {
             remember(WatchPackage(packageName, installed = false))
             result = null
@@ -272,14 +323,17 @@ constructor(
   /**
    * Führt [task] für [packageName] aus, wenn dafür nicht schon etwas läuft. Gibt [task] null
    * zurück, ist es gelungen und der Stand verschwindet; sonst bleibt das Ergebnis in [states].
+   * [goal] siehe [goals].
    */
   private fun launchTask(
     packageName: String,
+    goal: Long,
     start: WatchInstallState,
     problem: WatchInstallProblem,
     task: suspend () -> WatchInstallState?,
   ) {
     if (_states.value[packageName].isRunning) return
+    goals[packageName] = goal
     set(packageName, start)
     scope.launch {
       val result =
@@ -329,7 +383,9 @@ constructor(
       bridge.install(apk) { step ->
         when (step) {
           is WatchInstallStep.Sending -> set(packageName, WatchInstallState.Sending(step.fraction))
-          WatchInstallStep.Confirm -> set(packageName, WatchInstallState.Confirm)
+          is WatchInstallStep.Confirm ->
+            set(packageName, WatchInstallState.Confirm(step.notification))
+          WatchInstallStep.Unconfirmed -> result = WatchInstallState.Unconfirmed(removal = false)
           is WatchInstallStep.Installed -> {
             // nannte die Uhr den Stand nicht, ist es die eben geprüfte APK
             remember(

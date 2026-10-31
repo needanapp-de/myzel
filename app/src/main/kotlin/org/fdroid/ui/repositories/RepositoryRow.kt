@@ -15,11 +15,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import de.needanapp.myzel.ui.compat.ListItem
 import de.needanapp.myzel.ui.compat.Switch
+import de.needanapp.myzel.ui.repositories.asPastTimeString
 import org.fdroid.R
 import org.fdroid.ui.FDroidContent
 import org.fdroid.ui.utils.AsyncShimmerImage
 import org.fdroid.ui.utils.BadgeIcon
-import org.fdroid.ui.utils.asRelativeTimeString
 import org.fdroid.ui.utils.repoItems
 
 @Composable
@@ -50,11 +50,12 @@ fun RepositoryRow(
     },
     headlineContent = { Text(repoItem.name) },
     supportingContent = {
+      // Myzel: genaue Zeit (asPastTimeString), ohne Index „Noch nicht geladen“
       val lastUpdated =
         if (repoItem.timestamp <= 0) {
-          stringResource(R.string.repositories_last_update_never)
+          stringResource(R.string.myzel_repo_not_loaded)
         } else {
-          repoItem.timestamp.asRelativeTimeString()
+          stringResource(R.string.repo_last_update_upstream, repoItem.timestamp.asPastTimeString())
         }
       // Myzel: lässt sich die Quelle nicht laden, steht das rot unter dem Namen
       if (repoItem.hasIssue) {
@@ -67,7 +68,7 @@ fun RepositoryRow(
           color = MaterialTheme.colorScheme.error,
         )
       } else {
-        Text(stringResource(R.string.repo_last_update_upstream, lastUpdated))
+        Text(lastUpdated)
       }
     },
     trailingContent = { Switch(repoItem.enabled, onCheckedChange = onRepoEnabled) },

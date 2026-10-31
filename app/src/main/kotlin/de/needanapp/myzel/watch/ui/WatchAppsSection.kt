@@ -189,7 +189,7 @@ internal fun WearUpdateNote(update: WearUpdateState, modifier: Modifier = Modifi
           trackColor = scheme.outlineVariant,
           modifier = Modifier.fillMaxWidth(),
         )
-      WearUpdateState.Confirm,
+      is WearUpdateState.Confirm,
       WearUpdateState.Restarting ->
         SignalLinearProgressIndicator(
           trackColor = scheme.outlineVariant,
@@ -207,7 +207,11 @@ internal fun wearUpdateText(update: WearUpdateState): String =
       stringResource(R.string.myzel_watch_wear_update_downloading, (update.fraction * 100).toInt())
     is WearUpdateState.Sending ->
       stringResource(R.string.myzel_watch_wear_update_sending, (update.fraction * 100).toInt())
-    WearUpdateState.Confirm -> stringResource(R.string.myzel_watch_wear_update_confirm)
+    is WearUpdateState.Confirm ->
+      stringResource(
+        if (update.notification) R.string.myzel_watch_wear_update_confirm_notification
+        else R.string.myzel_watch_wear_update_confirm
+      )
     WearUpdateState.Restarting -> stringResource(R.string.myzel_watch_wear_update_restarting)
     is WearUpdateState.Failed ->
       listOfNotNull(stringResource(R.string.myzel_watch_wear_update_failed), update.message)
@@ -245,9 +249,22 @@ internal fun watchStateText(state: WatchInstallState): String =
       stringResource(R.string.myzel_details_status_downloading, (state.fraction * 100).toInt())
     is WatchInstallState.Sending ->
       stringResource(R.string.myzel_details_watch_sending, (state.fraction * 100).toInt())
-    WatchInstallState.Confirm -> stringResource(R.string.myzel_details_watch_confirm)
+    is WatchInstallState.Confirm ->
+      stringResource(
+        if (state.notification) R.string.myzel_details_watch_confirm_notification
+        else R.string.myzel_details_watch_confirm
+      )
     WatchInstallState.Removing -> stringResource(R.string.myzel_details_watch_removing)
-    WatchInstallState.ConfirmRemoval -> stringResource(R.string.myzel_details_watch_confirm_removal)
+    is WatchInstallState.ConfirmRemoval ->
+      stringResource(
+        if (state.notification) R.string.myzel_details_watch_confirm_removal_notification
+        else R.string.myzel_details_watch_confirm_removal
+      )
+    is WatchInstallState.Unconfirmed ->
+      stringResource(
+        if (state.removal) R.string.myzel_details_watch_unconfirmed_removal
+        else R.string.myzel_details_watch_unconfirmed
+      )
     is WatchInstallState.Unreachable -> stringResource(state.reason.text())
     is WatchInstallState.Failed -> {
       val text =

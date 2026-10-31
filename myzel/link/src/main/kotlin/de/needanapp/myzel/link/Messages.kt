@@ -119,6 +119,12 @@ enum class InstallStatus {
  */
 data class Install(val status: InstallStatus, val message: String) : Message
 
+/**
+ * [Install.message] zu [InstallStatus.CONFIRM]: Myzel Wear war nicht vorn (etwa bei ausgeschaltetem
+ * Display) und durfte den Dialog nicht öffnen; die Bitte steht in einer Benachrichtigung.
+ */
+const val CONFIRM_BY_NOTIFICATION = "notification"
+
 /** Handy → Uhr: Welche dieser Apps sind installiert? Die Uhr antwortet mit [AppStates]. */
 data class AppQuery(val packageNames: List<String>) : Message
 

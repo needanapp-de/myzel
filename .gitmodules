@@ -3,5 +3,5 @@
 	url = https://gitlab.com/fdroid/fdroidclient-fastlane.git
 [submodule "myzel/needanapp-design"]
 	path = myzel/needanapp-design
-	url = https://git.needanapp.de/needanapp.de/needanapp-design.git
+	url = https://github.com/needanapp-de/needanapp-design.git
 	branch = main

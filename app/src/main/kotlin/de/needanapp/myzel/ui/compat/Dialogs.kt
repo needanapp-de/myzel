@@ -76,6 +76,7 @@ fun DeleteDialog(onDismissDialog: () -> Unit, onDelete: () -> Unit) {
     onDismiss = onDismissDialog,
     isDestructive = true,
     icon = Icons.Outlined.Delete,
+    confirmIcon = Icons.Outlined.Delete,
   ) {
     Text(stringResource(R.string.repo_confirm_delete_body))
   }
@@ -94,6 +95,7 @@ fun DeleteMirrorDialog(onDismiss: () -> Unit, onDelete: () -> Unit) {
     onDismiss = onDismiss,
     isDestructive = true,
     icon = Icons.Outlined.Delete,
+    confirmIcon = Icons.Outlined.Delete,
   ) {
     Text(stringResource(R.string.repo_confirm_delete_mirror_body))
   }
@@ -180,6 +182,7 @@ fun DisableRepoDialog(onDisable: () -> Unit, onDismiss: () -> Unit) {
     onDismiss = onDismiss,
     isDestructive = true,
     icon = Icons.Outlined.PauseCircle,
+    confirmIcon = Icons.Outlined.PauseCircle,
   ) {
     Text(stringResource(R.string.repo_disable_dialog_text))
     Row(

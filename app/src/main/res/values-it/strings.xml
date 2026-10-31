@@ -470,9 +470,11 @@
     <string name="category_group_health">Salute</string>
     <string name="category_group_summary_health">App per il fitness, l\'alimentazione e la salute</string>
     <string name="panic_hide_migration_title">La nuova versione di F-Droid ha modificato la funzione di occultamento delle app</string>
-    <string name="panic_hide_migration_message">La calcolatrice non c\'è più, ma puoi comunque modificare in modo permanente l\'icona dell\'app nelle impostazioni. Scorri fino a trovare “Icona app”.</string>
+    <string name="panic_hide_migration_message">La funzione calcolatrice è stata rimossa, ma puoi comunque modificare l\'icona dell\'app in modo permanente tramite le impostazioni \'icona app\' e \'pulsante antipanico\'.</string>
     <string name="panic_hide_migration_button">Verifica le impostazioni</string>
     <string name="icon_title">Icona dell\'app</string>
     <string name="icon_summary">Seleziona l\'icona di questa app sulla schermata iniziale e nel cassetto delle app</string>
     <string name="icon_intro">Seleziona un\'icona e un nome per questa app. Questi elementi verranno visualizzati nella schermata iniziale e nel menu delle app.\n\nNota: le notifiche utilizzeranno sempre l\'icona e il nome predefiniti.</string>
+    <string name="panic_hide_warning_title">Ricorda come ripristinare</string>
+    <string name="panic_hide_warning_message">In caso di emergenza, questa opzione mostrerà l\'icona e il nome Calcolatrice per questa app nella schermata Home e nell\'elenco delle applicazioni. Utilizzare le impostazioni dell\'icona dell\'app per ripristinare l\'icona e il nome predefiniti.\n\nNota: le notifiche utilizzeranno sempre l\'icona e il nome predefiniti.</string>
 </resources>

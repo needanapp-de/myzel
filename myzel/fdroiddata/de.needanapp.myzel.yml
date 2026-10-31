@@ -1,9 +1,11 @@
-# Entwurf für fdroiddata (metadata/de.needanapp.myzel.yml), noch nicht eingereicht; was vorher
-# fehlt, steht in myzel/README.md unter „F-Droid (vorbereitet)“. Zwei Builds je Version: Myzel fürs
-# Handy (versionCode 1000 + n) und Myzel Wear als Uhr-Version desselben Pakets (versionCode n,
-# darunter wie bei Catima; Merkmal android.hardware.type.watch). F-Droid signiert beide mit
-# demselben Schlüssel, deshalb nimmt Myzel die Uhr-Version aus dieser Paketquelle
-# (de.needanapp.myzel.watch.MyzelWearSource).
+# Entwurf für fdroiddata (metadata/de.needanapp.myzel.yml), noch nicht eingereicht. Zwei Builds je
+# Version: Myzel fürs Handy (versionCode 1000 + n) und Myzel Wear als Uhr-Version desselben Pakets
+# (versionCode n, darunter wie bei Catima; Merkmal android.hardware.type.watch). F-Droid signiert
+# beide mit demselben Schlüssel, deshalb nimmt Myzel die Uhr-Version aus dieser Paketquelle
+# (de.needanapp.myzel.watch.MyzelWearSource). Aus den Quellen baubar erst ab 0.23.0: Bis 0.22.1 lag
+# das Design-Paket (Submodul myzel/needanapp-design) nicht öffentlich, seitdem kommt es von
+# github.com/needanapp-de/needanapp-design. scandelete wie bei F-Droid Basic (org.fdroid.basic):
+# Testdateien mit JARs, die der Scanner sonst beanstandet.
 Categories:
   - System
 License: GPL-3.0-or-later
@@ -18,25 +20,28 @@ RepoType: git
 Repo: https://github.com/needanapp-de/myzel.git
 
 Builds:
-  - versionName: 0.11.0
-    versionCode: 1023
-    commit: myzel-0.11.0
+  - versionName: 0.23.0
+    versionCode: 1041
+    commit: myzel-0.23.0
     subdir: app
     submodules: true
     gradle:
-      - basicDefault
-    scanignore:
+      - basic
+      - default
+    scandelete:
       - libs/index/src/commonTest/resources
+      - libs/sharedTest/src/commonMain/resources
 
-  - versionName: 0.11.0
-    versionCode: 23
-    commit: myzel-0.11.0
+  - versionName: 0.23.0
+    versionCode: 41
+    commit: myzel-0.23.0
     subdir: myzel/wear
     submodules: true
     gradle:
       - yes
-    scanignore:
+    scandelete:
       - libs/index/src/commonTest/resources
+      - libs/sharedTest/src/commonMain/resources
 
 AutoUpdateMode: Version
 UpdateCheckMode: Tags ^myzel-
@@ -44,5 +49,5 @@ VercodeOperation:
   - '%c'
   - '%c - 1000'
 UpdateCheckData: myzel/version.properties|versionCode=(\d+)|myzel/version.properties|versionName=(.+)
-CurrentVersion: 0.11.0
-CurrentVersionCode: 1023
+CurrentVersion: 0.23.0
+CurrentVersionCode: 1041

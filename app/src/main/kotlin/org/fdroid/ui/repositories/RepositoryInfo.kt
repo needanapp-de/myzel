@@ -24,6 +24,7 @@ interface RepositoryInfo {
 data class RepositoryModel(
   val repositories: List<RepositoryItem>?,
   val showOnboarding: Boolean,
-  val lastCheckForUpdate: String,
+  // Myzel: der Zeitpunkt, 0 oder kleiner: noch nie; die Oberfläche formatiert ihn in ihrer Sprache
+  val lastCheckForUpdate: Long,
   val networkState: NetworkState,
 )

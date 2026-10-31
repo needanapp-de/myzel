@@ -28,6 +28,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Bluetooth
 import androidx.compose.material.icons.outlined.Delete
+import androidx.compose.material.icons.outlined.LinkOff
 import androidx.compose.material.icons.outlined.Refresh
 import androidx.compose.material.icons.outlined.SystemUpdate
 import androidx.compose.material.icons.outlined.VisibilityOff
@@ -254,6 +255,7 @@ private fun Overview(viewModel: WatchViewModel, watch: PairedWatch) {
       onDismiss = { confirmForget = false },
       isDestructive = true,
       icon = Icons.Outlined.Watch,
+      confirmIcon = Icons.Outlined.LinkOff,
     ) {
       Text(stringResource(R.string.myzel_watch_forget_text))
     }

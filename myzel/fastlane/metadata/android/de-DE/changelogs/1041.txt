@@ -1,0 +1,5 @@
+• Basiert jetzt auf F-Droid 2.0.3: schnellere Suche unter Android 14, Installation auf Xiaomi/Redmi repariert, „Neue Apps“ nach Aufnahmedatum
+• Uhr: Myzel wartet auf die Bestätigung an der Uhr, auch per Benachrichtigung bei dunklem Display
+• Paketquellen zeigen die genaue Zeit, etwa „am 29.10. um 12:39“
+• Stil NeedAnApp ist Standard für neue Installationen; Dialoge dort mit farbigem Band
+• Quellcode auf GitHub jetzt samt Design-Paket baubar
