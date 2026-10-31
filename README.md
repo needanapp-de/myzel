@@ -42,6 +42,44 @@ apps.needanapp.de neu; Myzel Wear auf der Uhr ebenso.
 Die App für die Uhr musst du nicht selbst installieren: Myzel holt sie bei der Einrichtung der Uhr aus derselben
 Paketquelle und hält sie danach aktuell.
 
+## Warnung von Google Play Protect
+
+Auf Handys mit Google-Diensten kann Play Protect Myzel als „schädliche App“ oder „unsichere App“ melden, die
+Installation blockieren oder später vorschlagen, Myzel zu deinstallieren. Myzel ist keine Schadsoftware. Die Warnung
+hat zwei Gründe:
+
+- **ADB für die Uhr:** Um Myzel auf eine Wear-OS-Uhr zu bringen, enthält Myzel einen ADB-Client
+  ([libadb-android](https://github.com/MuntashirAkon/libadb-android)). Das ist dieselbe Technik, mit der Entwickler über
+  „Debugging über WLAN“ Apps auf ein Gerät spielen. Play Protect stuft Apps, die das können, pauschal als riskant ein,
+  besonders wenn sie nicht aus dem Play Store kommen.
+- **Rechte eines App-Stores:** Myzel installiert, aktualisiert und entfernt Apps und sieht dafür, welche Apps
+  installiert sind. Das brauchen alle App-Stores, Play Protect bewertet es bei unbekannten Apps trotzdem streng.
+
+Was Myzel mit ADB macht und was nicht:
+
+- ADB kommt nur bei der Einrichtung der Uhr zum Einsatz, und die startest du selbst: Du schaltest auf der Uhr
+  „Debugging über WLAN“ ein und gibst den Kopplungscode der Uhr in Myzel ein.
+- Myzel verbindet sich dabei nur mit einer Uhr. Ein Handy oder Tablet mit „Debugging über WLAN“ lehnt es ab.
+- Auf der Uhr installiert Myzel nur Myzel Wear, gibt ihm die nötigen Rechte (Bluetooth, Benachrichtigungen, Apps
+  installieren) und übergibt einen Schlüssel. Danach schaltet Myzel „Debugging über WLAN“ auf der Uhr wieder ab. Alles
+  Weitere läuft über Bluetooth zwischen Myzel und Myzel Wear.
+- Auf dem Handy selbst nutzt Myzel kein ADB. Myzel schickt keine Daten an Dritte und enthält keine Werbung, kein
+  Tracking und keine Absturzberichte.
+- Der Quellcode liegt offen in diesem Repository, und die App ist mit dem Schlüssel von needanapp.de signiert
+  (Fingerabdruck oben unter „Installieren“).
+
+So installierst du Myzel trotzdem:
+
+1. Lade Myzel nur aus apps.needanapp.de oder von den Releases dieser Seite. Wer sichergehen will, vergleicht die
+   Signatur der APK mit dem Fingerabdruck oben, etwa mit `apksigner verify --print-certs myzel-<version>.apk`.
+2. Erscheint beim Installieren die Warnung von Play Protect, tippe auf „Weitere Details“ und dann auf „Trotzdem
+   installieren“. Die Bezeichnungen unterscheiden sich je nach Android-Version leicht. Ob du die App zur Prüfung an
+   Google schickst, kannst du frei entscheiden; an Myzel ändert das nichts.
+3. Hat Play Protect die Installation ganz blockiert oder Myzel deaktiviert: Öffne den Play Store, tippe oben rechts
+   auf dein Profilbild, dann auf „Play Protect“ und das Zahnrad, und schalte „Apps mit Play Protect scannen“
+   vorübergehend aus. Installiere Myzel und schalte die Prüfung danach wieder ein. Meldet Play Protect Myzel später
+   noch einmal, wähle dort, dass du die App behalten möchtest.
+
 ## Bilder
 
 <table>
