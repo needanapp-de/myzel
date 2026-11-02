@@ -251,7 +251,8 @@ private fun UpdatesGroup(model: SettingsModel, sections: SectionState) {
   val appUpdates = rememberPreferenceState(PREF_KEY_APP_AUTO_UPDATES, PREF_DEFAULT_APP_AUTO_UPDATES)
   var choosing by rememberSaveable { mutableStateOf<String?>(null) }
   SettingsGroup(
-    stringResource(R.string.updates),
+    // hier steht auch, wie Myzel installiert
+    stringResource(R.string.myzel_install_updates),
     id = "updates",
     sectionState = sections,
     icon = Icons.Outlined.Update,

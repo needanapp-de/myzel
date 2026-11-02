@@ -43,6 +43,7 @@ import de.needanapp.myzel.ui.compat.IconButton
 import de.needanapp.myzel.ui.compat.OnboardingPopupCard
 import de.needanapp.myzel.ui.compat.Scaffold
 import de.needanapp.myzel.ui.compat.TopAppBar
+import de.needanapp.myzel.ui.repositories.RefreshAllButton
 import de.needanapp.myzel.ui.repositories.RepositoriesList
 import de.needanapp.myzel.ui.repositories.asPastTimeString
 import org.fdroid.R
@@ -103,6 +104,8 @@ fun Repositories(info: RepositoryInfo, isBigScreen: Boolean, onBackClicked: () -
           }
         },
         title = { Text(stringResource(R.string.app_details_repositories)) },
+        // Myzel: alle auf einmal aktualisieren
+        actions = { RefreshAllButton() },
         subtitle = {
           // Myzel: „vor 17 Min.“ oder „am 29.10. um 07:09“
           val lastUpdated = info.model.lastCheckForUpdate

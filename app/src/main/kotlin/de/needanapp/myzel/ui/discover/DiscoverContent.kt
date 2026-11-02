@@ -76,8 +76,8 @@ import de.needanapp.myzel.recent.rememberRecentAppsCount
 import de.needanapp.myzel.ui.apps.rememberNewAndUpdateCounts
 import de.needanapp.myzel.ui.apps.rememberNewAndUpdateCountsByRepo
 import de.needanapp.myzel.ui.categories.CategoryList
+import de.needanapp.myzel.ui.nav.RepoBoardSwitch
 import de.needanapp.myzel.ui.nav.RepoState
-import de.needanapp.myzel.ui.nav.RepoUpdateDisplay
 import de.needanapp.myzel.ui.nav.rememberRepoState
 import de.needanapp.myzel.ui.nav.repoTimeText
 import kotlinx.coroutines.delay
@@ -269,21 +269,16 @@ fun DiscoverContent(
  * Die Anzeige oben in Entdecken: wie viele Apps neu sind und wie viele Updates es gibt, rechts wann
  * die Paketquellen zuletzt geladen wurden; ließen sich welche nicht laden, sagt sie das. Danach
  * schaltet sie durch die Paketquellen, die etwas zu melden haben ([NewsDisplay]); ein Tipp öffnet,
- * was die Meldung betrifft ([onNav]). Während einer Aktualisierung zeigt sie deren Fortschritt
- * ([RepoUpdateDisplay]).
+ * was die Meldung betrifft ([onNav]). Während einer Aktualisierung fährt sie nach unten aus und
+ * zeigt jede Paketquelle ([RepoBoardSwitch]).
  */
 @Composable
 internal fun DiscoverDisplay(modifier: Modifier, onNav: (NavKey) -> Unit) {
   val repos = rememberRepoState()
-  // mit der Punktreihe wird die Anzeige höher; das gleitet, statt Entdecken springen zu lassen
+  // mit den Zeilen der Paketquellen wird die Anzeige höher; das gleitet, statt Entdecken springen
+  // zu lassen
   Box(modifier.animateContentSize(emphasizedSpec())) {
-    val update = repos.update
-    if (update != null) {
-      // während einer Aktualisierung: welche Paketquelle gerade lädt und wie weit alle sind
-      RepoUpdateDisplay(update)
-    } else {
-      NewsDisplay(repos, onNav)
-    }
+    RepoBoardSwitch { NewsDisplay(repos, onNav) }
   }
 }
 

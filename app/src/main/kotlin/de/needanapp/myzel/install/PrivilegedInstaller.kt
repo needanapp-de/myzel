@@ -26,7 +26,8 @@ import rikka.shizuku.Shizuku
 sealed interface InstallAccess {
   data object Granted : InstallAccess
 
-  data class Denied(@StringRes val reason: Int) : InstallAccess
+  /** [app]: Paket der App, in der sich der Zugriff erlauben lässt (Root-App, Shizuku), falls da. */
+  data class Denied(@StringRes val reason: Int, val app: String? = null) : InstallAccess
 }
 
 /** Ergebnis einer Installation über Root oder Shizuku. */
@@ -51,15 +52,19 @@ constructor(@param:ApplicationContext private val context: Context) {
   private val mutex = Mutex()
 
   /**
-   * Prüft den Zugriff und fragt ihn bei Bedarf an: Root zeigt dabei die Abfrage von Magisk oder
-   * KernelSU, Shizuku seine eigene.
+   * Prüft den Zugriff und fragt ihn bei Bedarf an: Shizuku zeigt dabei seine Abfrage, ältere
+   * Versionen von Magisk ihre. Magisk ab 31.1 und KernelSU fragen nicht, dort muss Myzel vorher
+   * erlaubt sein; sonst nennt [InstallAccess.Denied] die Root-App, in der das geht.
    */
   suspend fun requestAccess(method: InstallMethod): InstallAccess =
     when (method) {
       InstallMethod.SESSION -> InstallAccess.Granted
       InstallMethod.ROOT ->
-        if (hasRoot(ROOT_PROMPT_TIMEOUT_MS)) InstallAccess.Granted
-        else InstallAccess.Denied(R.string.myzel_install_root_denied)
+        when (rootAccess(ROOT_PROMPT_TIMEOUT_MS)) {
+          RootAccess.GRANTED -> InstallAccess.Granted
+          RootAccess.DENIED -> InstallAccess.Denied(R.string.myzel_install_root_denied, rootApp())
+          RootAccess.MISSING -> InstallAccess.Denied(R.string.myzel_install_root_missing)
+        }
       InstallMethod.SHIZUKU -> requestShizuku()
     }
 
@@ -107,16 +112,31 @@ constructor(@param:ApplicationContext private val context: Context) {
   }
 
   private suspend fun hasRoot(timeoutMs: Long): Boolean =
+    rootAccess(timeoutMs) == RootAccess.GRANTED
+
+  /** Ohne su gibt es kein Root; gibt es su, hat die Root-App abgelehnt oder nicht geantwortet. */
+  private suspend fun rootAccess(timeoutMs: Long): RootAccess =
     try {
-      isRootId(RootShell.execute("id", timeoutMs = timeoutMs))
+      if (isRootId(RootShell.execute("id", timeoutMs = timeoutMs))) RootAccess.GRANTED
+      else RootAccess.DENIED
     } catch (_: TimeoutCancellationException) {
-      false
+      RootAccess.DENIED
     } catch (e: CancellationException) {
       throw e
     } catch (e: Exception) {
       log.info { "No root: ${e.message}" }
-      false
+      RootAccess.MISSING
     }
+
+  /** Die installierte Root-App, in der Myzel Root bekommt, oder null. */
+  private fun rootApp(): String? = ROOT_APPS.firstOrNull {
+    context.packageManager.getLaunchIntentForPackage(it) != null
+  }
+
+  /** Shizuku, falls installiert. */
+  private fun shizukuApp(): String? = SHIZUKU_APP.takeIf {
+    context.packageManager.getLaunchIntentForPackage(it) != null
+  }
 
   private fun hasShizuku(): Boolean =
     try {
@@ -132,14 +152,15 @@ constructor(@param:ApplicationContext private val context: Context) {
     withContext(Dispatchers.Main) {
       when {
         !runCatching { Shizuku.pingBinder() }.getOrDefault(false) ->
-          InstallAccess.Denied(R.string.myzel_install_shizuku_not_running)
-        Shizuku.isPreV11() -> InstallAccess.Denied(R.string.myzel_install_shizuku_too_old)
+          InstallAccess.Denied(R.string.myzel_install_shizuku_not_running, shizukuApp())
+        Shizuku.isPreV11() ->
+          InstallAccess.Denied(R.string.myzel_install_shizuku_too_old, shizukuApp())
         Shizuku.checkSelfPermission() == PERMISSION_GRANTED -> InstallAccess.Granted
         Shizuku.shouldShowRequestPermissionRationale() ->
           // „nicht mehr fragen“: nur in Shizuku selbst wieder freizugeben
-          InstallAccess.Denied(R.string.myzel_install_shizuku_denied)
+          InstallAccess.Denied(R.string.myzel_install_shizuku_denied, shizukuApp())
         awaitShizukuPermission() -> InstallAccess.Granted
-        else -> InstallAccess.Denied(R.string.myzel_install_shizuku_denied)
+        else -> InstallAccess.Denied(R.string.myzel_install_shizuku_denied, shizukuApp())
       }
     }
 
@@ -157,9 +178,27 @@ constructor(@param:ApplicationContext private val context: Context) {
     Shizuku.requestPermission(SHIZUKU_REQUEST_CODE)
   }
 
+  private enum class RootAccess {
+    GRANTED,
+    DENIED,
+    MISSING,
+  }
+
   private companion object {
     const val SHIZUKU_REQUEST_CODE = 4711
-    /** Die Abfrage von Magisk wartet auf den Nutzer. */
+    const val SHIZUKU_APP = "moe.shizuku.privileged.api"
+
+    /** Magisk, Kitsune Mask, KernelSU, KernelSU Next, APatch: die erste installierte zählt. */
+    val ROOT_APPS =
+      listOf(
+        "com.topjohnwu.magisk",
+        "io.github.huskydg.magisk",
+        "me.weishu.kernelsu",
+        "com.rifsxd.ksunext",
+        "me.bmax.apatch",
+      )
+
+    /** Ältere Versionen von Magisk fragen und warten dabei auf den Nutzer. */
     const val ROOT_PROMPT_TIMEOUT_MS = 60_000L
     const val ROOT_CHECK_TIMEOUT_MS = 10_000L
     const val INSTALL_TIMEOUT_MS = 5 * 60_000L

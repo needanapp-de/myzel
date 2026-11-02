@@ -61,7 +61,7 @@ internal class RepoUpdateManagerTest {
     every { settingsManager.repoUpdates } returns SettingsConstants.AutoUpdateValues.OnlyWifi
     every { installedAppsCache.installedApps } returns MutableStateFlow(emptyMap())
     // Myzel: Vorladen der Indexe
-    every { repoUpdater.prefetch(any()) } returns null
+    every { repoUpdater.prefetch(any(), any()) } returns null
   }
 
   // The UpdatesManager needs a complex mock, because loadUpdates() accesses installedAppsCache
@@ -187,6 +187,20 @@ internal class RepoUpdateManagerTest {
     repoUpdateManager.updateRepos()
 
     verify(exactly = 0) { repositoryDao.getRepositories() }
+  }
+
+  @Test
+  fun `manual updateRepos does recheck`() = runTest {
+    // Myzel: wer selbst zieht oder tippt, wartet nicht die 15 s ab
+    every { settingsManager.lastRepoUpdate } returns (System.currentTimeMillis() - 500)
+    every { repositoryDao.getRepositories() } returns emptyList()
+    every { notificationManager.cancelUpdateRepoNotification() } just runs
+    every { repositoryDao.walCheckpoint() } just runs
+    every { settingsManager.lastRepoUpdate = any() } just runs
+
+    repoUpdateManager.updateRepos(manual = true)
+
+    verify(exactly = 1) { repositoryDao.getRepositories() }
   }
 
   @Test

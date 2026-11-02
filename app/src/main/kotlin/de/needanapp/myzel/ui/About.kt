@@ -1,15 +1,14 @@
 package de.needanapp.myzel.ui
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Article
@@ -63,17 +62,19 @@ private const val HEADER_ICON_SIZE = 96
 @OptIn(ExperimentalMaterial3Api::class)
 fun About(version: String = VERSION_NAME, onBackClicked: (() -> Unit)?) {
   val scrollBehavior = enterAlwaysScrollBehavior(rememberTopAppBarState())
-  Scaffold(
-    topBar = {
-      TopAppBar(
-        navigationIcon = { if (onBackClicked != null) BackButton(onClick = onBackClicked) },
-        title = { Text(stringResource(R.string.about_title_full), maxLines = 1) },
-        scrollBehavior = scrollBehavior,
-      )
-    },
-    modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-  ) { paddingValues ->
-    AboutContent(version, Modifier.fillMaxWidth(), paddingValues)
+  AboutLogoFrame(onClose = onBackClicked, modifier = Modifier.fillMaxSize()) { logo ->
+    Scaffold(
+      topBar = {
+        TopAppBar(
+          navigationIcon = { if (onBackClicked != null) BackButton(onClick = onBackClicked) },
+          title = { Text(stringResource(R.string.about_title_full), maxLines = 1) },
+          scrollBehavior = scrollBehavior,
+        )
+      },
+      modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+    ) { paddingValues ->
+      AboutList(version, logo, Modifier.fillMaxWidth(), paddingValues)
+    }
   }
 }
 
@@ -84,9 +85,21 @@ fun AboutContent(
   modifier: Modifier = Modifier,
   paddingValues: PaddingValues = PaddingValues(),
 ) {
+  AboutLogoFrame(onClose = null, modifier = modifier) { logo ->
+    AboutList(version, logo, Modifier.fillMaxSize(), paddingValues)
+  }
+}
+
+@Composable
+private fun AboutList(
+  version: String,
+  logo: AboutLogoState,
+  modifier: Modifier,
+  paddingValues: PaddingValues,
+) {
   val uriHandler = LocalUriHandler.current
   LazyColumn(contentPadding = paddingValues, modifier = modifier) {
-    item { Header(version) }
+    item { Header(version, logo) }
     item {
       SettingsGroup(stringResource(R.string.links)) {
         row {
@@ -167,7 +180,7 @@ fun AboutContent(
 }
 
 @Composable
-private fun Header(version: String) {
+private fun Header(version: String, logo: AboutLogoState) {
   SettingsGroup(null) {
     row {
       ContentRow(it, null) {
@@ -175,7 +188,7 @@ private fun Header(version: String) {
           Modifier.fillMaxWidth().padding(vertical = 8.dp),
           horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-          Box(Modifier.size(HEADER_ICON_SIZE.dp), contentAlignment = Alignment.Center) {
+          AboutLogo(logo, HEADER_ICON_SIZE.dp) {
             // das Myzel füllt etwa die Hälfte der 108-dp-Fläche des Symbols
             Image(
               painterResource(R.drawable.ic_launcher_foreground),

@@ -1,0 +1,4 @@
+• When the sources update, the display at the top expands and shows each source: checking, loading, saving, then the result and how long it took. It stays until you tap or scroll
+• Pulling down checks right away, even just after the last time
+• Sources: "Update all" at the top right, or pull down
+• Install via root: hint for Magisk 31.1 and later with "Open Magisk"

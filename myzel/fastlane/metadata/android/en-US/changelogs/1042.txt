@@ -1,0 +1,1 @@
+• The Myzel menu now closes as soon as you pick another page at the bottom (Discover, Search, My apps)

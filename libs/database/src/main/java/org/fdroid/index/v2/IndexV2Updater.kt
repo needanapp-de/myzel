@@ -10,6 +10,7 @@ import org.fdroid.database.FDroidDatabaseInt
 import org.fdroid.database.Repository
 import org.fdroid.database.RepositoryDaoInt
 import org.fdroid.download.DownloaderFactory
+import org.fdroid.fdroid.ProgressListener
 import org.fdroid.index.IndexFormatVersion
 import org.fdroid.index.IndexFormatVersion.ONE
 import org.fdroid.index.IndexFormatVersion.TWO
@@ -64,8 +65,9 @@ public class IndexV2Updater(
    * download while another one is written to the database. The download goes to a temporary name
    * first, so [update] never finds an incomplete file. Errors are only logged: [update] then
    * downloads again and reports them. Returns the file, or null if there is nothing to process.
+   * [onProgress] gets the progress of that download, not of entry.jar before it.
    */
-  public fun prefetch(repo: Repository): File? {
+  public fun prefetch(repo: Repository, onProgress: ProgressListener? = null): File? {
     val part = tempFileProvider.createTempFile(null)
     return try {
       val (_, entry) = getCertAndEntry(repo, repo.certificate, reportProgress = false)
@@ -79,6 +81,7 @@ public class IndexV2Updater(
           indexFile = entryFile,
           destFile = part,
         )
+        .apply { if (onProgress != null) setListener(onProgress) }
         .download()
       val file = tempFileProvider.createTempFile(entryFile.sha256)
       if (part.renameTo(file)) file else null

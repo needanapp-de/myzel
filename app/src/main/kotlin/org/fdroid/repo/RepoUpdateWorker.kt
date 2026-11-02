@@ -58,15 +58,20 @@ constructor(
      *
      * @param repoId The optional ID of the repo to update. If no ID is given, all (enabled) repos
      *   will be updated. Also triggers a clean cache job if no ID is given
+     * @param manual Myzel: the user asked for it, so update all repos even right after the last
+     *   update (see [RepoUpdateManager.updateRepos])
      */
     @UiThread
     @JvmStatic
     @JvmOverloads
-    fun updateNow(context: Context, repoId: Long = -1) {
+    fun updateNow(context: Context, repoId: Long = -1, manual: Boolean = false) {
       val request =
         OneTimeWorkRequestBuilder<RepoUpdateWorker>()
           .setExpedited(RUN_AS_NON_EXPEDITED_WORK_REQUEST)
-          .apply { if (repoId >= 0) setInputData(workDataOf("repoId" to repoId)) }
+          .apply {
+            if (repoId >= 0) setInputData(workDataOf("repoId" to repoId))
+            else if (manual) setInputData(workDataOf("manual" to true)) // Myzel
+          }
           .build()
       WorkManager.getInstance(context).enqueue(request)
     }
@@ -134,7 +139,8 @@ constructor(
     val repoId = inputData.getLong("repoId", -1)
     return try {
       currentCoroutineContext().ensureActive()
-      if (repoId >= 0) repoUpdateManager.updateRepo(repoId) else repoUpdateManager.updateRepos()
+      if (repoId >= 0) repoUpdateManager.updateRepo(repoId)
+      else repoUpdateManager.updateRepos(manual = inputData.getBoolean("manual", false))
       // use opportunity to clean up cached APKs
       cacheCleaner.clean()
       historyManager.pruneEvents()

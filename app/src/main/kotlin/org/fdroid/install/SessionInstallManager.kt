@@ -31,6 +31,7 @@ import androidx.core.content.ContextCompat.registerReceiver
 import androidx.core.content.FileProvider
 import androidx.core.os.LocaleListCompat
 import dagger.hilt.android.qualifiers.ApplicationContext
+import de.needanapp.myzel.install.InstalledLabel
 import java.io.File
 import java.util.Locale
 import java.util.concurrent.atomic.AtomicBoolean
@@ -123,6 +124,8 @@ constructor(
     isUpdate: Boolean,
     version: PackageVersion,
     canRequestUserConfirmationNow: Boolean,
+    // Myzel: Name der installierten App, sonst fragt Android nach dem Download noch einmal
+    installedLabel: InstalledLabel? = null,
   ): PreApprovalResult {
     return if (!context.isAppInForeground()) {
       log.info { "App not in foreground, pre-approval for ${app.packageName} not supported." }
@@ -138,7 +141,7 @@ constructor(
       log.info { "Requesting pre-approval for ${app.packageName}..." }
       try {
         val icon = iconGetter()
-        preapproval(app, icon, canRequestUserConfirmationNow)
+        preapproval(app, icon, canRequestUserConfirmationNow, installedLabel)
       } catch (e: Exception) {
         log.error(e) { "Error requesting pre-approval for ${app.packageName}: " }
         PreApprovalResult.Error("${e::class.java.simpleName} ${e.message}")
@@ -153,11 +156,12 @@ constructor(
     app: AppMetadata,
     icon: Bitmap?,
     canRequestUserConfirmationNow: Boolean,
+    installedLabel: InstalledLabel?,
   ): PreApprovalResult = safeSuspendCoroutine { cont ->
     val params = getSessionParams(app.packageName)
     val sessionId = installer.createSession(params)
     log.info { "Opened session $sessionId for ${app.packageName}" }
-    val name = app.name.getBestLocale(LocaleListCompat.getDefault()) ?: ""
+    val name = installedLabel?.text ?: app.name.getBestLocale(LocaleListCompat.getDefault()) ?: ""
     val timeSource = TimeSource.Monotonic
     var preapprovalMark: TimeSource.Monotonic.ValueTimeMark? = null
 
@@ -226,7 +230,8 @@ constructor(
         PackageInstaller.PreapprovalDetails.Builder()
           .setPackageName(app.packageName)
           .setLabel(name)
-          .setLocale(ULocale.getDefault()) // TODO get the real one used for label
+          // TODO get the real one used for label (Myzel: nur noch beim Namen aus der Paketquelle)
+          .setLocale(installedLabel?.locale ?: ULocale.getDefault())
           .apply { if (icon != null) setIcon(icon) }
           .build()
       val sender = getInstallIntentSender(sessionId, app.packageName)

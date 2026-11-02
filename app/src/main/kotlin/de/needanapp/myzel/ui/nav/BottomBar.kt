@@ -53,6 +53,8 @@ import de.needanapp.design.components.StatusTone
 import de.needanapp.design.theme.isNeedanappDesign
 import de.needanapp.myzel.favorites.Favorites
 import de.needanapp.myzel.favorites.FavoritesEntryPoint
+import de.needanapp.myzel.repo.RepoUpdateRun
+import de.needanapp.myzel.repo.RepoUpdateStep
 import de.needanapp.myzel.ui.MyzelLogo
 import de.needanapp.myzel.watch.ui.WatchPage
 import java.util.Date
@@ -60,9 +62,7 @@ import org.fdroid.BuildConfig.VERSION_NAME
 import org.fdroid.R
 import org.fdroid.database.Repository
 import org.fdroid.index.RepoManager
-import org.fdroid.repo.RepoUpdateFinished
 import org.fdroid.repo.RepoUpdateManager
-import org.fdroid.repo.RepoUpdateProgress
 import org.fdroid.ui.MainModel
 import org.fdroid.ui.navigation.NavDestinations
 import org.fdroid.ui.navigation.NavigationKey
@@ -154,7 +154,7 @@ private fun RepoDisplay(repos: RepoState) {
   val last = repos.lastUpdated
   val update = repos.update
   when {
-    update != null -> RepoUpdateDisplay(update, compact = true, showProgress = false)
+    update != null -> RepoUpdateDisplay(update, compact = true)
     repos.issues > 0 ->
       DeviceDisplay(
         pluralStringResource(R.plurals.myzel_display_repos_issues, repos.issues, repos.issues),
@@ -289,7 +289,7 @@ interface RepoIssuesEntryPoint {
 /**
  * Stand der eingeschalteten Paketquellen für das Menü und die Anzeigen der Hauptseiten; [update]
  * ist die laufende Aktualisierung, sonst null. [sources] sind die eingeschalteten Paketquellen in
- * der Reihenfolge ihrer Liste.
+ * der Reihenfolge ihrer Liste, [names] die Namen aller für die Anzeigen.
  */
 internal data class RepoState(
   val issues: Int,
@@ -297,6 +297,7 @@ internal data class RepoState(
   val lastUpdated: Long?,
   val update: RepoUpdate? = null,
   val sources: List<RepoSource> = emptyList(),
+  val names: Map<Long, String> = emptyMap(),
 )
 
 /**
@@ -310,17 +311,59 @@ internal data class RepoSource(
   val needsLogin: Boolean = false,
 )
 
+/** Was bei einer Aktualisierung gerade geschieht; [UPDATES]: alle geladen, Myzel sucht Updates. */
+internal enum class RepoPhase {
+  CHECKING,
+  LOADING,
+  SAVING,
+  UPDATES,
+}
+
 /**
- * Eine laufende Aktualisierung: Die Paketquelle [name] lädt als [number]. von [total];
- * [repoProgress] ist ihr eigener Fortschritt, [progress] der aller zusammen (je 0 bis 1).
+ * Eine laufende Aktualisierung: Die Paketquelle [name] ist als [number]. von [total] dran, gerade
+ * bei [phase] mit [percent] (null, wenn unbekannt); [progress] ist der Fortschritt aller zusammen
+ * (0 bis 1).
  */
 internal data class RepoUpdate(
   val name: String,
   val number: Int,
   val total: Int,
-  val repoProgress: Float,
+  val phase: RepoPhase,
+  val percent: Int?,
   val progress: Float,
 )
+
+/** Die laufende Aktualisierung für die Anzeigen, null nach ihrem Ende. */
+internal fun RepoUpdateRun.toUpdate(names: Map<Long, String>): RepoUpdate? {
+  if (isFinished) return null
+  val repoId = current ?: return RepoUpdate("", total, total, RepoPhase.UPDATES, null, 1f)
+  val (phase, percent) =
+    when (val step = step(repoId)) {
+      is RepoUpdateStep.Loading -> RepoPhase.LOADING to step.percent
+      is RepoUpdateStep.Saving -> RepoPhase.SAVING to step.percent
+      // geladen, F-Droid prüft nur noch die Datei und speichert dann
+      RepoUpdateStep.Loaded -> RepoPhase.SAVING to 0
+      else -> RepoPhase.CHECKING to null
+    }
+  return RepoUpdate(names[repoId].orEmpty(), number, total, phase, percent, progress)
+}
+
+/** „Prüft F-Droid“, „Lädt F-Droid“, „Speichert F-Droid“ oder „Sucht Updates“. */
+@Composable
+internal fun RepoUpdate.displayText(): String =
+  when {
+    phase == RepoPhase.UPDATES -> stringResource(R.string.myzel_board_updates)
+    name.isEmpty() -> stringResource(R.string.myzel_display_repos_loading)
+    else ->
+      stringResource(
+        when (phase) {
+          RepoPhase.CHECKING -> R.string.myzel_display_repo_checking
+          RepoPhase.LOADING -> R.string.myzel_display_repo_loading
+          else -> R.string.myzel_display_repo_saving
+        },
+        name,
+      )
+  }
 
 /**
  * Wie viele Paketquellen eingeschaltet sind, wie viele davon sich zuletzt nicht aktualisieren
@@ -338,24 +381,9 @@ internal fun rememberRepoState(): RepoState {
   }
   val repos by entryPoint.repoManager().repositoriesState.collectAsState()
   val run by entryPoint.repoUpdateManager().updateRun.collectAsState()
-  val updateState by entryPoint.repoUpdateManager().repoUpdateState.collectAsState()
   val enabled = repos.orEmpty().filter { it.enabled }
-  val update = run?.let { run ->
-    // der Fortschritt von F-Droid gehört zur Paketquelle, die gerade dran ist
-    val repoProgress =
-      when (val state = updateState?.takeIf { it.repoId == run.repoId }) {
-        is RepoUpdateProgress -> state.progress
-        is RepoUpdateFinished -> 1f
-        null -> 0f
-      }
-    RepoUpdate(
-      name = repos?.firstOrNull { it.repoId == run.repoId }?.displayName() ?: "",
-      number = run.index + 1,
-      total = run.total,
-      repoProgress = repoProgress,
-      progress = ((run.index + repoProgress) / run.total).coerceIn(0f, 1f),
-    )
-  }
+  val names = repos.orEmpty().associate { it.repoId to it.displayName() }
+  val update = run?.toUpdate(names)
   return RepoState(
     issues = enabled.count { it.hasIssue() },
     active = enabled.size,
@@ -363,6 +391,7 @@ internal fun rememberRepoState(): RepoState {
     update = update,
     sources =
       enabled.map { RepoSource(it.repoId, it.displayName(), it.hasIssue(), it.needsLogin()) },
+    names = names,
   )
 }
 
@@ -391,36 +420,16 @@ internal fun Repository.displayName(): String {
 private val REPO_NAME_SUFFIX = Regex("""\s+(F-?Droid\s+)?Repo(sitory)?$""", RegexOption.IGNORE_CASE)
 
 /**
- * Die Anzeige während einer Aktualisierung: welche Paketquelle gerade lädt, als wievielte von wie
- * vielen und mit wie viel Prozent, darunter die Punktreihe für den Fortschritt aller zusammen (mit
- * [showProgress], sonst ohne Prozent). Die Prozentzahl hat eine feste Breite, damit der Text
- * daneben nicht springt.
+ * Die kleine Anzeige während einer Aktualisierung oben im Menü: was die Paketquelle tut, die gerade
+ * dran ist, und als wievielte von wie vielen, ohne Prozent, damit ihr Name Platz hat. Die großen
+ * Anzeigen zeigen statt dessen die ganze Tafel ([RepoBoardSwitch]).
  */
 @Composable
-internal fun RepoUpdateDisplay(
-  update: RepoUpdate,
-  modifier: Modifier = Modifier,
-  compact: Boolean = false,
-  showProgress: Boolean = true,
-) {
+internal fun RepoUpdateDisplay(update: RepoUpdate, compact: Boolean = false) {
   DeviceDisplay(
-    if (update.name.isEmpty()) stringResource(R.string.myzel_display_repos_loading)
-    else stringResource(R.string.myzel_display_repo_loading, update.name),
+    update.displayText(),
     StatusTone.ACCENT,
-    modifier,
-    // ohne Punktreihe (im schmalen Menü) nur „n/gesamt“, damit der Name der Quelle Platz hat
-    detail =
-      if (showProgress) {
-        stringResource(
-          R.string.myzel_display_repo_step,
-          update.number,
-          update.total,
-          (update.repoProgress * 100).toInt(),
-        )
-      } else {
-        stringResource(R.string.myzel_display_repo_number, update.number, update.total)
-      },
-    progress = update.progress.takeIf { showProgress },
+    detail = stringResource(R.string.myzel_display_repo_number, update.number, update.total),
     compact = compact,
     blinking = true,
   )

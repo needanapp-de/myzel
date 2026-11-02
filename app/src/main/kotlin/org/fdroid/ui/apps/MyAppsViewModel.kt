@@ -156,7 +156,7 @@ constructor(
   }
 
   override fun checkForUpdates() {
-    RepoUpdateWorker.updateNow(application)
+    RepoUpdateWorker.updateNow(application, manual = true) // Myzel: auch kurz nach dem letzten Mal
   }
 
   override fun exportInstalledApps() {

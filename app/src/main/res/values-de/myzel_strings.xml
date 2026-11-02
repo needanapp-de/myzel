@@ -64,12 +64,16 @@
     <string name="myzel_install_session">Android-Paketinstaller</string>
     <string name="myzel_install_session_summary">Standard: Android fragt bei neuen Apps und manchen Updates nach</string>
     <string name="myzel_install_root">Root</string>
-    <string name="myzel_install_root_summary">Installiert und aktualisiert ohne Nachfrage, braucht Root-Zugriff (Magisk, KernelSU)</string>
+    <string name="myzel_install_root_summary">Installiert und aktualisiert ohne Nachfrage, braucht Root-Zugriff: Myzel vorher in der Root-App erlauben (Magisk: Superuser)</string>
     <string name="myzel_install_shizuku">Shizuku</string>
     <string name="myzel_install_shizuku_summary">Installiert und aktualisiert ohne Nachfrage, die App Shizuku muss laufen</string>
     <string name="myzel_install_checking">Zugriff wird geprüft…</string>
     <string name="myzel_install_enabled">Myzel installiert jetzt über %s.</string>
-    <string name="myzel_install_root_denied">Kein Root-Zugriff. Myzel bleibt beim Paketinstaller.</string>
+    <string name="myzel_install_root_denied">Deine Root-App hat Myzel keinen Zugriff gegeben. Magisk ab Version 31.1 und KernelSU fragen nicht mehr nach: Erlaube Myzel dort vorab, bei Magisk im Reiter Superuser, und wähle dann Root erneut. Bis dahin bleibt Myzel beim Paketinstaller.</string>
+    <string name="myzel_install_updates">Installieren und Aktualisieren</string>
+    <string name="myzel_install_no_access">Kein Zugriff über %s</string>
+    <string name="myzel_install_open_app">%s öffnen</string>
+    <string name="myzel_install_root_missing">Auf diesem Gerät gibt es kein Root (kein su gefunden). Myzel bleibt beim Paketinstaller.</string>
     <string name="myzel_install_shizuku_not_running">Shizuku läuft nicht. Starte Shizuku und versuche es erneut.</string>
     <string name="myzel_install_shizuku_too_old">Diese Version von Shizuku ist zu alt. Bitte aktualisiere Shizuku.</string>
     <string name="myzel_install_shizuku_denied">Shizuku hat Myzel keinen Zugriff gegeben. Du kannst ihn in der App Shizuku erlauben.</string>
@@ -546,4 +550,38 @@
     <string name="myzel_display_repo_number">%1$d/%2$d</string>
     <string name="myzel_display_repo_issue">! Lädt nicht</string>
     <string name="myzel_display_repo_login">! Anmeldung nötig</string>
+    <string name="myzel_display_repo_checking">Prüft %s</string>
+    <string name="myzel_display_repo_saving">Speichert %s</string>
+    <string name="myzel_board_updates">Sucht Updates</string>
+    <string name="myzel_board_cancelled">Abgebrochen</string>
+    <string name="myzel_board_failed_one">! %s lädt nicht</string>
+    <plurals name="myzel_board_failed">
+        <item quantity="one">! %d Quelle lädt nicht</item>
+        <item quantity="other">! %d Quellen laden nicht</item>
+    </plurals>
+    <string name="myzel_board_changed_one">%s neu geladen</string>
+    <plurals name="myzel_board_changed">
+        <item quantity="one">%d Quelle neu geladen</item>
+        <item quantity="other">%d Quellen neu geladen</item>
+    </plurals>
+    <plurals name="myzel_board_summary">
+        <item quantity="one">%1$d Quelle · %2$s s</item>
+        <item quantity="other">%1$d Quellen · %2$s s</item>
+    </plurals>
+    <string name="myzel_board_row">%1$s: %2$s</string>
+    <string name="myzel_board_waiting">wartet</string>
+    <string name="myzel_board_checking">prüft</string>
+    <string name="myzel_board_loading">lädt, %d %%</string>
+    <string name="myzel_board_loaded">geladen</string>
+    <string name="myzel_board_saving">speichert, %d %%</string>
+    <string name="myzel_board_saving_plain">speichert</string>
+    <plurals name="myzel_board_changed_apps">
+        <item quantity="one">neu geladen, %d App</item>
+        <item quantity="other">neu geladen, %d Apps</item>
+    </plurals>
+    <string name="myzel_board_changed_plain">neu geladen</string>
+    <string name="myzel_board_unchanged">unverändert</string>
+    <string name="myzel_board_failed_row">lädt nicht</string>
+    <string name="myzel_board_dismiss">Ergebnis ausblenden</string>
+    <string name="myzel_repos_update_all">Alle aktualisieren</string>
 </resources>

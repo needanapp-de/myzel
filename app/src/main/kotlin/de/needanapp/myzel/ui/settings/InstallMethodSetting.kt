@@ -1,13 +1,14 @@
 package de.needanapp.myzel.ui.settings
 
 import android.widget.Toast
-import android.widget.Toast.LENGTH_LONG
 import android.widget.Toast.LENGTH_SHORT
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.OpenInNew
 import androidx.compose.material.icons.outlined.InstallMobile
 import androidx.compose.material.icons.outlined.RadioButtonChecked
 import androidx.compose.material.icons.outlined.RadioButtonUnchecked
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -18,6 +19,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import dagger.hilt.android.EntryPointAccessors
+import de.needanapp.design.components.ContentDialog
+import de.needanapp.design.components.InfoDialog
 import de.needanapp.design.components.ListRow
 import de.needanapp.design.components.OptionsSheet
 import de.needanapp.design.components.RowPosition
@@ -31,7 +34,9 @@ import org.fdroid.R
 
 /**
  * Wie Myzel installiert: Paketinstaller, Root oder Shizuku. Root und Shizuku werden erst
- * eingestellt, wenn der Zugriff klappt; dabei erscheint die Abfrage von Magisk bzw. Shizuku.
+ * eingestellt, wenn der Zugriff klappt; dabei erscheint die Abfrage von Shizuku bzw. älterer
+ * Versionen von Magisk. Klappt er nicht, erklärt ein Dialog warum und öffnet auf Wunsch die App, in
+ * der sich der Zugriff erlauben lässt.
  */
 @Composable
 internal fun InstallMethodRow(position: RowPosition) {
@@ -42,6 +47,8 @@ internal fun InstallMethodRow(position: RowPosition) {
   var choosing by rememberSaveable { mutableStateOf(false) }
   // die Methode, deren Zugriff gerade geprüft wird
   var checking by remember { mutableStateOf<InstallMethod?>(null) }
+  // die Methode, deren Zugriff fehlt, und warum
+  var denied by remember { mutableStateOf<Pair<InstallMethod, InstallAccess.Denied>?>(null) }
 
   ListRow(
     position,
@@ -91,8 +98,7 @@ internal fun InstallMethodRow(position: RowPosition) {
                     )
                   Toast.makeText(context, message, LENGTH_SHORT).show()
                 }
-                is InstallAccess.Denied ->
-                  Toast.makeText(context, access.reason, LENGTH_LONG).show()
+                is InstallAccess.Denied -> denied = method to access
               }
               checking = null
             }
@@ -100,5 +106,42 @@ internal fun InstallMethodRow(position: RowPosition) {
         )
       }
     }
+  }
+
+  denied?.let { (method, access) -> NoAccessDialog(method, access) { denied = null } }
+}
+
+/** Warum [method] nicht geht; mit [InstallAccess.Denied.app] ein Knopf, der diese App öffnet. */
+@Composable
+private fun NoAccessDialog(
+  method: InstallMethod,
+  access: InstallAccess.Denied,
+  onDismiss: () -> Unit,
+) {
+  val context = LocalContext.current
+  val title = stringResource(R.string.myzel_install_no_access, stringResource(method.label))
+  val message = stringResource(access.reason)
+  val pm = context.packageManager
+  val launch = access.app?.let { pm.getLaunchIntentForPackage(it) }
+  if (launch == null) {
+    InfoDialog(title = title, message = message, onDismiss = onDismiss)
+    return
+  }
+  val appName = runCatching {
+    pm.getApplicationLabel(pm.getApplicationInfo(access.app, 0)).toString()
+  }
+    .getOrDefault(access.app)
+  ContentDialog(
+    title = title,
+    confirmLabel = stringResource(R.string.myzel_install_open_app, appName),
+    confirmIcon = Icons.AutoMirrored.Outlined.OpenInNew,
+    onConfirm = {
+      context.startActivity(launch)
+      onDismiss()
+    },
+    onDismiss = onDismiss,
+    dismissLabel = stringResource(R.string.myzel_close),
+  ) {
+    Text(message)
   }
 }

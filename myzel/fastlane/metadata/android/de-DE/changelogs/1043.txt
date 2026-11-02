@@ -1,0 +1,2 @@
+• Updates fragen nur noch einmal um Erlaubnis: beim Tippen auf Aktualisieren, nicht noch einmal nach dem Download
+• Neue Apps fragt Android einmal, sobald die Datei heruntergeladen ist

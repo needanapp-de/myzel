@@ -67,13 +67,17 @@
     <string name="myzel_install_session">Android package installer</string>
     <string name="myzel_install_session_summary">Standard: Android asks before installing new apps and some updates</string>
     <string name="myzel_install_root">Root</string>
-    <string name="myzel_install_root_summary">Installs and updates without asking, needs root access (Magisk, KernelSU)</string>
+    <string name="myzel_install_root_summary">Installs and updates without asking, needs root access: allow Myzel in your root app first (Magisk: Superuser)</string>
     <string name="myzel_install_shizuku">Shizuku</string>
     <string name="myzel_install_shizuku_summary">Installs and updates without asking, needs the Shizuku app to be running</string>
     <string name="myzel_install_checking">Checking access…</string>
     <!-- %s ist Root oder Shizuku -->
     <string name="myzel_install_enabled">Myzel now installs with %s.</string>
-    <string name="myzel_install_root_denied">No root access. Myzel keeps using the package installer.</string>
+    <string name="myzel_install_root_denied">Your root app did not give Myzel access. Magisk 31.1 and later and KernelSU no longer ask: allow Myzel there first, in Magisk on the Superuser tab, then choose Root again. Until then Myzel keeps using the package installer.</string>
+    <string name="myzel_install_updates">Install and update</string>
+    <string name="myzel_install_no_access">No access via %s</string>
+    <string name="myzel_install_open_app">Open %s</string>
+    <string name="myzel_install_root_missing">This device has no root (no su found). Myzel keeps using the package installer.</string>
     <string name="myzel_install_shizuku_not_running">Shizuku is not running. Start Shizuku and try again.</string>
     <string name="myzel_install_shizuku_too_old">This version of Shizuku is too old. Please update Shizuku.</string>
     <string name="myzel_install_shizuku_denied">Shizuku did not give Myzel access. You can allow it in the Shizuku app.</string>
@@ -551,4 +555,38 @@
     <string name="myzel_display_repo_number">%1$d/%2$d</string>
     <string name="myzel_display_repo_issue">! Not loading</string>
     <string name="myzel_display_repo_login">! Login needed</string>
+    <string name="myzel_display_repo_checking">Checking %s</string>
+    <string name="myzel_display_repo_saving">Saving %s</string>
+    <string name="myzel_board_updates">Finding updates</string>
+    <string name="myzel_board_cancelled">Cancelled</string>
+    <string name="myzel_board_failed_one">! %s not loading</string>
+    <plurals name="myzel_board_failed">
+        <item quantity="one">! %d source not loading</item>
+        <item quantity="other">! %d sources not loading</item>
+    </plurals>
+    <string name="myzel_board_changed_one">%s refreshed</string>
+    <plurals name="myzel_board_changed">
+        <item quantity="one">%d source refreshed</item>
+        <item quantity="other">%d sources refreshed</item>
+    </plurals>
+    <plurals name="myzel_board_summary">
+        <item quantity="one">%1$d source · %2$s s</item>
+        <item quantity="other">%1$d sources · %2$s s</item>
+    </plurals>
+    <string name="myzel_board_row">%1$s: %2$s</string>
+    <string name="myzel_board_waiting">waiting</string>
+    <string name="myzel_board_checking">checking</string>
+    <string name="myzel_board_loading">loading, %d %%</string>
+    <string name="myzel_board_loaded">loaded</string>
+    <string name="myzel_board_saving">saving, %d %%</string>
+    <string name="myzel_board_saving_plain">saving</string>
+    <plurals name="myzel_board_changed_apps">
+        <item quantity="one">refreshed, %d app</item>
+        <item quantity="other">refreshed, %d apps</item>
+    </plurals>
+    <string name="myzel_board_changed_plain">refreshed</string>
+    <string name="myzel_board_unchanged">unchanged</string>
+    <string name="myzel_board_failed_row">not loading</string>
+    <string name="myzel_board_dismiss">Hide result</string>
+    <string name="myzel_repos_update_all">Update all</string>
 </resources>

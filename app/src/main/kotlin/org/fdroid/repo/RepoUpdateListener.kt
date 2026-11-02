@@ -3,6 +3,7 @@ package org.fdroid.repo
 import android.content.Context
 import android.text.format.Formatter
 import androidx.core.os.LocaleListCompat
+import de.needanapp.myzel.repo.RepoUpdateBoard
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -19,6 +20,8 @@ private const val PROGRESS_THROTTLE_MILLIS = 1_000L
 internal class RepoUpdateListener(
   private val context: Context,
   private val notificationManager: NotificationManager,
+  // Myzel: der Fortschritt jeder Paketquelle für die Anzeigen
+  private val board: RepoUpdateBoard? = null,
 ) : IndexUpdateListener {
 
   private val log = KotlinLogging.logger {}
@@ -28,6 +31,7 @@ internal class RepoUpdateListener(
 
   fun onUpdateStarted(repoId: Long) {
     _updateState.update { RepoUpdateProgress(repoId, true, 0) }
+    board?.checking(repoId) // Myzel
   }
 
   override fun onDownloadProgress(repo: Repository, bytesRead: Long, totalBytes: Long) {
@@ -43,6 +47,7 @@ internal class RepoUpdateListener(
       progress = percent,
     )
     _updateState.update { RepoUpdateProgress(repo.repoId, true, percent) }
+    board?.loading(repo.repoId, bytesRead, totalBytes) // Myzel
   }
 
   /**
@@ -53,6 +58,8 @@ internal class RepoUpdateListener(
    * then a message of "Saving app details (x/total)" is displayed.
    */
   override fun onUpdateProgress(repo: Repository, appsProcessed: Int, totalApps: Int) {
+    // Myzel: die Anzeigen bekommen jeden Prozentschritt, nicht nur einen je Sekunde
+    board?.saving(repo.repoId, appsProcessed, totalApps)
     if (shouldThrottleProgress(appsProcessed, totalApps)) return
 
     log.debug { "Committing ${repo.address} ($appsProcessed/$totalApps)" }
@@ -76,6 +83,7 @@ internal class RepoUpdateListener(
 
   fun onUpdateFinished(repoId: Long, result: IndexUpdateResult) {
     _updateState.update { RepoUpdateFinished(repoId, result) }
+    board?.done(repoId, result) // Myzel
   }
 
   private fun shouldThrottleProgress(appsProcessed: Int, totalApps: Int): Boolean {

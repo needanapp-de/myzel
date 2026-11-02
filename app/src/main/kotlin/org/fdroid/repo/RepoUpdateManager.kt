@@ -5,7 +5,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
 import androidx.core.os.LocaleListCompat
 import dagger.hilt.android.qualifiers.ApplicationContext
-import de.needanapp.myzel.repo.RepoUpdateRun
+import de.needanapp.myzel.repo.RepoUpdateBoard
 import de.needanapp.myzel.repo.inUpdateOrder
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -56,8 +56,10 @@ internal constructor(
   // Defaults keep the testing constructor lightweight while still mirroring production wiring.
   private val compatibilityChecker: CompatibilityChecker =
     CompatibilityCheckerImpl(packageManager = context.packageManager, forceTouchApps = false),
+  // Myzel: wie weit jede Paketquelle ist (Anzeigen in Entdecken und über den Paketquellen)
+  private val updateBoard: RepoUpdateBoard = RepoUpdateBoard(),
   private val repoUpdateListener: RepoUpdateListener =
-    RepoUpdateListener(context, notificationManager),
+    RepoUpdateListener(context, notificationManager, updateBoard),
   private val repoUpdater: RepoUpdater =
     RepoUpdater(
       tempDir = context.cacheDir, // FIXME this causes disk I/O
@@ -96,9 +98,8 @@ internal constructor(
   val isUpdating = _isUpdating.asStateFlow()
   val repoUpdateState = repoUpdateListener.updateState
 
-  // Myzel: welche Paketquelle gerade dran ist, als wievielte von wie vielen (Anzeige in Entdecken)
-  private val _updateRun = MutableStateFlow<RepoUpdateRun?>(null)
-  val updateRun = _updateRun.asStateFlow()
+  // Myzel: wie weit jede Paketquelle der laufenden oder letzten Aktualisierung ist
+  val updateRun = updateBoard.run
 
   /**
    * The time in milliseconds of the (earliest!) next automatic repo update check. This is
@@ -126,11 +127,13 @@ internal constructor(
    * The call is skipped when an update is already running or when the last update happened very
    * recently. When at least one repository is processed, app updates are loaded and notifications
    * are refreshed.
+   *
+   * Myzel: [manual] (the user pulled or tapped) is only skipped while an update is running.
    */
   @WorkerThread
-  suspend fun updateRepos() {
+  suspend fun updateRepos(manual: Boolean = false) {
     currentCoroutineContext().ensureActive()
-    if (shouldSkipUpdate()) return
+    if (shouldSkipUpdate(manual)) return
 
     _isUpdating.value = true
     try {
@@ -145,14 +148,13 @@ internal constructor(
           it.enabled // don't update disabled repos
         }
       // Myzel: die Indexe laden parallel vor, geschrieben wird weiter nacheinander
+      if (repositories.isNotEmpty()) updateBoard.start(repositories.map { it.repoId })
       deleteAbandonedPrefetches()
       val prefetched = repositories.associate { repository ->
-        repository.repoId to
-          prefetchScope.async { prefetchPermits.withPermit { repoUpdater.prefetch(repository) } }
+        repository.repoId to prefetchScope.async { prefetch(repository) }
       }
-      repositories.forEachIndexed { index, repository ->
+      repositories.forEach { repository ->
         currentCoroutineContext().ensureActive()
-        _updateRun.value = RepoUpdateRun(repository.repoId, index, repositories.size) // Myzel
         // Vorladen und Update derselben Paketquelle dürfen nicht gleichzeitig in die Datei
         // schreiben
         val prefetchedFile = prefetched.getValue(repository.repoId).await()
@@ -172,7 +174,7 @@ internal constructor(
       }
     } finally {
       notificationManager.cancelUpdateRepoNotification()
-      _updateRun.value = null // Myzel
+      updateBoard.finish() // Myzel
       _isUpdating.value = false
     }
   }
@@ -187,8 +189,10 @@ internal constructor(
     if (isUpdating.value) log.warn { "Already updating repositories: updateRepo($repoId)" }
 
     val repository = repoManager.getRepository(repoId) ?: return IndexUpdateResult.NotFound
+    // Myzel: läuft schon eine Aktualisierung aller, bleibt deren Anzeige
+    val onBoard = !isUpdating.value
     _isUpdating.value = true
-    _updateRun.value = RepoUpdateRun(repoId, 0, 1) // Myzel
+    if (onBoard) updateBoard.start(listOf(repoId))
     return try {
       val result = updateRepositoryInternal(repository)
       if (result is IndexUpdateResult.Processed) {
@@ -197,10 +201,25 @@ internal constructor(
       result
     } finally {
       notificationManager.cancelUpdateRepoNotification()
-      _updateRun.value = null // Myzel
+      if (onBoard) updateBoard.finish() // Myzel
       _isUpdating.value = false
       db.getRepositoryDao().walCheckpoint()
     }
+  }
+
+  /**
+   * Myzel: lädt den Index von [repository] vor, sobald einer der drei Plätze frei ist, und meldet,
+   * wie weit es ist. Null, wenn es nichts zu laden gab oder das Laden scheiterte (dann lädt das
+   * Update selbst noch einmal und meldet den Fehler).
+   */
+  private suspend fun prefetch(repository: Repository) = prefetchPermits.withPermit {
+    val repoId = repository.repoId
+    updateBoard.checking(repoId)
+    repoUpdater
+      .prefetch(repository) { bytesRead, totalBytes ->
+        updateBoard.loading(repoId, bytesRead, totalBytes)
+      }
+      ?.also { updateBoard.loaded(repoId) }
   }
 
   /**
@@ -216,7 +235,7 @@ internal constructor(
       ?.forEach { it.delete() }
   }
 
-  private fun shouldSkipUpdate(): Boolean {
+  private fun shouldSkipUpdate(manual: Boolean): Boolean {
     if (isUpdating.value) {
       // This is a workaround for what looks like a WorkManager bug.
       // Sometimes it goes through scheduling/cancellation loops
@@ -225,7 +244,8 @@ internal constructor(
       return true
     }
     val timeSinceLastCheck = System.currentTimeMillis() - settingsManager.lastRepoUpdate
-    if (timeSinceLastCheck in 1..<MIN_UPDATE_INTERVAL_MILLIS) {
+    // Myzel: wer selbst zieht oder tippt, will prüfen, auch kurz nach der letzten Aktualisierung
+    if (!manual && timeSinceLastCheck in 1..<MIN_UPDATE_INTERVAL_MILLIS) {
       // This is a workaround for a similar issue as above.
       // We've seen WorkManager tell our worker to run in what looks like an endless loop.
       log.info { "Not updating, only $timeSinceLastCheck ms since last check." }

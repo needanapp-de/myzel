@@ -1,5 +1,6 @@
 package de.needanapp.myzel.ui.repositories
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.clickable
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
@@ -56,7 +58,8 @@ import de.needanapp.design.theme.emphasizedSpec
 import de.needanapp.design.theme.isNeedanappDesign
 import de.needanapp.myzel.ui.compat.DisableRepoDialog
 import de.needanapp.myzel.ui.compat.MeteredConnectionDialog
-import de.needanapp.myzel.ui.nav.RepoUpdateDisplay
+import de.needanapp.myzel.ui.discover.RepoRefreshBox
+import de.needanapp.myzel.ui.nav.RepoBoardSwitch
 import de.needanapp.myzel.ui.nav.rememberRepoState
 import de.needanapp.myzel.ui.nav.repoTimeText
 import org.fdroid.R
@@ -137,50 +140,54 @@ fun RepositoriesList(
     )
   }
 
-  LazyColumn(
-    state = listState,
-    contentPadding = paddingValues + PaddingValues(top = 8.dp),
-    verticalArrangement = spacedBy(8.dp),
-    modifier =
-      modifier
-        .then(if (enabled.size > 1) Modifier.dragContainer(dragDropState) else Modifier)
-        .then(if (currentRepositoryId == null) Modifier else Modifier.selectableGroup()),
-  ) {
-    item(key = STATUS_KEY, contentType = "status") {
-      RepoStatusDisplay(Modifier.padding(horizontal = 16.dp))
-    }
-    // die eingeschalteten stehen gleich nach der Anzeige, ihr Index in der Liste ist eins größer
-    itemsIndexed(items = enabled, key = { _, item -> item.repoId }) { index, repoItem ->
-      DraggableItem(dragDropState, index + 1) { isDragging ->
-        val elevation by animateDpAsState(if (isDragging) 4.dp else 0.dp)
-        Box {
-          // Schatten in der Form der Karte dahinter; F-Droids Schatten am Zeilen-Modifier läge
-          // eckig über dem Hintergrund der Karte (de.needanapp.myzel.ui.compat.ListItem)
-          if (elevation > 0.dp)
-            Box(
-              Modifier.matchParentSize()
-                .padding(horizontal = 16.dp, vertical = shapes.rowGap / 2)
-                .dropShadow(
-                  shape = RoundedCornerShape((shapes.group + shapes.inner) / 2),
-                  shadow = Shadow(radius = 8.dp, offset = DpOffset(x = elevation, elevation)),
-                )
-            )
-          RepoRow(repoItem)
+  // Ziehen nach unten aktualisiert alle, wie in Entdecken; die Liste beginnt schon unter der
+  // Kopfleiste
+  RepoRefreshBox(modifier.fillMaxSize(), indicatorTop = 0.dp) {
+    LazyColumn(
+      state = listState,
+      contentPadding = paddingValues + PaddingValues(top = 8.dp),
+      verticalArrangement = spacedBy(8.dp),
+      modifier =
+        Modifier.fillMaxSize()
+          .then(if (enabled.size > 1) Modifier.dragContainer(dragDropState) else Modifier)
+          .then(if (currentRepositoryId == null) Modifier else Modifier.selectableGroup()),
+    ) {
+      item(key = STATUS_KEY, contentType = "status") {
+        RepoStatusDisplay(Modifier.padding(horizontal = 16.dp))
+      }
+      // die eingeschalteten stehen gleich nach der Anzeige, ihr Index in der Liste ist eins größer
+      itemsIndexed(items = enabled, key = { _, item -> item.repoId }) { index, repoItem ->
+        DraggableItem(dragDropState, index + 1) { isDragging ->
+          val elevation by animateDpAsState(if (isDragging) 4.dp else 0.dp)
+          Box {
+            // Schatten in der Form der Karte dahinter; F-Droids Schatten am Zeilen-Modifier läge
+            // eckig über dem Hintergrund der Karte (de.needanapp.myzel.ui.compat.ListItem)
+            if (elevation > 0.dp)
+              Box(
+                Modifier.matchParentSize()
+                  .padding(horizontal = 16.dp, vertical = shapes.rowGap / 2)
+                  .dropShadow(
+                    shape = RoundedCornerShape((shapes.group + shapes.inner) / 2),
+                    shadow = Shadow(radius = 8.dp, offset = DpOffset(x = elevation, elevation)),
+                  )
+              )
+            RepoRow(repoItem)
+          }
         }
       }
-    }
-    if (disabled.isNotEmpty()) {
-      item(key = MORE_HEADER_KEY) {
-        MoreRepositoriesHeader(
-          count = disabled.size,
-          expanded = showMore,
-          onToggle = { showMore = !showMore },
-          modifier = Modifier.animateItem(),
-        )
-      }
-      if (showMore) {
-        items(items = disabled, key = { it.repoId }) { repoItem ->
-          RepoRow(repoItem, rowModifier = Modifier.animateItem())
+      if (disabled.isNotEmpty()) {
+        item(key = MORE_HEADER_KEY) {
+          MoreRepositoriesHeader(
+            count = disabled.size,
+            expanded = showMore,
+            onToggle = { showMore = !showMore },
+            modifier = Modifier.animateItem(),
+          )
+        }
+        if (showMore) {
+          items(items = disabled, key = { it.repoId }) { repoItem ->
+            RepoRow(repoItem, rowModifier = Modifier.animateItem())
+          }
         }
       }
     }
@@ -207,27 +214,27 @@ fun RepositoriesList(
 
 /**
  * Die Anzeige über den Paketquellen: wie viele eingeschaltet sind und wann sie zuletzt geladen
- * wurden; lassen sich welche wiederholt nicht laden, sagt sie das.
+ * wurden; lassen sich welche wiederholt nicht laden, sagt sie das. Während einer Aktualisierung
+ * fährt sie aus wie die in Entdecken ([RepoBoardSwitch]).
  */
 @Composable
 private fun RepoStatusDisplay(modifier: Modifier) {
   val repos = rememberRepoState()
-  val update = repos.update
-  if (update != null) {
-    RepoUpdateDisplay(update, modifier)
-  } else if (repos.issues > 0) {
-    DeviceDisplay(
-      pluralStringResource(R.plurals.myzel_display_repos_issues, repos.issues, repos.issues),
-      StatusTone.ERROR,
-      modifier,
-    )
-  } else {
-    DeviceDisplay(
-      pluralStringResource(R.plurals.myzel_repos_active, repos.active, repos.active),
-      StatusTone.POSITIVE,
-      modifier,
-      detail = repos.lastUpdated?.let { repoTimeText(it) },
-    )
+  Box(modifier.animateContentSize(emphasizedSpec())) {
+    RepoBoardSwitch {
+      if (repos.issues > 0) {
+        DeviceDisplay(
+          pluralStringResource(R.plurals.myzel_display_repos_issues, repos.issues, repos.issues),
+          StatusTone.ERROR,
+        )
+      } else {
+        DeviceDisplay(
+          pluralStringResource(R.plurals.myzel_repos_active, repos.active, repos.active),
+          StatusTone.POSITIVE,
+          detail = repos.lastUpdated?.let { repoTimeText(it) },
+        )
+      }
+    }
   }
 }
 

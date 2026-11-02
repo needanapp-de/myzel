@@ -7,6 +7,7 @@ import org.fdroid.CompatibilityChecker
 import org.fdroid.database.FDroidDatabase
 import org.fdroid.database.Repository
 import org.fdroid.download.DownloaderFactory
+import org.fdroid.fdroid.ProgressListener
 import org.fdroid.index.v1.IndexV1Updater
 import org.fdroid.index.v2.IndexV2Updater
 
@@ -58,9 +59,10 @@ public class RepoUpdater(
   /**
    * Myzel: downloads the index [update] will need for [repo] in advance, see
    * [IndexV2Updater.prefetch]. Safe to run in parallel for different repos, but not together with
-   * [update] of the same repo.
+   * [update] of the same repo. [onProgress] gets the progress of the index download.
    */
-  public fun prefetch(repo: Repository): File? = indexV2Updater.prefetch(repo)
+  public fun prefetch(repo: Repository, onProgress: ProgressListener? = null): File? =
+    indexV2Updater.prefetch(repo, onProgress)
 
   /** Updates the given [repo]. */
   public fun update(repo: Repository): IndexUpdateResult =

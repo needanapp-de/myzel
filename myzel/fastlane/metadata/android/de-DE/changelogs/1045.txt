@@ -1,0 +1,4 @@
+• Beim Aktualisieren der Paketquellen fährt die Anzeige oben aus und zeigt jede Quelle: prüfen, laden, speichern, dann das Ergebnis mit Dauer. Es bleibt stehen, bis du tippst oder scrollst
+• Ziehen nach unten prüft sofort, auch direkt nach dem letzten Mal
+• Paketquellen: „Alle aktualisieren“ oben rechts, oder nach unten ziehen
+• Installation über Root: Hinweis für Magisk ab 31.1 mit „Magisk öffnen“

@@ -1,0 +1,2 @@
+• Updates ask for permission only once: when you tap Update, not again after the download
+• For new apps, Android asks once as soon as the file is downloaded

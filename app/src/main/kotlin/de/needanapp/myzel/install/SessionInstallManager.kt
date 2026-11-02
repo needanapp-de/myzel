@@ -1,7 +1,10 @@
 package de.needanapp.myzel.install
 
+import android.content.Context
 import android.graphics.Bitmap
+import android.os.Build.VERSION.SDK_INT
 import androidx.annotation.WorkerThread
+import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.File
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -34,6 +37,7 @@ import org.fdroid.utils.IoDispatcher
 class SessionInstallManager
 @Inject
 constructor(
+  @param:ApplicationContext private val context: Context,
   private val session: org.fdroid.install.SessionInstallManager,
   private val privilegedInstaller: PrivilegedInstaller,
   private val settingsManager: SettingsManager,
@@ -54,19 +58,35 @@ constructor(
       .launchIn(scope)
   }
 
-  /** Mit Root oder Shizuku braucht es keine Vorabfreigabe; installiert wird ohne Nachfrage. */
+  /**
+   * Mit Root oder Shizuku braucht es keine Vorabfreigabe; installiert wird ohne Nachfrage. Sonst
+   * nur für installierte Apps, mit ihrem Namen ([InstalledLabel]): Bei einer neuen App kann Android
+   * den Namen aus der Paketquelle erst nach dem Download prüfen, und weicht er ab, fragt es ein
+   * zweites Mal. Neue Apps fragt Android so einmal, nach dem Download.
+   */
   suspend fun requestPreapproval(
     app: AppMetadata,
     iconGetter: suspend () -> Bitmap?,
     isUpdate: Boolean,
     version: PackageVersion,
     canRequestUserConfirmationNow: Boolean,
-  ): PreApprovalResult =
-    if (method != InstallMethod.SESSION) {
-      PreApprovalResult.NotSupported
-    } else {
-      session.requestPreapproval(app, iconGetter, isUpdate, version, canRequestUserConfirmationNow)
-    }
+  ): PreApprovalResult {
+    if (method != InstallMethod.SESSION || SDK_INT < 34) return PreApprovalResult.NotSupported
+    val label =
+      InstalledLabel.of(context, app.packageName)
+        ?: run {
+          log.info { "${app.packageName} not installed, no pre-approval" }
+          return PreApprovalResult.NotSupported
+        }
+    return session.requestPreapproval(
+      app,
+      iconGetter,
+      isUpdate,
+      version,
+      canRequestUserConfirmationNow,
+      label,
+    )
+  }
 
   @WorkerThread
   suspend fun install(
