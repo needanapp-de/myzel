@@ -1,0 +1,1 @@
+• App-Seite: Nach „… bevorzugen“ in der Update-Diagnose bietet sie das Update sofort an, ohne die Seite neu zu öffnen

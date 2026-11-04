@@ -844,6 +844,82 @@ internal class DetailsPresenterTest {
     }
   }
 
+  @Test
+  fun versionsFollowTheAppWhenAnotherRepoIsPreferred() = runTest {
+    // Myzel: die Update-Diagnose bevorzugt eine Paketquelle mit einem Update, ohne sie zu wählen;
+    // die Seite zeigt dann die App aus der neuen und muss auch deren Versionen nehmen
+    val repoId2 = 2L
+    every { repoManager.getRepository(repoId2) } returns
+      Repository(
+        repoId = repoId2,
+        address = "https://example.com/second/repo",
+        timestamp = 200L,
+        formatVersion = IndexFormatVersion.TWO,
+        certificate = "abcde",
+        version = 2L,
+        weight = 50,
+        lastUpdated = 500L,
+      )
+    val app2: App = mockk()
+    every { app2.metadata } returns testApp.app.copy(repoId = repoId2)
+    every { app2.repoId } returns repoId2
+    every { app2.authorName } returns null
+    every { app2.packageName } returns packageName
+    every { app2.getDescription(any()) } returns testApp.description
+    every { app2.getIcon(any()) } returns null
+    every { app2.getFeatureGraphic(any()) } returns null
+    every { app2.getPhoneScreenshots(any()) } returns emptyList()
+    val version2: AppVersion = mockk()
+    every { version2.repoId } returns repoId2
+    every { version2.versionCode } returns versionCode + 1
+    every { version2.versionName } returns "1.1"
+    every { version2.file } returns FileV1(name = "test2.apk", sha256 = "abce", size = 124L)
+    every { version2.added } returns 400L
+    every { version2.size } returns 124L
+    every { version2.signer } returns null
+    every { version2.releaseChannels } returns emptyList()
+    every { version2.packageManifest } returns
+      AppManifest(versionName = "1.1", versionCode = versionCode + 1)
+    every { version2.hasKnownVulnerability } returns false
+    every { version2.isCompatible } returns true
+    every { version2.getWhatsNew(any()) } returns null
+    every { version2.antiFeatureKeys } returns emptyList()
+    every { versionDao.getAppVersions(repoId2, packageName) } returns
+      MutableLiveData(listOf(version2))
+    every { appDao.getRepositoryIdsForApp(packageName) } returns listOf(repoId, repoId2)
+    // die Seite folgt der bevorzugten Paketquelle, die erst die von app ist
+    val preferredApp = MutableLiveData<App?>(app)
+    val appPrefs = MutableLiveData(AppPrefs(packageName))
+    every { appDao.getApp(packageName) } returns preferredApp
+    every { appPrefsDao.getAppPrefs(packageName) } returns appPrefs
+    currentRepoIdFlow.value = null
+    setupInstalledApp(versionCode = versionCode, isInstalled = true)
+
+    presenterFlow.test {
+      val before = awaitLoadedItem { it.versions != null }
+      assertEquals(MainButtonState.NONE, before.mainButtonState)
+
+      appPrefs.value = AppPrefs(packageName, preferredRepoId = repoId2)
+      preferredApp.value = app2
+      val after = awaitLoadedItem { it.app.repoId == repoId2 && it.suggestedVersion == version2 }
+      assertEquals(MainButtonState.UPDATE, after.mainButtonState)
+      assertEquals(repoId2, after.preferredRepoId)
+      assertEquals(listOf(version2), after.versions?.map { it.version })
+
+      cancelAndPrintRemainingEvents()
+    }
+  }
+
+  /** Wartet auf ein [LoadedAppDetailsItem], für das [condition] gilt. */
+  private suspend fun ReceiveTurbine<AppDetailsItem?>.awaitLoadedItem(
+    condition: (LoadedAppDetailsItem) -> Boolean
+  ): LoadedAppDetailsItem {
+    while (true) {
+      val item = awaitItem()
+      if (item is LoadedAppDetailsItem && condition(item)) return item
+    }
+  }
+
   private fun setupInstalledApp(versionCode: Long, isInstalled: Boolean = false) {
     val signature = mockk<Signature>()
     every { signature.toByteArray() } returns byteArrayOf(0xAB.toByte(), 0xCD.toByte())

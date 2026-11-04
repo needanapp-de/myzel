@@ -77,17 +77,16 @@ fun DetailsPresenter(
       is Loaded if loadableApp.value != null -> loadableApp.value
       else -> return NotFoundAppDetailsItem
     }
+  // Myzel: die Versionen der Paketquelle, aus der die App gerade kommt. Ohne gewählte Paketquelle
+  // ist das die bevorzugte; wird eine andere bevorzugt (etwa mit „… bevorzugen“ in der
+  // Update-Diagnose), kommt die App aus der neuen, und die Versionen müssen mit. Sonst blieben die
+  // der alten stehen und das Update fehlte, bis die Seite neu geöffnet wird.
+  val versionsRepoId = currentRepoId ?: app.repoId
   val versions =
-    produceState<List<AppVersion>?>(null, currentRepoId) {
+    produceState<List<AppVersion>?>(null, versionsRepoId) {
         withContext(dispatcher) {
-          if (currentRepoId == null) {
-            db.getVersionDao().getAppVersions(app.repoId, packageName).asFlow().collect {
-              value = it
-            }
-          } else {
-            db.getVersionDao().getAppVersions(currentRepoId, packageName).asFlow().collect {
-              value = it
-            }
+          db.getVersionDao().getAppVersions(versionsRepoId, packageName).asFlow().collect {
+            value = it
           }
         }
       }
@@ -104,7 +103,8 @@ fun DetailsPresenter(
       appPrefs?.preferredRepoId ?: app.repoId // DB loads preferred repo first, so we remember it
     }
   val installedSigner =
-    remember(packageInfo?.packageName) {
+    // Myzel: neu lesen, wenn sich die installierte App ändert, nicht nur ihr Paketname
+    remember(packageInfo) {
       @Suppress("DEPRECATION") // so far we had issues with the new way of getting sigs
       packageInfo?.signatures?.get(0)?.let { sha256(it.toByteArray()) }
     }
@@ -191,7 +191,7 @@ fun DetailsPresenter(
   val authorHasMoreThanOneApp =
     if (authorName == null) false
     else {
-      produceState(false) {
+      produceState(false, authorName) { // Myzel: authorName, die App kann die Quelle wechseln
           withContext(dispatcher) {
             db.getAppDao().hasAuthorMoreThanOneApp(authorName).asFlow().collect { value = it }
           }

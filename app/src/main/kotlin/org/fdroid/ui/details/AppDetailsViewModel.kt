@@ -179,6 +179,9 @@ constructor(
   fun onPreferredRepoChanged(repoId: Long) {
     scope.launch {
       repoManager.setPreferredRepoId(packageName, repoId).join()
+      // Myzel: danach die bevorzugte zeigen, auch wenn vorher eine andere gewählt war; die
+      // Update-Diagnose bevorzugt auch eine Paketquelle, die gerade nicht gezeigt wird
+      currentRepoIdFlow.update { null }
       updatesManager.loadUpdates()
     }
   }

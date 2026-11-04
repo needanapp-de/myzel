@@ -1,0 +1,1 @@
+• App page: after "Prefer …" in the update diagnosis, it offers the update right away, without reopening the page
