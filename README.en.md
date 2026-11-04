@@ -13,6 +13,11 @@ and more repositories, installs them and keeps them up to date – on your phone
 the official F-Droid client (currently version 2.0.3) and follows its updates, but wears the design of
 needanapp.de.
 
+<p>
+  <a href="https://apps.needanapp.de"><img src="myzel/badges/needanapp-repo-en.png" alt="F-Droid repository needanapp.de" height="80"></a>
+  <a href="https://apps.obtainium.imranr.dev/redirect?r=obtainium://add/https://github.com/needanapp-de/myzel"><img src="myzel/badges/obtainium.png" alt="Get it on Obtainium" height="80"></a>
+</p>
+
 [F-Droid repository](https://apps.needanapp.de) · [Myzel in the repository](https://apps.needanapp.de/de.needanapp.myzel/) ·
 Android 12 and newer · Wear OS 3 and newer · License [GPL-3.0](LICENSE) · Published by needanapp.de
 

@@ -13,6 +13,11 @@ IzzyOnDroid und weiteren Paketquellen, installierst sie und hältst sie aktuell 
 Myzel basiert auf dem offiziellen F-Droid-Client (zurzeit Version 2.0.3) und übernimmt dessen Updates, trägt aber
 das Design von needanapp.de.
 
+<p>
+  <a href="https://apps.needanapp.de"><img src="myzel/badges/needanapp-repo-de.png" alt="F-Droid-Paketquelle needanapp.de" height="80"></a>
+  <a href="https://apps.obtainium.imranr.dev/redirect?r=obtainium://add/https://github.com/needanapp-de/myzel"><img src="myzel/badges/obtainium.png" alt="Get it on Obtainium" height="80"></a>
+</p>
+
 [F-Droid-Repo](https://apps.needanapp.de) · [Myzel im Repo](https://apps.needanapp.de/de.needanapp.myzel/) ·
 Android 12 und neuer · Wear OS 3 und neuer · Lizenz [GPL-3.0](LICENSE) · Herausgeber needanapp.de
 
